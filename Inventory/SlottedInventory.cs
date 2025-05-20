@@ -24,7 +24,7 @@ namespace PolyWare.Items {
 		/// <param name="item"></param>
 		/// <param name="slot"></param>
 		/// <returns></returns>
-		public bool AddItemAtSlot(Item item, int slot) {
+		public bool AddItemAtSlot(IItem item, int slot) {
 			if (slots[slot] && !slots[slot].Drop()) {
 				return false;
 			}
@@ -34,7 +34,7 @@ namespace PolyWare.Items {
 			return true; // later, we may need to block dropping equipment
 		} 
 		
-		public virtual int AddItem(Item item) {
+		public virtual int AddItem(IItem item) {
 			if (item is not T) {
 				Logger.Error($"Inventory doesnt support {item.GetType()}");
 				return (int)IInventory.InventoryError.InvalidItem;

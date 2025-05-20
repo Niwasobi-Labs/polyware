@@ -10,7 +10,7 @@ namespace PolyWare.Items {
 		/// </summary>
 		/// <param name="item"></param>
 		/// <returns></returns>
-		public int AddItem(Item item);
+		public int AddItem(IItem item);
 		public void Clear();
 	}
 }
