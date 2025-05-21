@@ -14,16 +14,9 @@ namespace PolyWare.Levels {
 		public static UnityAction OnLevelStarted = delegate { };
 		public static UnityAction OnLevelReset = delegate { };
 
-		protected IResettable[] Resettables { get; private set; }
-
 		public bool LevelStarted { get; private set; }
 		
 		private Stopwatch levelTimer = new Stopwatch();
-		
-		private void Awake() {
-			// todo this is a bad design 
-			Resettables = GetComponentsInChildren<IResettable>();
-		}
 
 		public abstract void LoadLevel();
 		public abstract void UnLoadLevel();
@@ -66,8 +59,6 @@ namespace PolyWare.Levels {
 			
 			// todo re-enable telemetry for levels, (fix telemetry event ids)
 			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
-
-			foreach (IResettable resettable in Resettables) resettable.Reset();
 
 			OnResetLevel();
 
