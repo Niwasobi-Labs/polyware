@@ -1,10 +1,12 @@
 using PolyWare.AssetManagement.Registries;
+using PolyWare.Levels;
 using UnityEngine;
 
 namespace PolyWare.Game {
 	public abstract class GameManager : MonoBehaviour, IGameManager {
 		
 		[SerializeField] protected LevelRegistry levelRegistry;
+		public abstract Level CurrentLevel { get; }
 
 		protected abstract void OnInitialize();
 		public void Initialize() {

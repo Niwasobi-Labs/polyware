@@ -1,4 +1,3 @@
-using PolyWare.Gameplay;
 using PolyWare.Telemetry;
 using PolyWare.Timers;
 using PolyWare.Utils;
@@ -54,10 +53,9 @@ namespace PolyWare.Levels {
 
 		public void RestartLevel() {
 			LevelStarted = false;
-
+			
 			levelTimer.Stop();
 			
-
 			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
 
 			OnResetLevel();
