@@ -4,13 +4,18 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 
-namespace PolyWare.Metrics {
+namespace PolyWare.Telemetry {
 	public class TelemetryManager {
-		private static readonly ThreadLocal<StringBuilder> ThreadLocalBuilder =
-			new(() => new StringBuilder(256), false);
-
+		public const string EventSerializationSeparator = " | ";
+		public const string EventSerializationBracketStart = "{";
+		public const string EventSerializationBracketEnd = "}";
+		public const string EventSerializationSpace = " ";
+		public const string EventSerializationEventIDPrefix = "ID: ";
+		
+		private static readonly ThreadLocal<StringBuilder> ThreadLocalBuilder = new(() => new StringBuilder(256), false);
+		
 		private StreamWriter writer;
-
+		
 		public TelemetryManager() {
 			string filePath = Application.persistentDataPath;
 
@@ -18,7 +23,7 @@ namespace PolyWare.Metrics {
 
 			if (directory != null && !Directory.Exists(directory)) Directory.CreateDirectory(directory);
 
-			// Create build-specific directory
+			// Create a build-specific directory
 			string buildDir = Path.Combine(filePath, Application.version);
 			if (!Directory.Exists(buildDir)) Directory.CreateDirectory(buildDir);
 
@@ -44,12 +49,39 @@ namespace PolyWare.Metrics {
 			Application.quitting += OnApplicationQuit;
 		}
 
-		public void LogEvent<T>(T eventData) where T : ITelemetryEvent {
-			TelemetryEventData newEvent = new(eventData);
-			newEvent.SerializeTo(writer);
+		public void LogEvent<T>(T @event) where T : ITelemetryEvent {
+			SerializeEvent(@event);
 			writer.WriteLine();
 		}
 
+		private void SerializeEvent(ITelemetryEvent @event) {
+			StringBuilder sb = ThreadLocalBuilder.Value;
+			sb.Clear();
+			
+			sb.Append(EventSerializationBracketStart);
+			sb.Append(DateTime.UtcNow.Ticks);
+			sb.Append(EventSerializationBracketEnd);
+			
+			sb.Append(EventSerializationSeparator);
+			
+			sb.Append(EventSerializationBracketStart);
+			sb.Append(EventSerializationEventIDPrefix);
+			sb.Append(@event.EventID);
+			sb.Append(EventSerializationBracketEnd);
+			
+			sb.Append(EventSerializationSeparator);
+			
+			sb.Append(EventSerializationBracketStart);
+			sb.Append(@event.EventName);
+			sb.Append(EventSerializationBracketEnd);
+			
+			sb.Append(EventSerializationSeparator);
+			
+			@event.SerializeTo(sb);
+			
+			writer.Write(sb);
+		}
+		
 		private void OnApplicationQuit() {
 			CloseWriter();
 		}
@@ -63,26 +95,6 @@ namespace PolyWare.Metrics {
 			writer?.Flush();
 			writer?.Close();
 			writer = null;
-		}
-
-		private readonly struct TelemetryEventData {
-			private readonly long timestamp;
-			private readonly ITelemetryEvent data;
-
-			public TelemetryEventData(ITelemetryEvent data) {
-				timestamp = DateTime.UtcNow.Ticks;
-				this.data = data;
-			}
-
-			public void SerializeTo(TextWriter writer) {
-				StringBuilder sb = ThreadLocalBuilder.Value;
-				sb.Clear();
-				sb.Append('[');
-				sb.Append(timestamp);
-				sb.Append("] ");
-				writer.Write(sb);
-				data.SerializeTo(writer);
-			}
 		}
 	}
 }

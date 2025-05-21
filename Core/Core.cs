@@ -1,7 +1,8 @@
 using PolyWare.AssetManagement;
 using PolyWare.Audio;
+using PolyWare.Game;
 using PolyWare.Input;
-using PolyWare.Metrics;
+using PolyWare.Telemetry;
 using PolyWare.UI;
 using UnityEngine.EventSystems;
 
@@ -13,7 +14,7 @@ namespace PolyWare {
 		public static InputManager Input { get; private set; }
 		public static SfxManager SfxManager { get; private set; }
 		public static UIManager UI { get; private set; }
-		public static Game Game { get; private set; }
+		public static GameManager Game { get; private set; }
 		public static TelemetryManager Telemetry { get; private set; }
 
 		public static void Setup(Bootstrapper bootstrapper) {
@@ -23,7 +24,7 @@ namespace PolyWare {
 			Input = bootstrapper.Input;
 			SfxManager = bootstrapper.SfxManager;
 			UI = bootstrapper.UI;
-			Game = bootstrapper.Game;
+			Game = bootstrapper.GameManager;
 			Telemetry = new TelemetryManager();
 		}
 		

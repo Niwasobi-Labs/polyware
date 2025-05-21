@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PolyWare.AssetManagement;
 using PolyWare.Audio;
+using PolyWare.Game;
 using PolyWare.Input;
 using PolyWare.UI;
 using UnityEngine;
@@ -19,14 +20,14 @@ namespace PolyWare {
 		public InputManager Input;
 		public SfxManager SfxManager;
 		public UIManager UI;
-		public Game Game;
+		public GameManager GameManager;
 		
 		private void Awake() {
 			DontDestroyOnLoad(Input = Instantiate(Input));
 			DontDestroyOnLoad(EventSystem = Instantiate(EventSystem));
 			DontDestroyOnLoad(SfxManager = Instantiate(SfxManager));
 			DontDestroyOnLoad(UI = Instantiate(UI));
-			DontDestroyOnLoad(Game = Instantiate(Game));
+			DontDestroyOnLoad(GameManager = Instantiate(GameManager));
 			
 			Core.Setup(this);
 			
@@ -38,14 +39,14 @@ namespace PolyWare {
 		protected abstract void OnAwake();
 		
 		protected void Start() {
-			Game.LoadGame();
+			GameManager.LoadGame();
 			StartCoroutine(SlowStart());
 		}
 
 		private IEnumerator SlowStart() {
 			// wait a frame for load to finish (and Awake to be called on all objects)
 			yield return null;
-			Game.StartGame();
+			GameManager.StartGame();
 		}
 	}
 }

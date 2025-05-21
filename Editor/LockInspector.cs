@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace PolyWare.Editor {
 	public class LockInspector {
-		[MenuItem("Tools/Lock Inspector %l")]
+		[MenuItem("PolyWare/Lock Inspector %l")]
 		public static void Lock() {
 			ActiveEditorTracker.sharedTracker.isLocked = !ActiveEditorTracker.sharedTracker.isLocked;
 

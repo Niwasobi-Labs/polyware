@@ -1,4 +1,5 @@
 using PolyWare.Gameplay;
+using PolyWare.Telemetry;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -28,19 +29,17 @@ namespace PolyWare.Levels {
 		protected abstract void OnResetLevel();
 
 		public void StartLevel() {
-			// Core.Telemetry.LogEvent(new LevelStart(levelName));
+			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelStart(levelName));
 
 			OnStartLevel();
 
 			OnLevelStarted.Invoke();
 
 			LevelStarted = true;
-
-			// PolyWare.Core.Input.ChangeToActionMap(InputManager.ActionMap.Player);
 		}
 
 		public void LevelComplete() {
-			// PolyWare.Core.Telemetry.LogEvent(new LevelComplete(levelName));
+			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName));
 
 			OnCompleteLevel();
 		}
@@ -49,7 +48,7 @@ namespace PolyWare.Levels {
 			LevelStarted = false;
 
 			// todo re-enable telemetry for levels, (fix telemetry event ids)
-			// PolyWare.Core.Telemetry.LogEvent(new LevelReset(levelName));
+			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName));
 
 			foreach (IResettable resettable in Resettables) resettable.Reset();
 
