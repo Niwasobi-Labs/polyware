@@ -1,5 +1,7 @@
 using PolyWare.Gameplay;
 using PolyWare.Telemetry;
+using PolyWare.Timers;
+using PolyWare.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -15,7 +17,9 @@ namespace PolyWare.Levels {
 		protected IResettable[] Resettables { get; private set; }
 
 		public bool LevelStarted { get; private set; }
-
+		
+		private Stopwatch levelTimer = new Stopwatch();
+		
 		private void Awake() {
 			// todo this is a bad design 
 			Resettables = GetComponentsInChildren<IResettable>();
@@ -25,6 +29,7 @@ namespace PolyWare.Levels {
 		public abstract void UnLoadLevel();
 
 		protected abstract void OnStartLevel();
+		protected abstract void OnLevelUpdate();
 		protected abstract void OnCompleteLevel();
 		protected abstract void OnResetLevel();
 
@@ -35,20 +40,32 @@ namespace PolyWare.Levels {
 
 			OnLevelStarted.Invoke();
 
+			levelTimer.Start();
+			
 			LevelStarted = true;
 		}
 
+		private void Update() {
+			levelTimer.Tick(Time.deltaTime);
+			
+			OnLevelUpdate();
+		}
+		
 		public void LevelComplete() {
-			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName));
+			levelTimer.Stop();
 
+			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelComplete(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
+			
 			OnCompleteLevel();
 		}
 
 		public void RestartLevel() {
 			LevelStarted = false;
 
+			levelTimer.Stop();
+			
 			// todo re-enable telemetry for levels, (fix telemetry event ids)
-			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName));
+			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
 
 			foreach (IResettable resettable in Resettables) resettable.Reset();
 

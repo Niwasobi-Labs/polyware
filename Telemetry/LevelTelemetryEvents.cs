@@ -3,6 +3,7 @@ using System.Text;
 namespace PolyWare.Telemetry {
 	public class LevelTelemetryEvents {
 		public const string LevelPrefix = "level: ";
+		public const string LevelTimePrefix = "level time: ";
 		
 		public readonly struct LevelStart : ITelemetryEvent {
 			public int EventID => (int)Telemetry.EventID.LevelStart;
@@ -26,14 +27,21 @@ namespace PolyWare.Telemetry {
 			private const string eventName = "LevelCompleted";
 			
 			private readonly string levelName;
+			private readonly string levelTime;
 
-			public LevelComplete(string name) {
+			public LevelComplete(string name, string time) {
 				levelName = name;
+				levelTime = time;
 			}
 
 			public void SerializeTo(StringBuilder stringBuilder) {
 				stringBuilder.Append(LevelPrefix);
 				stringBuilder.Append(levelName);
+				
+				stringBuilder.Append(TelemetryManager.EventSerializationSeparator);
+				
+				stringBuilder.Append(LevelTimePrefix);
+				stringBuilder.Append(levelTime);
 			}
 		}
 
@@ -43,14 +51,21 @@ namespace PolyWare.Telemetry {
 			private const string eventName = "LevelReset";
 			
 			private readonly string levelName;
+			private readonly string levelTime;
 			
-			public LevelReset(string name) {
+			public LevelReset(string name, string time) {
 				levelName = name;
+				levelTime = time;
 			}
 
 			public void SerializeTo(StringBuilder stringBuilder) {
 				stringBuilder.Append(LevelPrefix);
 				stringBuilder.Append(levelName);
+
+				stringBuilder.Append(TelemetryManager.EventSerializationSeparator);
+				
+				stringBuilder.Append(LevelTimePrefix);
+				stringBuilder.Append(levelTime);
 			}
 		}
 	}

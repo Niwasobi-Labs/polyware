@@ -7,8 +7,8 @@ using UnityEngine;
 namespace PolyWare.Telemetry {
 	public class TelemetryManager {
 		public const string EventSerializationSeparator = " | ";
-		public const string EventSerializationBracketStart = "{";
-		public const string EventSerializationBracketEnd = "}";
+		public const string EventSerializationBracketStart = "{ ";
+		public const string EventSerializationBracketEnd = " }";
 		public const string EventSerializationSpace = " ";
 		public const string EventSerializationEventIDPrefix = "ID: ";
 		
