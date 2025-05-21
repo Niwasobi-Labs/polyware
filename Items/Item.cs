@@ -2,9 +2,7 @@ using PolyWare.Entities;
 using PolyWare.Interactions;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-// todo move this to PolyWare
 namespace PolyWare.Items {
 	public abstract class Item : Entity, IItem {
 		[SerializeField] [Required] protected ProximityDetector interaction;

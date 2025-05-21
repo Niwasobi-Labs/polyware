@@ -82,10 +82,5 @@ namespace PolyWare.UI {
 		public void RegisterWorldSpaceWidget(Widget widget) {
 			widget.transform.SetParent(worldSpace.transform);
 		}
-
-		// todo consider moving this to a IObserve interface? (https://lost-woods.codecks.io/card/18q-better-observer-pattern)
-		private void OnDestroy() {
-			OnDisable();
-		}
 	}
 }

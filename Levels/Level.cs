@@ -57,7 +57,7 @@ namespace PolyWare.Levels {
 
 			levelTimer.Stop();
 			
-			// todo re-enable telemetry for levels, (fix telemetry event ids)
+
 			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
 
 			OnResetLevel();
