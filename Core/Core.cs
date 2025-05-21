@@ -31,6 +31,7 @@ namespace PolyWare {
 			Collector.Initialize();
 			Input.Initialize();
 			UI.Initialize();
+			SfxManager.Initialize();
 			Game.Initialize();
 		}
 	}
