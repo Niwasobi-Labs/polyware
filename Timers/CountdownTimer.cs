@@ -24,7 +24,7 @@ namespace PolyWare.Timers {
 			OnTimerComplete?.Invoke();
 		}
 		
-		protected virtual bool IsFinished => Time <= 0;
+		public virtual bool IsFinished => Time <= 0;
 	}
 
 	/// <summary>
@@ -37,6 +37,6 @@ namespace PolyWare.Timers {
 			completionCondition = predicate;
 		}
 
-		protected override bool IsFinished => Time <= 0 && completionCondition();
+		public override bool IsFinished => Time <= 0 && completionCondition();
 	}
 }
