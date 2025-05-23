@@ -1,8 +1,8 @@
-using PolyWare.AssetManagement.Registries;
+using PolyWare.Analytics.Telemetry;
 using PolyWare.Levels;
 using UnityEngine;
 
-namespace PolyWare.Game {
+namespace PolyWare.Core {
 	public abstract class GameManager : MonoBehaviour, IGameManager {
 		
 		[SerializeField] protected LevelRegistry levelRegistry;
@@ -19,7 +19,7 @@ namespace PolyWare.Game {
 
 		protected abstract void OnStartGame();
 		public void StartGame() {
-			Core.Telemetry.LogEvent(new GameStartTelemetryEvent());
+			Instance.Telemetry.LogEvent(new GameStartTelemetryEvent());
 			OnStartGame();
 		}
 	}

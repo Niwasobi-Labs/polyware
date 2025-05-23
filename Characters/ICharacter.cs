@@ -1,4 +1,4 @@
-using PolyWare.Interactions;
+using PolyWare.Interaction;
 using PolyWare.Items;
 
 namespace PolyWare.Characters {

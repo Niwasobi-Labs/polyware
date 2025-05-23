@@ -1,4 +1,4 @@
-using PolyWare.Interactions;
+using PolyWare.Interaction;
 
 namespace PolyWare.Items {
 	public interface IItem {

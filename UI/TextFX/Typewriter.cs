@@ -1,3 +1,4 @@
+using PolyWare.Core;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -36,7 +37,7 @@ namespace PolyWare.UI.TextFX {
 		private IEnumerator Reveal(int totalCharacters) {
 			while (text.maxVisibleCharacters != totalCharacters) {
 				text.maxVisibleCharacters += 1;
-				yield return PolyWare.Utils.Yielders.WaitForSeconds(speedUp ? PolyWare.Core.Constants.dialogueSkipMultiplier : PolyWare.Core.Constants.dialogueCharacterDelay);
+				yield return Utils.Yielders.WaitForSeconds(speedUp ? Instance.Constants.dialogueSkipMultiplier : Instance.Constants.dialogueCharacterDelay);
 			}
 		}
 	}

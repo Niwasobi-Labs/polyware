@@ -1,4 +1,5 @@
 using System;
+using PolyWare.Debug;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -54,7 +55,7 @@ namespace PolyWare.Input {
 			playerInput.onControlsChanged += OnControlsChanged;
 			OnControlsChanged(playerInput);
 
-			OnRebindStarted += (action, index) => Debug.Logger.Message($"Rebind of ({action} : {index}) Started...");
+			OnRebindStarted += (action, index) => Log.Message($"Rebind of ({action} : {index}) Started...");
 		}
 
 		private void OnControlsChanged(PlayerInput input) {
@@ -84,7 +85,7 @@ namespace PolyWare.Input {
 							break;
 						}
 
-						Debug.Logger.Error("Unknown gamepad found, setting default gamepad platform");
+						Log.Error("Unknown gamepad found, setting default gamepad platform");
 						currentPlatform = Platform.Xbox;
 					}
 
@@ -100,7 +101,7 @@ namespace PolyWare.Input {
 
 					break;
 				default:
-					Debug.Logger.Error($"Invalid Control Scheme: {input.currentControlScheme}");
+					Log.Error($"Invalid Control Scheme: {input.currentControlScheme}");
 					break;
 			}
 
@@ -120,7 +121,7 @@ namespace PolyWare.Input {
 					ActionMaps.UI.Enable();
 					break;
 				default:
-					Debug.Logger.Error("Invalid Action Map provided");
+					Log.Error("Invalid Action Map provided");
 					break;
 			}
 		}

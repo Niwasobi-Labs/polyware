@@ -1,3 +1,4 @@
+using PolyWare.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -22,7 +23,7 @@ namespace PolyWare.Input {
 		public bool IsTryingToJump { get; private set; }
 
 		public void Initialize() {
-			Core.Input.ActionMaps.Player.SetCallbacks(this);
+			Instance.Input.ActionMaps.Player.SetCallbacks(this);
 		}
 		
 		public void OnActiveAim(InputAction.CallbackContext context) {

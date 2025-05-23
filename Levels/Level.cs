@@ -1,6 +1,6 @@
-using PolyWare.Telemetry;
+using PolyWare.Analytics.Telemetry;
+using PolyWare.Core;
 using PolyWare.Timers;
-using PolyWare.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -26,7 +26,7 @@ namespace PolyWare.Levels {
 		protected abstract void OnResetLevel();
 
 		public void StartLevel() {
-			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelStart(levelName));
+			Instance.Telemetry.LogEvent(new LevelTelemetryEvents.LevelStart(levelName));
 
 			OnStartLevel();
 
@@ -46,7 +46,7 @@ namespace PolyWare.Levels {
 		public void LevelComplete() {
 			levelTimer.Stop();
 
-			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelComplete(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
+			Instance.Telemetry.LogEvent(new LevelTelemetryEvents.LevelComplete(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
 			
 			OnCompleteLevel();
 		}
@@ -56,7 +56,7 @@ namespace PolyWare.Levels {
 			
 			levelTimer.Stop();
 			
-			Core.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
+			Instance.Telemetry.LogEvent(new LevelTelemetryEvents.LevelReset(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
 
 			OnResetLevel();
 

@@ -19,7 +19,7 @@ namespace PolyWare.AssetManagement {
 					collection.Initialize();
 				}
 				catch (Exception e) {
-					Debug.Logger.Error(e.Message);
+					Debug.Log.Error(e.Message);
 					throw;
 				}
 		}

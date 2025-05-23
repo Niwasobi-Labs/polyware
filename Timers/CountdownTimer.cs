@@ -1,5 +1,4 @@
 using System;
-using UnityEngine.UIElements;
 
 namespace PolyWare.Timers {
 	public class CountdownTimer : Timer {

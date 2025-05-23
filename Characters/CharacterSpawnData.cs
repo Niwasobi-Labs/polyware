@@ -3,7 +3,7 @@ using PolyWare.Entities;
 
 namespace PolyWare.Characters {
 	[Serializable]
-	public abstract class CharacterSpawnData : SpawnData {
+	public abstract class CharacterOverrideData : EntityOverrideData {
 		
 	}
 }

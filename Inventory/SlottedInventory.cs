@@ -1,7 +1,8 @@
 using System.Linq;
 using PolyWare.Debug;
+using PolyWare.Items;
 
-namespace PolyWare.Items {
+namespace PolyWare.Inventory {
 	public class SlottedInventory<T> : IInventory where T : Item {
 		
 		protected readonly T[] slots;
@@ -36,7 +37,7 @@ namespace PolyWare.Items {
 		
 		public virtual int AddItem(IItem item) {
 			if (item is not T) {
-				Logger.Error($"Inventory doesnt support {item.GetType()}");
+				Log.Error($"Inventory doesnt support {item.GetType()}");
 				return (int)IInventory.InventoryError.InvalidItem;
 			}
 

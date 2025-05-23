@@ -1,4 +1,5 @@
-using PolyWare.AssetManagement.Registries;
+using PolyWare.Core;
+using PolyWare.Debug;
 using PolyWare.Input;
 using UnityEngine;
 
@@ -48,7 +49,7 @@ namespace PolyWare.UI {
 		private void ChangeToMouseNavigation() {
 			if (IsMouseActive) return;				
 			
-			Core.EventSystem.SetSelectedGameObject(null);
+			Instance.EventSystem.SetSelectedGameObject(null);
 			IsMouseActive = true;
 				
 			Cursor.visible = true;
@@ -67,7 +68,7 @@ namespace PolyWare.UI {
 			T screen = screenStack.CheckForCachedScreen(typeof(T)) as T ?? screenRegistry.GetPrefab(typeof(T), screenSpace.gameObject.transform) as T;
 
 			if (!screen) {
-				Debug.Logger.Error($"Couldn't find screen of type: {typeof(T)}");
+				Log.Error($"Couldn't find screen of type: {typeof(T)}");
 				return null;
 			}
 			

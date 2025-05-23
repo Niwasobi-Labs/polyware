@@ -1,5 +1,5 @@
 using PolyWare.Entities;
-using PolyWare.Interactions;
+using PolyWare.Interaction;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

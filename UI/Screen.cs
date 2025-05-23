@@ -1,3 +1,4 @@
+using PolyWare.Core;
 using PolyWare.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,11 +17,11 @@ namespace PolyWare.UI {
 		public bool Persistant => persistant;
 
 		private void EnableInputEvents() {
-			Core.Input.ActionMaps.UI.Cancel.performed += OnCancel;
+			Instance.Input.ActionMaps.UI.Cancel.performed += OnCancel;
 		}
 
 		private void DisableInputEvents() {
-			Core.Input.ActionMaps.UI.Cancel.performed -= OnCancel;
+			Instance.Input.ActionMaps.UI.Cancel.performed -= OnCancel;
 		}
 
 		protected virtual void OnCancel(InputAction.CallbackContext context) {
@@ -34,7 +35,7 @@ namespace PolyWare.UI {
 			if (!focusOnOpen) return;
 				
 			EnableInputEvents();
-			Core.Input.ChangeToActionMap(InputManager.ActionMap.UI);
+			Instance.Input.ChangeToActionMap(InputManager.ActionMap.UI);
 			Focus();
 		}
 
@@ -47,19 +48,19 @@ namespace PolyWare.UI {
 		}
 
 		public void Focus() {
-			if (Core.UI.IsMouseActive) return;
+			if (Instance.UI.IsMouseActive) return;
 
 			if (lastSelectedObject) {
-				Core.EventSystem.SetSelectedGameObject(lastSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : lastSelectedObject.gameObject);
+				Instance.EventSystem.SetSelectedGameObject(lastSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : lastSelectedObject.gameObject);
 				lastSelectedObject = null;
 			}
 			else if (defaultSelectedObject) {
-				Core.EventSystem.SetSelectedGameObject(defaultSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : defaultSelectedObject);
+				Instance.EventSystem.SetSelectedGameObject(defaultSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : defaultSelectedObject);
 			}
 		}
 
 		private void RememberCurrentlySelectedObject() {
-			lastSelectedObject = Core.EventSystem.currentSelectedGameObject;
+			lastSelectedObject = Instance.EventSystem.currentSelectedGameObject;
 		}
 	}
 }

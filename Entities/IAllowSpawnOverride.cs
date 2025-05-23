@@ -1,5 +1,5 @@
 namespace PolyWare.Entities {
 	public interface IAllowSpawnOverride {
-		public void OnSpawn(SpawnData spawnData);
+		public void OnSpawnOverride(EntityOverrideData entityOverrideData);
 	}
 }

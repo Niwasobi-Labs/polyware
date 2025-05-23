@@ -1,14 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
+using PolyWare.Utils;
 using PolyWare.AssetManagement;
 using PolyWare.Audio;
-using PolyWare.Game;
 using PolyWare.Input;
 using PolyWare.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PolyWare {
+namespace PolyWare.Core {
 	public abstract class Bootstrapper : MonoBehaviour {
 		[Header("PolyWare")]
 		// scriptable systems
@@ -29,11 +28,11 @@ namespace PolyWare {
 			DontDestroyOnLoad(UI = Instantiate(UI));
 			DontDestroyOnLoad(GameManager = Instantiate(GameManager));
 			
-			Core.Setup(this);
+			Instance.Setup(this);
 			
 			OnAwake();
 			
-			Core.Initialize();
+			Instance.Initialize();
 		}
 
 		protected abstract void OnAwake();

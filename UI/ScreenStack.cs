@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PolyWare.Debug;
 
 namespace PolyWare.UI {
 	public class ScreenStack {
@@ -37,7 +38,7 @@ namespace PolyWare.UI {
 		}
 
 		private void CacheScreen(Screen uIScreen) {
-			if (!screenCache.TryAdd(uIScreen.GetType(), uIScreen) && uIScreen != screenCache[uIScreen.GetType()]) Debug.Logger.Error("Persistant screen already exists, can't cache: " + uIScreen.gameObject.name);
+			if (!screenCache.TryAdd(uIScreen.GetType(), uIScreen) && uIScreen != screenCache[uIScreen.GetType()]) Log.Error("Persistant screen already exists, can't cache: " + uIScreen.gameObject.name);
 		}
 	}
 }

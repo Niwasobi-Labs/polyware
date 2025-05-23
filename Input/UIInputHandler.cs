@@ -1,4 +1,4 @@
-using PolyWare.Input;
+using PolyWare.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -10,7 +10,7 @@ namespace PolyWare.Input {
 		public UnityAction OnMouseNavigation = delegate { };
 		
 		public void Initialize() {
-			Core.Input.ActionMaps.UI.SetCallbacks(this);
+			Instance.Input.ActionMaps.UI.SetCallbacks(this);
 		}
 		
 		public void OnNavigate(InputAction.CallbackContext context) {
@@ -34,7 +34,7 @@ namespace PolyWare.Input {
 		}
 		
 		public void OnMouseDelta(InputAction.CallbackContext context) {
-			var mouseDelta = Core.Input.ActionMaps.UI.MouseDelta.ReadValue<Vector2>();
+			var mouseDelta = Instance.Input.ActionMaps.UI.MouseDelta.ReadValue<Vector2>();
 			
 			if (mouseDelta.x > 0.01f || mouseDelta.y > 0.01f) OnMouseNavigation.Invoke();
 		}

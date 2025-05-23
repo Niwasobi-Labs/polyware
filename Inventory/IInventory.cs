@@ -1,4 +1,6 @@
-namespace PolyWare.Items {
+using PolyWare.Items;
+
+namespace PolyWare.Inventory {
 	public interface IInventory {
 		public enum InventoryError {
 			InvalidItem = -1,

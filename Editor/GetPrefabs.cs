@@ -1,7 +1,8 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using UnityEditor;
+using Log = PolyWare.Debug.Log;
 using UnityEngine;
+using UnityEditor;
 
 namespace PolyWare.Editor {
 	public class GetPrefabs : MonoBehaviour {
@@ -24,7 +25,7 @@ namespace PolyWare.Editor {
 				string name = component.name;
 
 				if (!allowDuplicates && foundNames.Contains(name)) {
-					Debug.Logger.Error($"Duplicate prefab with component '{typeof(T)}' found: {name}, skipping.");
+					Log.Error($"Duplicate prefab with component '{typeof(T)}' found: {name}, skipping.");
 					continue;
 				}
 
@@ -32,7 +33,7 @@ namespace PolyWare.Editor {
 				foundNames.Add(name);
 			}
 
-			Debug.Logger.Message($"Collected {result.Count} prefabs with component {typeof(T).Name} from selected folders.");
+			Log.Message($"Collected {result.Count} prefabs with component {typeof(T).Name} from selected folders.");
 			return result;
 		}
 
@@ -53,7 +54,7 @@ namespace PolyWare.Editor {
 				string name = asset.name;
 
 				if (!allowDuplicates && foundNames.Contains(name)) {
-					Debug.Logger.Error($"Duplicate ScriptableObject of type '{typeof(T)}' found: {name}, skipping.");
+					Log.Error($"Duplicate ScriptableObject of type '{typeof(T)}' found: {name}, skipping.");
 					continue;
 				}
 
@@ -61,7 +62,7 @@ namespace PolyWare.Editor {
 				foundNames.Add(name);
 			}
 
-			Debug.Logger.Message($"Collected {result.Count} ScriptableObjects of type {typeof(T).Name} from selected folders.");
+			Log.Message($"Collected {result.Count} ScriptableObjects of type {typeof(T).Name} from selected folders.");
 			return result;
 		}
 	}

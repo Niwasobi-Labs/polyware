@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
+using PolyWare.Debug;
 
 namespace PolyWare.Editor {
 	public static class TelemetryMenu {
@@ -20,7 +21,7 @@ namespace PolyWare.Editor {
 			string telemetryDir = GetTelemetryDirectory();
 
 			if (Directory.Exists(telemetryDir)) EditorUtility.RevealInFinder(telemetryDir);
-			else Debug.Logger.Error($"Telemetry directory does not exist: {telemetryDir}");
+			else Log.Error($"Telemetry directory does not exist: {telemetryDir}");
 		}
 	}
 }
