@@ -81,7 +81,11 @@ namespace PolyWare.Inventory {
 
 			for (int i = 0; i < slots.Length; i++) {
 				newSlot = (newSlot + 1) % slots.Length;
+				
+				if (newSlot == activeSlot) return false;
+				
 				if (!slots[newSlot]) continue;
+				
 				activeSlot = newSlot;
 				return true;
 			}
@@ -94,7 +98,10 @@ namespace PolyWare.Inventory {
 
 			for (int i = 0; i < slots.Length; i++) {
 				newSlot = (newSlot - 1 + slots.Length) % slots.Length;
+				if (newSlot == activeSlot) return false;
+				
 				if (!slots[newSlot]) continue;
+				
 				activeSlot = newSlot;
 				return true;
 			}
