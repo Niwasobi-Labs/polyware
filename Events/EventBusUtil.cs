@@ -59,7 +59,7 @@ namespace PolyWare.Events {
             foreach (var eventType in EventTypes) {
                 var busType = typedef.MakeGenericType(eventType);
                 eventBusTypes.Add(busType);
-                Debug.Log.Message($"Initialized EventBus<{eventType.Name}>");
+                // Debug.Log.Message($"Initialized EventBus<{eventType.Name}>");
             }
 
             return eventBusTypes;
@@ -69,7 +69,7 @@ namespace PolyWare.Events {
         /// Clears (removes all listeners from) all event buses in the application.
         /// </summary>
         public static void ClearAllBuses() {
-            Debug.Log.Message("Clearing all buses...");
+            // Debug.Log.Message("Clearing all buses...");
             for (int i = 0; i < EventBusTypes.Count; i++) {
                 var busType = EventBusTypes[i];
                 var clearMethod = busType.GetMethod("Clear", BindingFlags.Static | BindingFlags.NonPublic);

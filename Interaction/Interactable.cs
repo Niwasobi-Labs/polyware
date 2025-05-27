@@ -1,5 +1,6 @@
 using System;
 using PolyWare.Characters;
+using PolyWare.Events;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -12,9 +13,6 @@ namespace PolyWare.Interaction {
 
 		public UnityEvent OnInteraction;
 		
-		public static Action<string> OnPlayerEntered = delegate { };
-		public static Action OnPlayerExited = delegate { };
-
 		private bool isPromptActive;
 
 		private void OnDisable() {
@@ -42,12 +40,12 @@ namespace PolyWare.Interaction {
 		}
 
 		private void ShowPrompt() {
-			OnPlayerEntered.Invoke(GetPrompt());
+			EventBus<PlayerInteractionEvent>.Raise(new PlayerInteractionEvent(true, GetPrompt()));
 			isPromptActive = true;
 		}
 
 		private void HidePrompt() {
-			OnPlayerExited.Invoke();
+			EventBus<PlayerInteractionEvent>.Raise(new PlayerInteractionEvent(false, GetPrompt()));
 			isPromptActive = false;
 		}
 	}

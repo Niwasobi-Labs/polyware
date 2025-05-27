@@ -20,7 +20,7 @@ namespace PolyWare.Events {
         }
 
         static void Clear() {
-            Debug.Log.Message($"Clearing {typeof(T).Name} bindings");
+            // Debug.Log.Message($"Clearing {typeof(T).Name} bindings");
             bindings.Clear();
         }
     }
