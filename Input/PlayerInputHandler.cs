@@ -12,6 +12,7 @@ namespace PolyWare.Input {
 		public UnityAction Reload = delegate { };
 		public UnityAction Switch = delegate { };
 		public UnityAction<bool> Use = delegate { };
+		public UnityAction<bool> Jump = delegate { };
 
 		public Vector2 MoveDirection { get; private set; }
 		public Vector2 LookDirection { get; private set; }
@@ -40,7 +41,14 @@ namespace PolyWare.Input {
 		}
 
 		public void OnJump(InputAction.CallbackContext context) {
-			IsTryingToJump = context.ReadValueAsButton();
+			switch (context.phase) {
+				case InputActionPhase.Started:
+					Jump.Invoke(true);
+					break;
+				case InputActionPhase.Canceled:
+					Jump.Invoke(false);
+					break;
+			}
 		}
 
 		public void OnLook(InputAction.CallbackContext context) {
