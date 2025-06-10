@@ -4,11 +4,12 @@ using UnityEngine;
 
 namespace PolyWare.Shooter.AimAssist {
 	public class ConeAimAssist : AimAssistStrategy {
+		protected readonly Collider[] aimAssistResults = new Collider[10];
 		
 		public ConeAimAssist(AimAssistInfo aimAssistData, Transform spawnPoint) : base(aimAssistData, spawnPoint) { }
 		
 		public override void RunAimAssist() {
-			Physics.OverlapSphereNonAlloc(spawnPoint.position + spawnPoint.forward * (aimAssistInfo.Range * 0.5f), aimAssistInfo.Radius, aimAssistResults, enemyLayerMask);
+			Physics.OverlapSphereNonAlloc(spawnPoint.position, aimAssistInfo.Range, aimAssistResults, enemyLayerMask);
 			float maxAngle = Mathf.Atan2(aimAssistInfo.Radius, aimAssistInfo.Range) * Mathf.Rad2Deg;
 			
 			float closestAngle = float.MaxValue;
@@ -16,14 +17,21 @@ namespace PolyWare.Shooter.AimAssist {
 			RaycastHit bestHit = default;
 			
 			foreach (Collider col in aimAssistResults.Where(col => col)) {
-				Vector3 toTarget = col.ClosestPoint(spawnPoint.position) - spawnPoint.position;
-				float angle = Vector3.Angle(spawnPoint.forward, toTarget);
-			
-				if (!(angle <= maxAngle)) continue;
-				if (!Physics.Raycast(spawnPoint.position, toTarget.normalized, out RaycastHit tempHit, aimAssistInfo.Range, enemyLayerMask)) continue;
-				if (tempHit.collider != col || !(angle < closestAngle)) continue;
+				Vector3 targetDirection = (col.ClosestPoint(spawnPoint.position) - spawnPoint.position).normalized;
+
+				Vector3 flatToTarget = Vector3.ProjectOnPlane(targetDirection, Vector3.up);
+
+				// Horizontal angle (XZ plane)
+				float horizontalAngle = Vector3.Angle(spawnPoint.forward, flatToTarget);
+				if (horizontalAngle > maxAngle) continue;
 				
-				closestAngle = angle;
+				// Vertical angle (Y component relative to horizontal distance)
+				if (!CheckVerticalAngle(targetDirection)) continue;
+
+				if (!Physics.Raycast(spawnPoint.position, targetDirection, out RaycastHit tempHit, aimAssistInfo.Range, enemyLayerMask)) continue;
+				if (horizontalAngle >= closestAngle) continue;
+				
+				closestAngle = horizontalAngle;
 				bestTarget = col;
 				bestHit = tempHit;
 			}
@@ -39,9 +47,11 @@ namespace PolyWare.Shooter.AimAssist {
 		public override void DrawGizmos() {
 			Vector3 origin = spawnPoint.position;
 
+			Gizmos.DrawWireSphere(spawnPoint.position, aimAssistInfo.Range);
+			
 			if (aimAssistTarget) {
-				GizmoHelper.DrawLine(origin, aimAssistHit.point, Color.red, 3);
-				GizmoHelper.DrawLine(origin, origin + CalculateDirectionToTarget() * aimAssistInfo.Range, Color.green, 3);
+				GizmoHelper.DrawLine(origin, aimAssistHit.collider.bounds.center, Color.red, 3);
+				GizmoHelper.DrawLine(origin, origin + CalculateAdjustedDirectionToTarget() * aimAssistInfo.Range, Color.green, 3);
 			}
 			
 			GizmoHelper.DrawCone(origin, spawnPoint.forward, spawnPoint.up, aimAssistInfo.Radius, aimAssistInfo.Range, GizmoHelper.ConeStyle.Line, Color.black, 3);
