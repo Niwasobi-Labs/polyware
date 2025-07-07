@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PolyWare.Items {
 	public abstract class Item : Entity, IItem {
-		[SerializeField] [Required] protected ProximityDetector interaction;
+		[SerializeField] [Required] protected ProximityTarget interaction;
 		public abstract ItemData Data { get; }
 		
 		protected abstract void OnPickup(IProximityUser user);

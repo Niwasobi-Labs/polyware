@@ -12,7 +12,7 @@ namespace PolyWare.Core {
 		public static Collector Collector { get; private set; }
 		public static EventSystem EventSystem { get; private set; }
 		public static InputManager Input { get; private set; }
-		public static SfxManager SfxManager { get; private set; }
+		public static SFXManager SfxManager { get; private set; }
 		public static UIManager UI { get; private set; }
 		public static GameManager Game { get; private set; }
 		public static TelemetryManager Telemetry { get; private set; }

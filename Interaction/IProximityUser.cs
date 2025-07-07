@@ -3,7 +3,7 @@ using UnityEngine;
 namespace PolyWare.Interaction {
 	public interface IProximityUser {
 		public GameObject GetUserObject();
-		public void NotifyTargetInRange(IProximityTarget target);
-		public void NotifyTargetOutOfRange(IProximityTarget target);
+		public void OnTargetEnteredRange(IProximityTarget target);
+		public void OnTargetExitedRange(IProximityTarget target);
 	}
 }

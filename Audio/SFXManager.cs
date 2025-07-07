@@ -5,7 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace PolyWare.Audio {
-	public class SfxManager : MonoBehaviour {
+	public class SFXManager : MonoBehaviour {
 		[SerializeField] private AudioSource sFXPrefab;
 		public bool IsPaused { get; private set; }
 		private readonly Queue<AudioSource> audioSourcePool = new();

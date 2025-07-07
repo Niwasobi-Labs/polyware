@@ -17,7 +17,7 @@ namespace PolyWare.Core {
 		// prefabs systems
 		public EventSystem EventSystem;
 		public InputManager Input;
-		public SfxManager SfxManager;
+		public SFXManager SfxManager;
 		public UIManager UI;
 		public GameManager GameManager;
 		

@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace PolyWare.Interaction {
-	public class ProximityDetector : MonoBehaviour, IProximityTarget {
+	public class ProximityTarget : MonoBehaviour, IProximityTarget {
 		[Header("ProximityDetector")] [SerializeField]
 		protected UnityEvent onTriggerEnterEvents;
 
@@ -18,14 +18,14 @@ namespace PolyWare.Interaction {
 		private void OnTriggerEnter(Collider other) {
 			if (!other.TryGetComponent(out IProximityUser user)) return;
 			
-			user.NotifyTargetInRange(this);
+			user.OnTargetEnteredRange(this);
 			OnProximityUserEnter(user);
 		}
 
 		private void OnTriggerExit(Collider other) {
 			if (!other.TryGetComponent(out IProximityUser user)) return;
 			
-			user.NotifyTargetOutOfRange(this);
+			user.OnTargetExitedRange(this);
 			OnProximityUserExit(user);
 		}
 

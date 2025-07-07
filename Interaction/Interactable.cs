@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 namespace PolyWare.Interaction {
-	public class Interactable : ProximityDetector, IInteractable {
+	public class Interactable : ProximityTarget, IInteractable {
 		[Title("Interaction")] [SerializeField] protected bool usePrompt;
 
 		[SerializeField] protected string prompt;

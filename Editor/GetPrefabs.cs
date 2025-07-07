@@ -1,14 +1,21 @@
 #if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using Log = PolyWare.Debug.Log;
 using UnityEngine;
 using UnityEditor;
 
 namespace PolyWare.Editor {
-	public class GetPrefabs : MonoBehaviour {
+	[Serializable]
+	public enum PrefabSearchMode {
+		Global,
+		Local
+	}
+	
+	public static class GetPrefabs {
 		// ReSharper disable Unity.PerformanceAnalysis
-		public static List<T> GetAllPrefabsWithComponent<T>(bool allowDuplicates) where T : Component {
-			string[] searchFolders = { "Assets/_Project/Prefabs" };
+		public static List<T> GetAllPrefabsWithComponent<T>(bool allowDuplicates, PrefabSearchMode searchMode, string startingPath) where T : Component {
+			string[] searchFolders = searchMode == PrefabSearchMode.Global ? new[] { "Assets/_Project/Prefabs" } : new[] { startingPath };
 
 			string[] prefabGUIDs = AssetDatabase.FindAssets("t:Prefab", searchFolders);
 
@@ -18,6 +25,7 @@ namespace PolyWare.Editor {
 			foreach (string guid in prefabGUIDs) {
 				string path = AssetDatabase.GUIDToAssetPath(guid);
 				var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
+				
 				if (!prefab) continue;
 
 				if (!prefab.TryGetComponent(out T component)) continue;
@@ -38,8 +46,8 @@ namespace PolyWare.Editor {
 		}
 
 		// ReSharper disable Unity.PerformanceAnalysis
-		public static List<T> GetAllScriptableObjectsOfType<T>(bool allowDuplicates) where T : ScriptableObject {
-			string[] searchFolders = { "Assets/_Project/Prefabs" };
+		public static List<T> GetAllScriptableObjectsOfType<T>(bool allowDuplicates, PrefabSearchMode searchMode, string startingPath) where T : ScriptableObject {
+			string[] searchFolders = searchMode == PrefabSearchMode.Global ? new[] { "Assets/_Project/Prefabs" } : new[] { startingPath };
 
 			string[] guids = AssetDatabase.FindAssets($"t:{typeof(T).Name}", searchFolders);
 
