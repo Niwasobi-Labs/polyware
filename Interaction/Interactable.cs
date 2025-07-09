@@ -24,7 +24,7 @@ namespace PolyWare.Interaction {
 		}
 
 		protected virtual string GetPrompt() {
-			return prompt != string.Empty ? prompt : $"Interact {GetGameObject().name}";
+			return prompt != string.Empty ? prompt : $"Interact";
 		}
 
 		protected override void OnProximityUserEnter(IProximityUser user) {
