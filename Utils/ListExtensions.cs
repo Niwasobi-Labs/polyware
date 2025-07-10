@@ -9,5 +9,13 @@ namespace PolyWare.Utils {
 				(list[i], list[j]) = (list[j], list[i]);
 			}
 		}
+		
+		public static bool IsFull<T>(this IList<T> list) {
+			if (list is List<T> concreteList) {
+				return concreteList.Count == concreteList.Capacity;
+			}
+			
+			return false;
+		}
 	}
 }
