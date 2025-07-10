@@ -1,12 +1,12 @@
 using PolyWare.Core;
 using PolyWare.Debug;
-using PolyWare.Input;
+using PolyWare.Events;
 using UnityEngine;
+using Cursor = UnityEngine.Cursor;
 
 namespace PolyWare.UI {
 	public abstract class UIManager : MonoBehaviour {
 		[Header("UI System")]
-		[SerializeField] protected UIInputHandler input;
 		[SerializeField] protected ScreenRegistry screenRegistry;
 
 		[SerializeField] private GameObject screenSpacePrefab;
@@ -17,16 +17,21 @@ namespace PolyWare.UI {
 		private Canvas screenSpace;
 		private Canvas worldSpace;
 
+		private EventBinding<DigitalNavigationEvent> digitalNavEventHandler;
+		private EventBinding<MouseNavigationEvent> mouseNavEventHandler;
 		public bool IsMouseActive { get; private set; }
 
 		private void OnEnable() {
-			input.OnDigitalNavigation += ChangeToControllerNavigation;
-			input.OnMouseNavigation += ChangeToMouseNavigation;
+			digitalNavEventHandler = new EventBinding<DigitalNavigationEvent>(ChangeToControllerNavigation);
+			EventBus<DigitalNavigationEvent>.Subscribe(digitalNavEventHandler);
+			
+			mouseNavEventHandler = new EventBinding<MouseNavigationEvent>(ChangeToMouseNavigation);
+			EventBus<MouseNavigationEvent>.Subscribe(mouseNavEventHandler);
 		}
 		
 		private void OnDisable() {
-			input.OnDigitalNavigation -= ChangeToControllerNavigation;
-			input.OnMouseNavigation -= ChangeToMouseNavigation;
+			EventBus<DigitalNavigationEvent>.Unsubscribe(digitalNavEventHandler);
+			EventBus<MouseNavigationEvent>.Unsubscribe(mouseNavEventHandler);
 		}
 
 		public void Initialize() {
@@ -39,7 +44,6 @@ namespace PolyWare.UI {
 			DontDestroyOnLoad(worldSpace);
 
 			screenRegistry.Initialize();
-			input.Initialize();
 			
 			OnInitialize();
 		}

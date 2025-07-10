@@ -6,13 +6,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace PolyWare.Input {
-	public class InputManager : MonoBehaviour {
-		public enum ActionMap {
-			None,
-			Player,
-			UI
-		}
-
+	public abstract class InputManager : MonoBehaviour {
+		
 		// platforms
 		public enum Platform {
 			None,
@@ -36,19 +31,13 @@ namespace PolyWare.Input {
 
 		[FormerlySerializedAs("CurrentPlatform")]
 		[SerializeField] private Platform currentPlatform;
-
-		[HideInInspector] public PolyWare_InputActions ActionMaps;
-
+		
 		// rebinding
 		public event Action<InputAction, int> OnRebindStarted;
 		public event Action OnRebindComplete;
 		public event Action OnRebindCancel;
 		public event Action OnPlatformChange;
 		
-		private void Awake() {
-			ActionMaps = new PolyWare_InputActions();
-		}
-
 		public void Initialize() {
 			DontDestroyOnLoad(gameObject);
 
@@ -108,27 +97,11 @@ namespace PolyWare.Input {
 			OnPlatformChange?.Invoke();
 		}
 
-		public void ChangeToActionMap(ActionMap actionMap) {
-			foreach (InputActionMap map in ActionMaps.asset.actionMaps) map.Disable();
-
-			switch (actionMap) {
-				case ActionMap.None:
-					break;
-				case ActionMap.Player:
-					ActionMaps.Player.Enable();
-					break;
-				case ActionMap.UI:
-					ActionMaps.UI.Enable();
-					break;
-				default:
-					Log.Error("Invalid Action Map provided");
-					break;
-			}
-		}
+		public abstract void ChangeToActionMap(int actionMap);
 
 		# region Control Rebinding
-		public void StartRebind(string actionName, int bindingIndex, TMP_Text statusText, bool excludeMouse) {
-			InputAction action = ActionMaps.asset.FindAction(actionName);
+		public void StartRebind(IInputActionCollection2 inputActions, string actionName, int bindingIndex, TMP_Text statusText, bool excludeMouse) {
+			InputAction action = inputActions.FindAction(actionName);
 
 			if (action.bindings[bindingIndex].isComposite) {
 				int firstPartIndex = bindingIndex + 1;
@@ -176,8 +149,8 @@ namespace PolyWare.Input {
 			rebind.Start();
 		}
 
-		public string GetBindingName(string actionName, int bindingIndex) {
-			InputAction action = ActionMaps.asset.FindAction(actionName);
+		public string GetBindingName(IInputActionCollection2 inputActions, string actionName, int bindingIndex) {
+			InputAction action = inputActions.FindAction(actionName);
 			return action.GetBindingDisplayString(bindingIndex);
 		}
 
@@ -185,16 +158,16 @@ namespace PolyWare.Input {
 			for (int i = 0; i < action.bindings.Count; i++) PlayerPrefs.SetString(action.actionMap + action.name + i, action.bindings[i].overridePath);
 		}
 
-		public void LoadBindingOverride(string actionName) {
-			InputAction action = ActionMaps.asset.FindAction(actionName);
+		public void LoadBindingOverride(IInputActionCollection2 inputActions, string actionName) {
+			InputAction action = inputActions.FindAction(actionName);
 
 			for (int i = 0; i < action.bindings.Count; i++)
 				if (!string.IsNullOrEmpty(PlayerPrefs.GetString(action.actionMap + action.name + i)))
 					action.ApplyBindingOverride(i, PlayerPrefs.GetString(action.actionMap + action.name + i));
 		}
 
-		public void ResetBinding(string actionName, int bindingIndex) {
-			InputAction action = ActionMaps.asset.FindAction(actionName);
+		public void ResetBinding(IInputActionCollection2 inputActions,string actionName, int bindingIndex) {
+			InputAction action = inputActions.FindAction(actionName);
 
 			if (action.bindings[bindingIndex].isComposite)
 				for (int i = bindingIndex + 1; i < action.bindings.Count && action.bindings[i].isPartOfComposite; i++)

@@ -1,4 +1,6 @@
-﻿namespace PolyWare.Events {
+﻿using UnityEngine;
+
+namespace PolyWare.Events {
 	public interface IEvent { }
 	
 	public struct PlayerInteractionEvent : IEvent {

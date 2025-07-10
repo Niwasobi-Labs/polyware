@@ -1,4 +1,5 @@
 using PolyWare.Core;
+using PolyWare.Events;
 using PolyWare.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -16,27 +17,31 @@ namespace PolyWare.UI {
 		public bool IsOpen { get; private set; }
 		public bool Persistant => persistant;
 
+		private EventBinding<CancelEvent> cancelEventHandler;
+
 		private void EnableInputEvents() {
-			Instance.Input.ActionMaps.UI.Cancel.performed += OnCancel;
+			cancelEventHandler = new EventBinding<CancelEvent>(OnCancel);
+			EventBus<CancelEvent>.Subscribe(cancelEventHandler);
 		}
 
 		private void DisableInputEvents() {
-			Instance.Input.ActionMaps.UI.Cancel.performed -= OnCancel;
+			EventBus<CancelEvent>.Unsubscribe(cancelEventHandler);
 		}
 
-		protected virtual void OnCancel(InputAction.CallbackContext context) {
+		protected virtual void OnCancel() {
 			Close();
 		}
 
-		public virtual void Open() {
+		public virtual bool Open() {
 			IsOpen = true;
 			gameObject.SetActive(true);
 				
-			if (!focusOnOpen) return;
+			if (!focusOnOpen) return false;
 				
 			EnableInputEvents();
-			Instance.Input.ChangeToActionMap(InputManager.ActionMap.UI);
+			// Instance.Input.ChangeToActionMap(InputManager.ActionMap.UI); // todo: send event to game that input needs to be changed to UI?
 			Focus();
+			return true;
 		}
 
 		public virtual void Close() {
