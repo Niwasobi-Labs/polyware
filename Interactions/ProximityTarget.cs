@@ -2,18 +2,12 @@ using PolyWare.Debug;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PolyWare.Interaction {
+namespace PolyWare.Interactions {
 	public class ProximityTarget : MonoBehaviour, IProximityTarget {
-		[Header("ProximityDetector")] [SerializeField]
-		protected UnityEvent onTriggerEnterEvents;
-
+		[Header("ProximityDetector")] 
+		[SerializeField] protected UnityEvent onTriggerEnterEvents;
 		[SerializeField] protected UnityEvent onTriggerExitEvents;
-
-		protected Collider MyCollider;
-
-		private void Awake() {
-			if (!GetComponent<Collider>()) Log.Error($"{name} is missing a collider for it's ProximityDetector");
-		}
+		[SerializeField] protected Collider MyCollider;
 
 		private void OnTriggerEnter(Collider other) {
 			if (!other.TryGetComponent(out IProximityUser user)) return;

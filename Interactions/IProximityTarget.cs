@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Interaction {
+namespace PolyWare.Interactions {
 	public interface IProximityTarget {
 		public GameObject GetGameObject();
 	}

@@ -5,13 +5,13 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PolyWare.Interaction {
-	public class Interactable : ProximityTarget, IInteractable {
+namespace PolyWare.Interactions {
+	public class Interaction : ProximityTarget, IInteractable {
 		[Title("Interaction")] [SerializeField] protected bool usePrompt;
 
 		[SerializeField] protected string prompt;
 
-		public UnityEvent OnInteraction;
+		public UnityEvent<IProximityUser> OnInteraction;
 		
 		private bool isPromptActive;
 
@@ -20,7 +20,7 @@ namespace PolyWare.Interaction {
 		}
 
 		public virtual void Interact(IProximityUser user) {
-			OnInteraction.Invoke();
+			OnInteraction.Invoke(user);
 		}
 
 		protected virtual string GetPrompt() {

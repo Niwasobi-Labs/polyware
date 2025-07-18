@@ -1,7 +1,13 @@
 using UnityEngine;
 
 namespace PolyWare.Shooter.AimAssist {
-	public abstract class AimAssistStrategy : IAimAssistStrategy {
+	public enum AimAssistMode {
+		None,
+		SphereCast,
+		ConeCast
+	}
+	
+	public abstract class AimAssistStrategy {
 		public Collider GetTarget => aimAssistTarget;
 		
 		protected readonly int enemyLayerMask;
@@ -11,6 +17,14 @@ namespace PolyWare.Shooter.AimAssist {
 		protected readonly Transform spawnPoint;
 		protected readonly AimAssistInfo aimAssistInfo;
 
+		public static AimAssistStrategy Create(AimAssistInfo aimAssist, Transform aimAssistSpawnPoint) {
+			return aimAssist.Mode switch {
+				AimAssistMode.SphereCast => new SphereCastAimAssist(aimAssist, aimAssistSpawnPoint),
+				AimAssistMode.ConeCast => new ConeAimAssist(aimAssist, aimAssistSpawnPoint),
+				_ => new NoAimAssist(aimAssist, aimAssistSpawnPoint)
+			};
+		}
+		
 		protected AimAssistStrategy(AimAssistInfo aimAssistData, Transform spawnPoint) {
 			enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
 			aimAssistInfo = aimAssistData;
