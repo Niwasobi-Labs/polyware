@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Entities {
+namespace PolyWare.Spawning {
 	public interface ISpawnPointStrategy {
 		public Transform NextSpawnPoint();
 	}

@@ -1,10 +1,12 @@
 using UnityEngine;
 
-namespace PolyWare.Entities {
+namespace PolyWare.Spawning {
 	public abstract class EntitySpawnManager : MonoBehaviour {
 		[SerializeField] private bool spawnOnStart = false;
 		[SerializeField] protected SpawnPointStrategyType spawnPointStrategyType = SpawnPointStrategyType.Linear;
 		[SerializeField] protected Transform[] spawnPoints;
+		[SerializeField] protected uint spawnCount;
+		[SerializeField] protected bool random;
 		
 		protected ISpawnPointStrategy spawnPointStrategy;
 

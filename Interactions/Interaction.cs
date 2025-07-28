@@ -1,6 +1,3 @@
-using System;
-using PolyWare.Characters;
-using PolyWare.Events;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -15,38 +12,10 @@ namespace PolyWare.Interactions {
 		
 		private bool isPromptActive;
 
-		private void OnDisable() {
-			if (isPromptActive) HidePrompt();
-		}
-
+		public string InteractionPrompt => prompt != string.Empty ? prompt : $"Interact";
+		
 		public virtual void Interact(IProximityUser user) {
 			OnInteraction.Invoke(user);
-		}
-
-		protected virtual string GetPrompt() {
-			return prompt != string.Empty ? prompt : $"Interact";
-		}
-
-		protected override void OnProximityUserEnter(IProximityUser user) {
-			base.OnProximityUserEnter(user);
-
-			if (user.GetUserObject().TryGetComponent(out ICharacter character) && character.IsPlayer) ShowPrompt();
-		}
-
-		protected override void OnProximityUserExit(IProximityUser user) {
-			base.OnProximityUserExit(user);
-
-			if (user.GetUserObject().TryGetComponent(out ICharacter character) && character.IsPlayer) HidePrompt();
-		}
-
-		private void ShowPrompt() {
-			EventBus<PlayerInteractionEvent>.Raise(new PlayerInteractionEvent(true, GetPrompt()));
-			isPromptActive = true;
-		}
-
-		private void HidePrompt() {
-			EventBus<PlayerInteractionEvent>.Raise(new PlayerInteractionEvent(false, GetPrompt()));
-			isPromptActive = false;
 		}
 	}
 }

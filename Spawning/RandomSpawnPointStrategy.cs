@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using PolyWare.Utils;
 using UnityEngine;
 
-namespace PolyWare.Entities {
+namespace PolyWare.Spawning {
 	public class RandomSpawnPointStrategy : ISpawnPointStrategy {
 		private readonly Transform[] spawnPoints;
 		private List<Transform> unusedSpawnPoints;

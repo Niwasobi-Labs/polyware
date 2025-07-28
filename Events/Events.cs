@@ -3,11 +3,11 @@
 namespace PolyWare.Events {
 	public interface IEvent { }
 	
-	public struct PlayerInteractionEvent : IEvent {
+	public struct PlayerNearbyInteractionEvent : IEvent {
 		public bool HasEntered;
 		public string Prompt;
 
-		public PlayerInteractionEvent(bool hasEntered, string prompt) {
+		public PlayerNearbyInteractionEvent(bool hasEntered, string prompt) {
 			HasEntered = hasEntered;
 			Prompt = prompt;
 		}

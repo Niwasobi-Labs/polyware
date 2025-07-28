@@ -1,5 +1,6 @@
 namespace PolyWare.Interactions {
 	public interface IInteractable {
 		public void Interact(IProximityUser user);
+		public string InteractionPrompt { get; }
 	}
 }
