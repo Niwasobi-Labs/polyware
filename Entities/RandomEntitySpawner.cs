@@ -1,15 +1,15 @@
 using UnityEngine;
 
 namespace PolyWare.Entities {
-	public class RandomEntitySpawner<TEntity, TData> : IEntitySpawner<TEntity> where TEntity : Entity where TData : IEntitySpawnData {
-		private readonly TData[] data;
+	public class RandomEntitySpawner<T, T2, T3> : IEntitySpawner<T> where T : IEntity where T2 : EntityDefinition where T3 : IEntityData {
+		private readonly EntitySpawnData<T2, T3>[] data;
 		
-		public RandomEntitySpawner(TData[] data) {
+		public RandomEntitySpawner(EntitySpawnData<T2, T3>[] data) {
 			this.data = data;
 		}
 		
-		public TEntity Spawn(Transform spawnPoint) {
-			return EntityFactory<TEntity>.Create(data[Random.Range(0, data.Length)], spawnPoint.position, spawnPoint.rotation);
+		public T Spawn(Transform spawnPoint) {
+			return EntityFactory<T>.Create(data[Random.Range(0, data.Length)], spawnPoint.position, spawnPoint.rotation);
 		}
 	}
 }

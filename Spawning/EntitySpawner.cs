@@ -1,7 +1,7 @@
 using PolyWare.Entities;
 
 namespace PolyWare.Spawning {
-	public class EntitySpawner<T> where T : Entity {
+	public class EntitySpawner<T> where T : IEntity {
 		private readonly IEntitySpawner<T> entitySpawner;
 		private readonly ISpawnPointStrategy spawnPointStrategy;
 

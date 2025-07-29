@@ -4,17 +4,17 @@ namespace PolyWare.Entities {
 	
 	public interface IEntitySpawnData {
 		public EntityDefinition Definition { get; }
-		public IEntityOverrideData OverrideData { get; }
-		public bool Override { get; }
+		public IEntityData OverrideData { get; }
 	}
 	
+	
+
 	[Serializable]
-	public class EntitySpawnData<T, T2> : IEntitySpawnData where T : EntityDefinition where T2 : IEntityOverrideData {
+	public class EntitySpawnData<T, T2> : IEntitySpawnData where T : EntityDefinition where T2 : IEntityData {
 		public T Definition;
-		public bool Override;
 		public T2 Overrides;
+		
 		EntityDefinition IEntitySpawnData.Definition => Definition;
-		bool IEntitySpawnData.Override => Override;
-		IEntityOverrideData IEntitySpawnData.OverrideData => Overrides;
+		IEntityData IEntitySpawnData.OverrideData => Overrides;
 	}
 }

@@ -1,11 +1,8 @@
 using UnityEngine;
 
 namespace PolyWare.Entities {
-	public interface IEntityDefinition { }
-
-	public abstract class EntityDefinition : ScriptableObject, IEntityDefinition {
+	public abstract class EntityDefinition : ScriptableObject {
 		public GameObject Prefab;
-
-		public abstract EntityData CreateDefaultInstance();
+		public abstract IEntityData CreateDefaultInstance();
 	}
 }
