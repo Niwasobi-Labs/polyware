@@ -15,7 +15,6 @@ namespace PolyWare.Core {
 		public Collector Collector;
 		
 		// prefabs systems
-		public EventSystem EventSystem;
 		public InputManager Input;
 		public SFXManager SfxManager;
 		public UIManager UI;
@@ -23,7 +22,6 @@ namespace PolyWare.Core {
 		
 		private void Awake() {
 			DontDestroyOnLoad(Input = Instantiate(Input));
-			DontDestroyOnLoad(EventSystem = Instantiate(EventSystem));
 			DontDestroyOnLoad(SfxManager = Instantiate(SfxManager));
 			DontDestroyOnLoad(UI = Instantiate(UI));
 			DontDestroyOnLoad(GameManager = Instantiate(GameManager));

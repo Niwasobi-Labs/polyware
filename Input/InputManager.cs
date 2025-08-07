@@ -2,6 +2,7 @@ using System;
 using PolyWare.Debug;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
@@ -27,6 +28,7 @@ namespace PolyWare.Input {
 		private const string manufacturerNintendo = "Nintendo Co., Ltd.";
 		private const string manufacturerSony = "Sony Interactive Entertainment";
 		private const string manufacturerMicrosoft = "Microsoft";
+		public EventSystem EventSystem;
 		[FormerlySerializedAs("PlayerInput")] [SerializeField] private PlayerInput playerInput;
 
 		[FormerlySerializedAs("CurrentPlatform")]

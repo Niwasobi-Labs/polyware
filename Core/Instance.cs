@@ -20,8 +20,8 @@ namespace PolyWare.Core {
 		public static void Setup(Bootstrapper bootstrapper) {
 			Constants = bootstrapper.Constants;
 			Collector = bootstrapper.Collector;
-			EventSystem = bootstrapper.EventSystem;
 			Input = bootstrapper.Input;
+			EventSystem = Input.EventSystem;
 			SfxManager = bootstrapper.SfxManager;
 			UI = bootstrapper.UI;
 			Game = bootstrapper.GameManager;
