@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace PolyWare.Entities {
-	public class RandomEntitySpawner<T, T2, T3> : IEntitySpawner<T> where T : IEntity where T2 : EntityDefinition where T3 : IEntityData {
+	public class RandomEntitySpawner<T, T2, T3> : IEntitySpawner<T> where T : IEntity where T2 : EntityDefinition where T3 : ISpawnData {
 		private readonly EntitySpawnData<T2, T3>[] data;
 		
 		public RandomEntitySpawner(EntitySpawnData<T2, T3>[] data) {
@@ -9,7 +9,7 @@ namespace PolyWare.Entities {
 		}
 		
 		public T Spawn(Transform spawnPoint) {
-			return EntityFactory<T>.Create(data[Random.Range(0, data.Length)], spawnPoint.position, spawnPoint.rotation);
+			return EntityFactory<T>.CreateWith(data[Random.Range(0, data.Length)], spawnPoint.position, spawnPoint.rotation);
 		}
 	}
 }
