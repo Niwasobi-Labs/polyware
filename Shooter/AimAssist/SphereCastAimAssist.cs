@@ -13,10 +13,11 @@ namespace PolyWare.Shooter.AimAssist {
 			Physics.SphereCastNonAlloc(spawnPoint.position + spawnPoint.forward * (aimAssistInfo.Radius * 0.5f), aimAssistInfo.Radius, spawnPoint.forward, aimAssistResults, aimAssistInfo.Range, enemyLayerMask);
 			
 			float closest = float.MaxValue;
-			Collider bestTarget = null;
-			RaycastHit bestHit = default;
+			IAimAssistTarget bestTarget = null;
 
 			foreach (RaycastHit hit in aimAssistResults.Where(hit => hit.collider)) {
+				if (!TryFilterTarget(hit.collider, out IAimAssistTarget newTarget)) continue;
+				
 				Vector3 toTarget = (hit.collider.ClosestPoint(spawnPoint.position) - spawnPoint.position);
 				
 				// Vertical angle (Y component relative to horizontal distance)
@@ -28,16 +29,10 @@ namespace PolyWare.Shooter.AimAssist {
 				if (closest < toTarget.sqrMagnitude) continue;
 				
 				closest = toTarget.sqrMagnitude;
-				bestTarget = hit.collider;
-				bestHit = tempHit;
+				bestTarget = newTarget;
 			}
 
-			if (bestTarget) {
-				aimAssistTarget = bestTarget;
-				aimAssistHit = bestHit;
-			} else {
-				aimAssistTarget = null;
-			}
+			aimAssistTarget = bestTarget;
 		}
 
 		public override void DrawGizmos() {
@@ -45,8 +40,8 @@ namespace PolyWare.Shooter.AimAssist {
 			Vector3 origin = spawnPoint.position;
 			Vector3 direction = spawnPoint.forward.normalized;
 
-			if (aimAssistTarget) {
-				GizmoHelper.DrawLine(origin, aimAssistHit.point, Color.red, 2);
+			if (aimAssistTarget != null) {
+				GizmoHelper.DrawLine(origin, aimAssistTarget.AimPoint.position, Color.red, 2);
 				GizmoHelper.DrawLine(origin, origin + spawnPoint.forward * aimAssistInfo.Range, Color.green, 2);
 				GizmoHelper.DrawLine(origin, origin + CalculateAdjustedDirectionToTarget() * aimAssistInfo.Range, Color.cyan, 2);
 			}

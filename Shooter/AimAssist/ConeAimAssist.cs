@@ -13,10 +13,11 @@ namespace PolyWare.Shooter.AimAssist {
 			float maxAngle = Mathf.Atan2(aimAssistInfo.Radius, aimAssistInfo.Range) * Mathf.Rad2Deg;
 			
 			float closestAngle = float.MaxValue;
-			Collider bestTarget = null;
-			RaycastHit bestHit = default;
+			IAimAssistTarget bestTarget = null;
 			
 			foreach (Collider col in aimAssistResults.Where(col => col)) {
+				if (!TryFilterTarget(col, out IAimAssistTarget newTarget)) continue;
+				
 				Vector3 targetDirection = (col.ClosestPoint(spawnPoint.position) - spawnPoint.position).normalized;
 
 				Vector3 flatToTarget = Vector3.ProjectOnPlane(targetDirection, Vector3.up);
@@ -32,16 +33,10 @@ namespace PolyWare.Shooter.AimAssist {
 				if (horizontalAngle >= closestAngle) continue;
 				
 				closestAngle = horizontalAngle;
-				bestTarget = col;
-				bestHit = tempHit;
+				bestTarget = newTarget;
 			}
-			
-			if (bestTarget) {
-				aimAssistTarget = bestTarget;
-				aimAssistHit = bestHit;
-			} else {
-				aimAssistTarget = null;
-			}
+
+			aimAssistTarget = bestTarget;
 		}
 
 		public override void DrawGizmos() {
@@ -49,8 +44,8 @@ namespace PolyWare.Shooter.AimAssist {
 
 			Gizmos.DrawWireSphere(spawnPoint.position, aimAssistInfo.Range);
 			
-			if (aimAssistTarget) {
-				GizmoHelper.DrawLine(origin, aimAssistHit.collider.bounds.center, Color.red, 3);
+			if (aimAssistTarget != null) {
+				GizmoHelper.DrawLine(origin, aimAssistTarget.AimPoint.position, Color.red, 3);
 				GizmoHelper.DrawLine(origin, origin + CalculateAdjustedDirectionToTarget() * aimAssistInfo.Range, Color.green, 3);
 			}
 			

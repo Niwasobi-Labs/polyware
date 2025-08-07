@@ -8,11 +8,8 @@ namespace PolyWare.Shooter.AimAssist {
 	}
 	
 	public abstract class AimAssistStrategy {
-		public Collider GetTarget => aimAssistTarget;
-		
 		protected readonly int enemyLayerMask;
-		protected RaycastHit aimAssistHit;
-		protected Collider aimAssistTarget;
+		protected IAimAssistTarget aimAssistTarget;
 		
 		protected readonly Transform spawnPoint;
 		protected readonly AimAssistInfo aimAssistInfo;
@@ -26,11 +23,15 @@ namespace PolyWare.Shooter.AimAssist {
 		}
 		
 		protected AimAssistStrategy(AimAssistInfo aimAssistData, Transform spawnPoint) {
-			enemyLayerMask = 1 << LayerMask.NameToLayer("Enemy");
+			enemyLayerMask = 1 << LayerMask.NameToLayer("Characters") | 1 << LayerMask.NameToLayer("Props");
 			aimAssistInfo = aimAssistData;
 			this.spawnPoint = spawnPoint;
 		}
 
+		protected static bool TryFilterTarget(Collider collider, out IAimAssistTarget target) {
+			return collider.TryGetComponent(out target);
+		}
+		
 		public abstract void RunAimAssist();
 		
 		protected bool CheckVerticalAngle(Vector3 targetDirection) {
@@ -39,9 +40,9 @@ namespace PolyWare.Shooter.AimAssist {
 		}
 		
 		public Vector3 CalculateAdjustedDirectionToTarget() {
-			if (!aimAssistTarget) return spawnPoint.forward;
+			if (aimAssistTarget == null) return spawnPoint.forward;
 
-			Vector3 toTarget = aimAssistHit.collider.bounds.center - spawnPoint.position;
+			Vector3 toTarget = aimAssistTarget.AimPoint.position - spawnPoint.position;
 			Vector3 flatToTarget = Vector3.ProjectOnPlane(toTarget, spawnPoint.up).normalized;
 			Vector3 gunForward = spawnPoint.forward;
 			
@@ -54,6 +55,10 @@ namespace PolyWare.Shooter.AimAssist {
 			Vector3 verticalNormal = Vector3.Cross(flatDirection, Vector3.up);
 			
 			return Vector3.ProjectOnPlane(toTarget, verticalNormal).normalized;
+		}
+
+		public Transform GetTargetTransform() {
+			return aimAssistTarget?.AimPoint;	
 		}
 		
 		public virtual void DrawGizmos() { }
