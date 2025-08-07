@@ -1,6 +1,6 @@
 using UnityEngine; 
 
-namespace PolyWare.Entities {
+namespace PolyWare.Core.Entities {
 	public interface IEntity {
 		public IEntityData EntityData { get; }
 		public GameObject GameObject { get; }

@@ -1,6 +1,6 @@
-using PolyWare.Entities;
+using PolyWare.Core.Spawning;
 
-namespace PolyWare.Spawning {
+namespace PolyWare.Core.Entities {
 	public class EntitySpawner<T> where T : IEntity {
 		private readonly IEntitySpawner<T> entitySpawner;
 		private readonly ISpawnPointStrategy spawnPointStrategy;

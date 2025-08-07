@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Entities {
+namespace PolyWare.Core.Entities {
 	public static class EntityFactory<T> where T : IEntity {
 		
 		public static T CreateFrom(EntityDefinition entityDefinition, Vector3 position = default, Quaternion rotation = default) {
@@ -15,7 +15,7 @@ namespace PolyWare.Entities {
 			return newEquipment;
 		}
 		
-		public static T CreateWith(IEntitySpawnData spawnData, Vector3 position = default, Quaternion rotation = default) {
+		public static T CreateWith(IEntitySpawnerData spawnData, Vector3 position = default, Quaternion rotation = default) {
 			var instance = Object.Instantiate(spawnData.Definition.Prefab, position, rotation).GetComponent<T>();
 			IEntityData newData = spawnData.Definition.CreateDefaultInstance();
 			if (newData is IAllowSpawnOverride overrideable) overrideable.Override(spawnData.Data);

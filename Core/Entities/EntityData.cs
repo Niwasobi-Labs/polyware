@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Entities {
+namespace PolyWare.Core.Entities {
 
 	public interface IEntityData {
 		public EntityDefinition EntityDefinition { get; }

@@ -1,4 +1,4 @@
-using PolyWare.Entities;
+using PolyWare.Core.Entities;
 
 namespace PolyWare.Items {
 	public abstract class ItemDefinition : EntityDefinition {
