@@ -1,8 +1,6 @@
 using PolyWare.Core;
-using PolyWare.Events;
-using PolyWare.Input;
+using PolyWare.Core.Events;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace PolyWare.UI {
 	public class Screen : MonoBehaviour {

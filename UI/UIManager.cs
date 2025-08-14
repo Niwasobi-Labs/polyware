@@ -1,6 +1,6 @@
 using PolyWare.Core;
 using PolyWare.Debug;
-using PolyWare.Events;
+using PolyWare.Core.Events;
 using UnityEngine;
 using Cursor = UnityEngine.Cursor;
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 
 // based on https://github.com/adammyhre/Unity-Event-Bus
-namespace PolyWare.Events {
+namespace PolyWare.Core.Events {
     public static class EventBus<T> where T : IEvent {
         static readonly HashSet<IEventBinding<T>> bindings = new HashSet<IEventBinding<T>>();
 

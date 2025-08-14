@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace PolyWare.Events {
+﻿namespace PolyWare.Core.Events {
 	public interface IEvent { }
 	
 	public struct PlayerNearbyInteractionEvent : IEvent {

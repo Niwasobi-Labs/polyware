@@ -1,4 +1,4 @@
-using PolyWare.Events;
+using PolyWare.Core.Events;
 using UnityEngine;
 
 namespace PolyWare.UI {
