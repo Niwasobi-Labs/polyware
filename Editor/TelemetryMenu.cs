@@ -1,10 +1,11 @@
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
 using System.IO;
 using PolyWare.Debug;
 
 namespace PolyWare.Editor {
-	public static class TelemetryMenu {
+	public static class TelemetryMenu { 
 		// Path to the telemetry directory
 		private static string GetTelemetryDirectory() {
 			string basePath = Application.persistentDataPath;
@@ -25,3 +26,4 @@ namespace PolyWare.Editor {
 		}
 	}
 }
+#endif

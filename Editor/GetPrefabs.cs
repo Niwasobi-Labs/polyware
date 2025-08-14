@@ -1,17 +1,10 @@
 #if UNITY_EDITOR
-using System;
 using System.Collections.Generic;
 using Log = PolyWare.Debug.Log;
 using UnityEngine;
 using UnityEditor;
 
 namespace PolyWare.Editor {
-	[Serializable]
-	public enum PrefabSearchMode {
-		Global,
-		Local
-	}
-	
 	public static class GetPrefabs {
 		// ReSharper disable Unity.PerformanceAnalysis
 		public static List<T> GetAllPrefabsWithComponent<T>(bool allowDuplicates, PrefabSearchMode searchMode, string startingPath) where T : Component {

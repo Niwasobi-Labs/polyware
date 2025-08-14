@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Editor;
-using UnityEditor;
-using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -34,19 +31,4 @@ namespace PolyWare.AssetManagement {
 			return null;
 		}
 	}
-	
-#if UNITY_EDITOR
-	[CustomEditor(typeof(Collector))]
-	public class CollectorEditor : UnityEditor.Editor {
-		public override void OnInspectorGUI() {
-			var collector = (Collector)target;
-			if (GUILayout.Button("Refresh")) {
-				collector.collections = GetPrefabs.GetAllScriptableObjectsOfType<Collection>(false, PrefabSearchMode.Global, AssetDatabase.GetAssetPath(target));
-				EditorUtility.SetDirty(target);
-			}
-
-			DrawDefaultInspector();
-		}
-	}
-#endif
 }
