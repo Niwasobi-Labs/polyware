@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Shooter.AimAssist {
+namespace PolyWare.ActionGame.AimAssist {
 	public enum AimAssistMode {
 		None,
 		SphereCast,

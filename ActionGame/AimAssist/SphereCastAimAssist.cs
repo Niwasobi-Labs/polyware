@@ -2,7 +2,7 @@ using System.Linq;
 using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.Shooter.AimAssist {
+namespace PolyWare.ActionGame.AimAssist {
 	public class SphereCastAimAssist : AimAssistStrategy {
 		protected readonly RaycastHit[] aimAssistResults = new RaycastHit[10];
 		

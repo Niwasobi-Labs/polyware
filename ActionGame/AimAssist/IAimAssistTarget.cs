@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Shooter.AimAssist {
+namespace PolyWare.ActionGame.AimAssist {
 	public interface IAimAssistTarget {
 		public Transform AimPoint { get; }
 	}

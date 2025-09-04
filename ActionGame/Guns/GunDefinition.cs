@@ -1,0 +1,65 @@
+using PolyWare.Combat;
+using PolyWare.Core.Entities;
+using PolyWare.Items;
+using PolyWare.ActionGame.AimAssist;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace PolyWare.ActionGame.Guns {
+	[CreateAssetMenu(fileName = "New Gun Item", menuName = "Cartographer/Items/Gun")]
+	public class GunDefinition : EquipmentDefinition {
+		
+		public override IEntityData CreateDefaultInstance() => new GunData(this);
+		
+		public enum FireMode {
+			SemiAuto,
+			Auto
+		}
+
+		public enum AmmoDisplayMode {
+			Projectiles,
+			NumberOnly
+		}
+		
+		[field: Title("Guns")]
+		[field: SerializeField] public string GunId { get; private set; }
+		[field: SerializeField] public DamageInfo Damage { get; private set; }
+		
+		[field: Title("Firing")]
+		[field: SerializeField] public FireMode FiringMode { get; private set; }
+		[field: SerializeField] public AimAssistInfo AimAssist { get; private set; }
+
+		[field: SerializeField] public float FireRate { get; private set; } = 1.0f;
+		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
+		[field: SerializeField] public float Range { get; private set; } = 25.0f;
+		[field: SerializeField] public float Spread { get; private set; }
+		
+		[field: Title("Ammo")]
+		[field: SerializeField] public AmmoDisplayMode AmmoDisplay { get; private set; }
+		[field: SerializeField] public int MaxAmmo { get; private set; }
+		[field: SerializeField] public int MaxReserveAmmo { get; private set; }
+		[field: SerializeField] public int AmmoConsumptionPerShot { get; private set; } = 1;
+		
+		[field: Title("Reloading")] 
+		[field: SerializeField] public ReloadStrategy ReloadType { get; private set; }
+		[field: SerializeField] public float ReloadTime { get; private set; } = 2.0f;
+		[field: SerializeField] [field: ShowIf("ReloadType", ReloadStrategy.OneByOne)] public int AmmoPerReload { get; private set; } = 1;
+		[field: SerializeField] public AudioClip ReloadingSfx { get; private set; }
+
+		[field: Title("Heating")] 
+		[field: SerializeField] public bool CanOverheat { get; private set; }
+		[field: SerializeField] public int MaxHeat { get; private set; }
+		[field: SerializeField] public float HeatPerShot { get; private set; }
+		[field: SerializeField] public float HeatCooldownRate { get; private set; } = 5f;
+		[field: SerializeField] public float OverHeatTime { get; private set; } = 3f;
+		
+		[field: Title("Aim Assist")] 
+		[field: SerializeField] public bool UseLaserSight { get; private set; }
+		[Tooltip("Percentage of the Gun's Range. eg. 1 = Range, 0.5 = Half")]
+		[field: SerializeField] [Range(0, 1)] public float RangeOfLaserSight { get; private set; } = 1;
+		
+		[field: Title("Audio")] 
+		[field: SerializeField] public AudioClip ShootingSfx { get; private set; }
+		
+	}
+}
