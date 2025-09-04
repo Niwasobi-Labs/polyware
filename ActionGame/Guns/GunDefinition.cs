@@ -6,7 +6,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.Guns {
-	[CreateAssetMenu(fileName = "New Gun Item", menuName = "Cartographer/Items/Gun")]
+	[CreateAssetMenu(fileName = "New Gun", menuName = "PolyWare/ActionGame/Gun")]
 	public class GunDefinition : EquipmentDefinition {
 		
 		public override IEntityData CreateDefaultInstance() => new GunData(this);

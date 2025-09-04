@@ -13,6 +13,6 @@ namespace PolyWare.ActionGame.Projectiles {
 	[Serializable]
 	public class ProjectileAsset : AssetData<string, ProjectileAssetInfo> { }
 
-	[CreateAssetMenu(fileName = "ProjectileIconCollection", menuName = "Cartographer/Collections/Projectile Icons")]
+	[CreateAssetMenu(fileName = "ProjectileIconCollection", menuName = "PolyWare/Collections/Projectile Icons")]
 	public class ProjectileCollection : AssetCollection<string, ProjectileAsset, ProjectileAssetInfo> { }
 }

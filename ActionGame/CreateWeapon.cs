@@ -7,12 +7,12 @@ using UnityEngine;
 namespace PolyWare.ActionGame {
 	public class CreateWeaponWindow : EditorWindow {
 		private string entityName = "NewWeapon";
-		private string nameSpace = "Cartographer.Items";
+		private string nameSpace = "PolyWare.Weapons";
 		private string targetFolder = "Assets";
 		private bool createSubfolder = false;
 		private string subfolderName = "";
 
-		[MenuItem("Cartographer/Create New Weapon")]
+		[MenuItem("PolyWare/Create New Weapon")]
 		public static void ShowWindow() {
 			var window = GetWindow<CreateWeaponWindow>(true, "Create New Weapon", true);
 			window.minSize = new Vector2(520, 210);

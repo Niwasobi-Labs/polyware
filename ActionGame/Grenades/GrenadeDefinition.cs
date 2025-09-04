@@ -4,7 +4,7 @@ using PolyWare.Items;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.Grenades {
-	[CreateAssetMenu(fileName = "Grenade Definition", menuName = "Game/Grenade")]
+	[CreateAssetMenu(fileName = "New Grenade", menuName = "PolyWare/ActionGame/Grenade")]
 	public class GrenadeDefinition : ItemDefinition {
 		public override IEntityData CreateDefaultInstance() => new GrenadeData(this);
 
