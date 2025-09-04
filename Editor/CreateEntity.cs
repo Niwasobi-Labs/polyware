@@ -131,8 +131,8 @@ $@"using PolyWare.Core.Entities;
 namespace {ns} {{
 	public class {name}SpawnData : IEntitySpawnData {{ }}
 
-	public class {name}Data : EntityData<EntityDefinition>, IAllowSpawnOverride {{
-		public {name}Data(EntityDefinition definition) : base(definition) {{ }}
+	public class {name}Data : EntityData<{name}Definition>, IAllowSpawnOverride {{
+		public {name}Dat{name}Definition definition) : base(definition) {{ }}
 
 		public void Override(IEntitySpawnData data) {{
 			// TODO: apply spawn overrides from {name}SpawnData
