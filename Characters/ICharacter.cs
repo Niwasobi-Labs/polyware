@@ -7,5 +7,6 @@ namespace PolyWare.Characters {
 		public void Interact();
 		public bool Pickup(IPickupable item);
 		public Transform Transform { get; }
+		public bool IsPlayer { get; }
 	}
 }
