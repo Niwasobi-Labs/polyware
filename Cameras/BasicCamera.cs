@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Cameras {
-	public class IsometricCamera : MonoBehaviour {
+	public class BasicCamera : MonoBehaviour {
 		[field: Title("Camera")]
 		[field: SerializeField] public Camera CameraRef { get; private set;  }
 
