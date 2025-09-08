@@ -9,7 +9,7 @@ using UnityEngine.Events;
 
 namespace PolyWare.ActionGame {
 	[Serializable]
-	public class GrenadeHandler {
+	public class DynamicGrenadeHandler : IGrenadeHandler {
 		// todo: standardize this to clean up this script and offloading inventory management
 		[ShowInInspector] public DynamicInventory<InventorySlot<GrenadeDefinition>> Inventory { get; private set; }
 		
@@ -17,7 +17,7 @@ namespace PolyWare.ActionGame {
 		
 		public event UnityAction<InventorySlot<GrenadeDefinition>> OnActiveGrenadeUpdate = delegate {};
 
-		public GrenadeHandler(ICharacter character) {
+		public DynamicGrenadeHandler(ICharacter character) {
 			this.character = character;
 			Inventory = new DynamicInventory<InventorySlot<GrenadeDefinition>>(5);
 		}

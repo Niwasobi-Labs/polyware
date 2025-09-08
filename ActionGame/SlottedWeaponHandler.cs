@@ -10,7 +10,7 @@ using UnityEngine.Events;
 
 namespace PolyWare.ActionGame {
 	[Serializable]
-	public class WeaponHandler {
+	public class SlottedWeaponHandler : IWeaponHandler {
 
 		[ShowInInspector] public EntitySlotInventory<Weapon, WeaponData> Slots { get; private set; }
 		[ShowInInspector] public Weapon CurrentWeapon { get; private set; }
@@ -20,8 +20,8 @@ namespace PolyWare.ActionGame {
 
 		public event UnityAction<Weapon> OnEquip = delegate { };
 		public event UnityAction<Weapon> OnUnequip = delegate { };
-
-		public WeaponHandler(ICharacter character, Transform pivot, uint slots) {
+		
+		public SlottedWeaponHandler(ICharacter character, Transform pivot, uint slots) {
 			this.character = character;
 			this.pivot = pivot;
 			Slots = new EntitySlotInventory<Weapon, WeaponData>((int)slots);
@@ -44,7 +44,7 @@ namespace PolyWare.ActionGame {
 			return true;
 		}
 
-		private void Equip(Weapon weapon) {
+		public void Equip(Weapon weapon) {
 			CurrentWeapon = weapon;
 
 			CurrentWeapon.transform.SetParent(pivot, false);
@@ -56,6 +56,13 @@ namespace PolyWare.ActionGame {
 			OnEquip.Invoke(CurrentWeapon);
 			
 			CurrentWeapon.Equip(character);
+		}
+
+		public void Use() {
+			CurrentWeapon?.Use();
+		}
+		public void StopUsing() {
+			CurrentWeapon?.StopUsing();
 		}
 
 		public bool DropCurrent() {
