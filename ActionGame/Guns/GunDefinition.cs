@@ -36,6 +36,7 @@ namespace PolyWare.ActionGame.Guns {
 		
 		[field: Title("Ammo")]
 		[field: SerializeField] public AmmoDisplayMode AmmoDisplay { get; private set; }
+		[field: SerializeField] public GameObject BulletPrefab { get; private set; } 
 		[field: SerializeField] public int MaxAmmo { get; private set; }
 		[field: SerializeField] public int MaxReserveAmmo { get; private set; }
 		[field: SerializeField] public int AmmoConsumptionPerShot { get; private set; } = 1;

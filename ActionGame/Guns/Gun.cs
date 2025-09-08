@@ -36,12 +36,12 @@ namespace PolyWare.ActionGame.Guns {
 		protected override void OnInitialize() {
 			aimAssistStrategy = AimAssistStrategy.Create(GunData.GunDefinition.AimAssist, bulletSpawn);
 			
-			if (GunData.CurrentAmmo < 0) GunData.SetCurrentAmmo(GunData.GunDefinition.MaxAmmo);
-			if (GunData.ReserveAmmo < 0) GunData.AddAmmoToReserves(GunData.GunDefinition.MaxReserveAmmo);
+			if (GunData.CurrentAmmo <= 0) GunData.SetCurrentAmmo(GunData.GunDefinition.MaxAmmo);
+			if (GunData.ReserveAmmo <= 0) GunData.AddAmmoToReserves(GunData.GunDefinition.MaxReserveAmmo);
 			
 			SetupReload();
 			
-			laserSight.SetRange(GunData.GunDefinition.Range * GunData.GunDefinition.RangeOfLaserSight);
+			laserSight?.SetRange(GunData.GunDefinition.Range * GunData.GunDefinition.RangeOfLaserSight);
 			
 			fireRateTimer = new CountdownWithPredicateTimer(GunData.GunDefinition.FireRate, CheckAdditionalFireRateLogic);
 
@@ -103,7 +103,7 @@ namespace PolyWare.ActionGame.Guns {
 			// if we are reloading but have gotten into this function, that means the reload can be interrupted
 			if (ReloadHandler.IsReloading) ReloadHandler.Cancel();
 			
-			Projectile newProjectile = Instantiate(PolyWare.Core.Instance.Collector.Get<ProjectileCollection>().Get(GunData.GunDefinition.GunId).Prefab, bulletSpawn.transform.position, bulletSpawn.rotation);
+			Projectile newProjectile = Instantiate(GunData.GunDefinition.BulletPrefab, bulletSpawn.transform.position, bulletSpawn.rotation).GetComponent<Projectile>();
 			
 			newProjectile.Initialize(new DamageInfo(myCharacter.IsPlayer, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, CalculateProjectileDirection(GunData.GunDefinition.Spread), aimAssistStrategy.GetTargetTransform());
 
