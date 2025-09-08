@@ -16,6 +16,7 @@ namespace PolyWare.Combat {
 		[ShowInInspector] [FoldoutGroup("Debug Info")] public DamageableValueHandler Shield { get; private set; }
 		
 		public event UnityAction<float, float> OnDamageTaken = delegate {};
+		public event UnityAction<float, float> OnHeal = delegate {};
 		public event UnityAction OnDeath = delegate {};
 
 		// todo: clean up awake vs init flow 
@@ -63,10 +64,12 @@ namespace PolyWare.Combat {
 
 		public void HealHealth(float healAmount) {
 			Health.Heal(healAmount);
+			OnHeal.Invoke(Health.Current / Health.Max, Shield.Current / Shield.Max);
 		}
 
 		public void HealShields(float healAmount) {
 			Shield.Heal(healAmount);
+			OnHeal.Invoke(Health.Current / Health.Max, Shield.Current / Shield.Max);
 		}
 	}
 }

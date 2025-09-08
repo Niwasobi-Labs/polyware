@@ -67,6 +67,8 @@ namespace PolyWare.Combat {
 				RegenTimer.Stop();
 				RegenDelayTimer.Restart();
 			}
+
+			if (data.Current <= 0) return;
 			
 			data.Current = Mathf.Max(data.Current - damage, 0);
 			
@@ -82,7 +84,7 @@ namespace PolyWare.Combat {
 		public void Heal(float healAmount) {
 			if (!data.CanHeal) return;
 			
-			data.Current = Mathf.Max(data.Current + healAmount, data.Max);
+			data.Current = Mathf.Min(data.Current + healAmount, data.Max);
 			OnValueChanged.Invoke(data.Current / data.Max);
 		}
 		
