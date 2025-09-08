@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Characters;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Combat;
-using PolyWare.Core.Events;
-using PolyWare.Interactions;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -82,7 +79,7 @@ namespace PolyWare.ActionGame.Guns {
 		}
 
 		protected override bool OnUnequip() {
-			CancelUse();
+			StopUsing();
 			
 			if (ReloadHandler.IsReloading) ReloadHandler.Cancel();
 			
@@ -96,7 +93,7 @@ namespace PolyWare.ActionGame.Guns {
 		public override void Use() {
 			triggerPulled = true;
 		}
-		public override void CancelUse() {
+		public override void StopUsing() {
 			triggerPulled = false;
 		}
 		

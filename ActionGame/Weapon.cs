@@ -68,6 +68,6 @@ namespace PolyWare.ActionGame {
 		
 		// IUsable
 		public abstract void Use();
-		public abstract void CancelUse();
+		public abstract void StopUsing();
 	}
 }
