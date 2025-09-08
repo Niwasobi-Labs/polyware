@@ -30,6 +30,7 @@ namespace PolyWare.UI {
 			Close();
 		}
 
+		// task: consider switching this to call an OnOpen that children will override instead of this
 		public virtual bool Open() {
 			IsOpen = true;
 			gameObject.SetActive(true);
