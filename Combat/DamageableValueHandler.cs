@@ -23,9 +23,9 @@ namespace PolyWare.Combat {
 
 		[ShowInInspector] private DamageValueHandlerData data;
 		
-		public UnityAction OnValueDepleted = delegate {};
-		public UnityAction OnRegenStarted = delegate {};
-		public UnityAction<float> OnValueChanged = delegate {};
+		public event UnityAction OnValueDepleted = delegate {};
+		public event UnityAction OnRegenStarted = delegate {};
+		public event UnityAction<float> OnValueChanged = delegate {};
 			
 		public CountdownTimer RegenTimer;
 		public CountdownTimer RegenDelayTimer;

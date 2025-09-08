@@ -15,9 +15,10 @@ namespace PolyWare.Combat {
 		[ShowInInspector] [FoldoutGroup("Debug Info")] public DamageableValueHandler Health { get; private set; }
 		[ShowInInspector] [FoldoutGroup("Debug Info")] public DamageableValueHandler Shield { get; private set; }
 		
-		public UnityAction<float, float> OnDamageTaken = delegate {};
-		public UnityAction OnDeath = delegate {};
+		public event UnityAction<float, float> OnDamageTaken = delegate {};
+		public event UnityAction OnDeath = delegate {};
 
+		// todo: clean up awake vs init flow 
 		private void Awake() {
 			Health = new DamageableValueHandler(HealthInfo);
 			Shield = new DamageableValueHandler(ShieldInfo);
@@ -30,6 +31,8 @@ namespace PolyWare.Combat {
 			
 			Health = new DamageableValueHandler(healthData);
 			Shield = new DamageableValueHandler(shieldData);
+			
+			Health.OnValueDepleted += Die;
 		}
 		
 		private void Update() {
