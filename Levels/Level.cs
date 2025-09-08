@@ -14,6 +14,7 @@ namespace PolyWare.Levels {
 		public static UnityAction OnLevelReset = delegate { };
 
 		public bool LevelStarted { get; private set; }
+		public bool LevelEnded { get; private set; }
 		
 		private Stopwatch levelTimer = new Stopwatch();
 
@@ -48,11 +49,14 @@ namespace PolyWare.Levels {
 
 			Instance.Telemetry.LogEvent(new LevelTelemetryEvents.LevelComplete(levelName, TimeFormatter.GetFormattedTime(levelTimer)));
 			
+			LevelEnded = true;
+			
 			OnCompleteLevel();
 		}
 
 		public void RestartLevel() {
 			LevelStarted = false;
+			LevelEnded = false;
 			
 			levelTimer.Stop();
 			
