@@ -33,6 +33,7 @@ namespace PolyWare.ActionGame {
 			interaction.gameObject.SetActive(false);
 			rigidbdy.isKinematic = true;
 			worldCollider.enabled = false;
+			myCharacter = character;
 			
 			OnEquip();
 		}
