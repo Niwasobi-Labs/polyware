@@ -9,11 +9,11 @@ namespace PolyWare.Core.Spawning {
 		public EntityDefinition EntityToSpawn;
 
 		private void Start() {
-			if (SpawnOnStart) Spawn(transform);
+			if (SpawnOnStart) Spawn(new SpawnLocation(transform));
 		}
 
-		public IEntity Spawn(Transform spawnPoint) {
-			return EntityFactory<IEntity>.CreateFrom(EntityToSpawn, spawnPoint.position, spawnPoint.rotation);
+		public IEntity Spawn(SpawnLocation spawnPoint) {
+			return EntityFactory<IEntity>.CreateFrom(EntityToSpawn, spawnPoint.Position, spawnPoint.Rotation);
 		}
 	}
 }

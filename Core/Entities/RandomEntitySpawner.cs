@@ -1,3 +1,4 @@
+using PolyWare.Core.Spawning;
 using UnityEngine;
 
 namespace PolyWare.Core.Entities {
@@ -8,8 +9,8 @@ namespace PolyWare.Core.Entities {
 			this.data = data;
 		}
 		
-		public T Spawn(Transform spawnPoint) {
-			return EntityFactory<T>.CreateWith(data[Random.Range(0, data.Length)], spawnPoint.position, spawnPoint.rotation);
+		public T Spawn(SpawnLocation spawnLocation) {
+			return EntityFactory<T>.CreateWith(data[Random.Range(0, data.Length)], spawnLocation.Position, spawnLocation.Rotation);
 		}
 	}
 }

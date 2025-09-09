@@ -9,10 +9,10 @@ namespace PolyWare.Core.Spawning {
 			this.spawnPoints = spawnPoints;
 		}
 
-		public Transform NextSpawnPoint() {
+		public SpawnLocation NextSpawnPoint() {
 			Transform spawnPoint = spawnPoints[index];
 			index = (index + 1) % spawnPoints.Length;
-			return spawnPoint;
+			return new SpawnLocation(spawnPoint);
 		}
 	}
 }

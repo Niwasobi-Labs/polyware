@@ -13,12 +13,12 @@ namespace PolyWare.Core.Spawning {
 			this.spawnPoints.Shuffle();
 		}
 
-		public Transform NextSpawnPoint() {
-			if (index < spawnPoints.Length) return spawnPoints[index++];
+		public SpawnLocation NextSpawnPoint() {
+			if (index < spawnPoints.Length) return new SpawnLocation(spawnPoints[index++]);
 			
 			index = 0;
 			spawnPoints.Shuffle();
-			return spawnPoints[index++];
+			return new SpawnLocation(spawnPoints[index++]);
 		}
 	}
 }

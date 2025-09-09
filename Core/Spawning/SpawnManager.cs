@@ -9,16 +9,21 @@ namespace PolyWare.Core.Spawning {
 		[SerializeField] protected bool random;
 		
 		protected ISpawnPointStrategy spawnPointStrategy;
+		[Header("Random Radius Only")]
+		[SerializeField] private float innerRadius;
+		[SerializeField] private float outerRadius;
 
 		protected enum SpawnPointStrategyType {
 			Linear,
-			Random
+			Random,
+			RandomRadiusOnAxis
 		}
 
 		protected virtual void Awake() {
 			spawnPointStrategy = spawnPointStrategyType switch {
 				SpawnPointStrategyType.Linear => new LinearSpawnPointStrategy(spawnPoints),
 				SpawnPointStrategyType.Random => new RandomSpawnPointStrategy(spawnPoints),
+				SpawnPointStrategyType.RandomRadiusOnAxis => new RandomRadiusAlongAxisSpawnPointStrategy(transform.position, innerRadius, outerRadius, transform.up),
 				_ => spawnPointStrategy
 			};
 		}
