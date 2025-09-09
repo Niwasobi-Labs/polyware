@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Combat;
+using PolyWare.Debug;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,7 +18,7 @@ namespace PolyWare.ActionGame.Guns {
 		public GunData GunData => Data as GunData;
 		
 		[Title("Gun")]
-		[SerializeField] private Transform bulletSpawn;
+		[SerializeField] protected Transform bulletSpawn;
 		[SerializeField] private LaserSight laserSight;
 		
 		private bool triggerPulled;
@@ -103,10 +104,8 @@ namespace PolyWare.ActionGame.Guns {
 			// if we are reloading but have gotten into this function, that means the reload can be interrupted
 			if (ReloadHandler.IsReloading) ReloadHandler.Cancel();
 			
-			Projectile newProjectile = Instantiate(GunData.GunDefinition.BulletPrefab, bulletSpawn.transform.position, bulletSpawn.rotation).GetComponent<Projectile>();
+			SpawnProjectile();
 			
-			newProjectile.Initialize(new DamageInfo(myCharacter.IsPlayer, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, CalculateProjectileDirection(GunData.GunDefinition.Spread), aimAssistStrategy.GetTargetTransform());
-
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
 			fireRateTimer.Start();
@@ -119,8 +118,18 @@ namespace PolyWare.ActionGame.Guns {
 			
 			//if (myCharacter.IsPlayer) PlayerCharacter.OnPlayerFired?.Invoke(GunData.GunDefinition.AmmoConsumptionPerShot); task: use event bus
 		}
+
+		protected Projectile CreateProjectile(Vector3 position, Vector3 direction) {
+			Projectile newProjectile = Instantiate(GunData.GunDefinition.BulletPrefab, position, Quaternion.Euler(direction)).GetComponent<Projectile>();
+			newProjectile.Initialize(new DamageInfo(myCharacter.IsPlayer, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, direction, aimAssistStrategy.GetTargetTransform());
+			return newProjectile;
+		}
 		
-		private Vector3 CalculateProjectileDirection(float spread) {
+		protected virtual void SpawnProjectile() {
+			CreateProjectile(bulletSpawn.position, CalculateProjectileDirection(GunData.GunDefinition.Spread));
+		}
+
+		protected Vector3 CalculateProjectileDirection(float spread) {
 			Vector3 direction = aimAssistStrategy.CalculateAdjustedDirectionToTarget();
 			if (!(spread > 0f)) return direction.normalized;
 			
