@@ -27,10 +27,10 @@ namespace PolyWare.ActionGame {
 			Slots = new EntitySlotInventory<Weapon, WeaponData>((int)slots);
 		}
 
-		public bool Pickup(Weapon weapon) {
+		public bool Pickup(Weapon newWeapon) {
 			if (CurrentWeapon != null && !CurrentWeapon.Unequip()) return false;
 
-			int slotAddedTo = Slots.Add(weapon.Data);
+			int slotAddedTo = Slots.Add(newWeapon.Data);
 
 			if (slotAddedTo < 0) {
 				Log.Error("Could not add equipment to inventory");
@@ -39,7 +39,7 @@ namespace PolyWare.ActionGame {
 
 			Slots.SetActiveSlot(slotAddedTo);
 			
-			Equip(weapon);
+			Equip(newWeapon);
 
 			return true;
 		}

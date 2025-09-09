@@ -4,7 +4,7 @@ namespace PolyWare.ActionGame {
 	public interface IWeaponHandler {
 		event UnityAction<Weapon> OnEquip;
 		event UnityAction<Weapon> OnUnequip;
-		bool Pickup(Weapon weapon);
+		bool Pickup(Weapon newWeapon);
 		void Equip(Weapon weapon);
 		void Use();
 		void StopUsing();
