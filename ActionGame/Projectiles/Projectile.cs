@@ -1,5 +1,6 @@
 using System.Collections;
 using PolyWare.Combat;
+using PolyWare.Levels;
 using PolyWare.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,10 +17,18 @@ namespace PolyWare.ActionGame.Projectiles {
 		protected float speed;
 		protected Transform target;
 
+		private void OnEnable() {
+			Level.OnLevelReset += Kill;
+		}
+		
+		private void OnDisable() {
+			Level.OnLevelReset -= Kill;
+		}
+		
 		private void Awake() {
 			rigidbdy = GetComponent<Rigidbody>();
 		}
-
+		
 		private void Start() {
 			if (!rigidbdy.isKinematic) rigidbdy.linearVelocity = rigidbdy.transform.forward * speed;
 
