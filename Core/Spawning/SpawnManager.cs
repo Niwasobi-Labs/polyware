@@ -10,8 +10,8 @@ namespace PolyWare.Core.Spawning {
 		
 		protected ISpawnPointStrategy spawnPointStrategy;
 		[Header("Random Radius Only")]
-		[SerializeField] private float innerRadius;
-		[SerializeField] private float outerRadius;
+		[SerializeField] protected float innerRadius;
+		[SerializeField] protected float outerRadius;
 
 		protected enum SpawnPointStrategyType {
 			Linear,
