@@ -1,3 +1,5 @@
+using System.Collections;
+using PolyWare.Utils;
 using UnityEngine;
 
 namespace PolyWare.Core.Spawning {
@@ -7,6 +9,8 @@ namespace PolyWare.Core.Spawning {
 		[SerializeField] protected Transform[] spawnPoints;
 		[SerializeField] protected uint spawnCount;
 		[SerializeField] protected bool random;
+		[SerializeField] protected bool loop;
+		[SerializeField] protected float loopDelay;
 		
 		protected ISpawnPointStrategy spawnPointStrategy;
 		[Header("Random Radius Only")]
@@ -31,7 +35,16 @@ namespace PolyWare.Core.Spawning {
 		private void Start() {
 			if (spawnOnStart) Spawn();
 		}
+
+		public virtual void Spawn() {
+			if (loop) {
+				StartCoroutine(SpawnDelay());
+			}
+		}
 		
-		public abstract void Spawn();
+		private IEnumerator SpawnDelay() {
+			yield return Yielders.WaitForSeconds(loopDelay);
+			Spawn();
+		}
 	}
 }
