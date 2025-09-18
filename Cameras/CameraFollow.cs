@@ -2,12 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Cameras {
-	public class BasicCamera : MonoBehaviour {
-		[field: Title("Camera")]
-		[field: SerializeField] public Camera CameraRef { get; private set;  }
-
-		[Title("Movement Settings")]
-		[ReadOnly] private Transform target;
+	public class CameraFollow : MonoBehaviour {
 		[SerializeField] private float smoothTime = 20f;
 
 		[Title("Aiming Settings")]
@@ -23,16 +18,21 @@ namespace PolyWare.Cameras {
 		private Vector3 leadVelocity = Vector3.zero;
 		private Vector3 moveVelocity = Vector3.zero;
 
+		[field: Title("Movement Settings")]
+		[field: ReadOnly]
+		
+		public Transform Target { get; private set; }
+
 		private void FixedUpdate() {
-			if (isPaused || !target) return;
+			if (isPaused || !Target) return;
 
 			UpdateAimingOffset();
 
 			transform.position = Vector3.SmoothDamp(transform.position, CalculateNewPos(), ref moveVelocity, smoothTime * Time.fixedDeltaTime);
 		}
-
+		
 		public void SetTarget(Transform newTarget) {
-			target = newTarget;
+			Target = newTarget;
 		}
 
 		public void Pause() {
@@ -52,11 +52,11 @@ namespace PolyWare.Cameras {
 		}
 
 		private Vector3 CalculateTargetPos() {
-			return target.position + targetAimingOffset;
+			return Target.position + targetAimingOffset;
 		}
 
 		private Vector3 CalculateNewPos() {
-			return target.position + currentAimingOffset;
+			return Target.position + currentAimingOffset;
 		}
 
 		private void UpdateAimingOffset() {
@@ -64,7 +64,7 @@ namespace PolyWare.Cameras {
 		}
 		
 		private void OnDrawGizmosSelected() {
-			if (!Application.isPlaying || !target || isPaused) return;
+			if (!Application.isPlaying || !Target || isPaused) return;
 
 			Gizmos.DrawRay(transform.position, transform.forward);
 

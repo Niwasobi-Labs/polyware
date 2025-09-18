@@ -2,6 +2,7 @@ using PolyWare.Analytics.Telemetry;
 using PolyWare.Utils;
 using PolyWare.AssetManagement;
 using PolyWare.Audio;
+using PolyWare.Cameras;
 using PolyWare.Input;
 using PolyWare.UI;
 using UnityEngine.EventSystems;
@@ -16,6 +17,7 @@ namespace PolyWare.Core {
 		public static UIManager UI { get; private set; }
 		public static GameManager Game { get; private set; }
 		public static TelemetryManager Telemetry { get; private set; }
+		public static ICameraManager CameraManager { get; private set; }
 
 		public static void Setup(Bootstrapper bootstrapper) {
 			Constants = bootstrapper.Constants;
@@ -26,6 +28,7 @@ namespace PolyWare.Core {
 			UI = bootstrapper.UI;
 			Game = bootstrapper.GameManager;
 			Telemetry = new TelemetryManager();
+			CameraManager = bootstrapper.CameraManager;
 		}
 		
 		public static void Initialize() {
