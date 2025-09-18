@@ -37,7 +37,7 @@ namespace PolyWare.UI.TextFX {
 		private IEnumerator Reveal(int totalCharacters) {
 			while (text.maxVisibleCharacters != totalCharacters) {
 				text.maxVisibleCharacters += 1;
-				yield return Utils.Yielders.WaitForSeconds(speedUp ? Instance.Constants.dialogueSkipMultiplier : Instance.Constants.dialogueCharacterDelay);
+				yield return PolyWare.Utils.Yielders.WaitForSeconds(speedUp ? Instance.Constants.dialogueSkipMultiplier : Instance.Constants.dialogueCharacterDelay);
 			}
 		}
 	}
