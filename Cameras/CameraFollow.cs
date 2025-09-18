@@ -4,6 +4,7 @@ using UnityEngine;
 namespace PolyWare.Cameras {
 	public class CameraFollow : MonoBehaviour {
 		[SerializeField] private float smoothTime = 20f;
+		[SerializeField] private float transitionSpeedDampener = 3f;
 
 		[Title("Aiming Settings")]
 		[SerializeField]  private float aimingLead = 5f;
@@ -28,11 +29,21 @@ namespace PolyWare.Cameras {
 
 			UpdateAimingOffset();
 
-			transform.position = Vector3.SmoothDamp(transform.position, CalculateNewPos(), ref moveVelocity, smoothTime * Time.fixedDeltaTime);
+			if (transitioningToNewTarget) {
+				transform.position = Vector3.SmoothDamp(transform.position, CalculateNewPos(), ref moveVelocity, (smoothTime * transitionSpeedDampener) * Time.fixedDeltaTime);
+				
+				if (Vector3.Distance(transform.position, Target.position) < 0.1f) transitioningToNewTarget = false;
+			}
+			else {
+				transform.position = Vector3.SmoothDamp(transform.position, CalculateNewPos(), ref moveVelocity, smoothTime * Time.fixedDeltaTime);	
+			}
 		}
-		
+
+		private bool transitioningToNewTarget = false;
+
 		public void SetTarget(Transform newTarget) {
 			Target = newTarget;
+			transitioningToNewTarget = true;
 		}
 
 		public void Pause() {
