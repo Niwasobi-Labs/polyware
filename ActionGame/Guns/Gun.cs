@@ -120,7 +120,7 @@ namespace PolyWare.ActionGame.Guns {
 		}
 
 		protected Projectile CreateProjectile(Vector3 position, Vector3 direction) {
-			var newProjectile = Instantiate(Core.Instance.Collector.Get<ProjectileCollection>().Get(GunData.GunDefinition.BulletID).Prefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Projectile>();
+			var newProjectile = Core.Instance.SpawnedPrefabPool.SpawnPrefabAt<Projectile>(Core.Instance.Collector.Get<ProjectileCollection>().Get(GunData.GunDefinition.BulletID).Prefab, bulletSpawn.position, bulletSpawn.rotation);
 			newProjectile.Initialize(new DamageInfo(myCharacter.IsPlayer, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, direction, aimAssistStrategy.GetTargetTransform());
 			newProjectile.gameObject.layer = LayerMask.NameToLayer(myCharacter.IsPlayer ? LayerDefinitions.PlayerBullets : LayerDefinitions.EnemyBullets);
 			return newProjectile;

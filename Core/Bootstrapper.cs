@@ -4,6 +4,7 @@ using PolyWare.Utils;
 using PolyWare.AssetManagement;
 using PolyWare.Audio;
 using PolyWare.Cameras;
+using PolyWare.Core.Spawning;
 using PolyWare.Debug;
 using PolyWare.Input;
 using PolyWare.UI;
@@ -22,6 +23,7 @@ namespace PolyWare.Core {
 		public SFXManager SfxManager;
 		public UIManager UI;
 		public GameManager GameManager;
+		public PrefabFactoryPool PrefabFactoryPool;
 		public GameObject CameraPrefab;
 		public ICameraManager CameraManager; // todo: can we serialize interface objects? (odin?)
 		
@@ -30,6 +32,7 @@ namespace PolyWare.Core {
 			DontDestroyOnLoad(SfxManager = Instantiate(SfxManager));
 			DontDestroyOnLoad(UI = Instantiate(UI));
 			DontDestroyOnLoad(GameManager = Instantiate(GameManager));
+			DontDestroyOnLoad(PrefabFactoryPool = Instantiate(PrefabFactoryPool));
 
 			GameObject cameraManager = Instantiate(CameraPrefab);
 			if (!cameraManager.TryGetComponent(out CameraManager)) {

@@ -3,6 +3,7 @@ using PolyWare.Utils;
 using PolyWare.AssetManagement;
 using PolyWare.Audio;
 using PolyWare.Cameras;
+using PolyWare.Core.Spawning;
 using PolyWare.Input;
 using PolyWare.UI;
 using UnityEngine.EventSystems;
@@ -18,11 +19,13 @@ namespace PolyWare.Core {
 		public static GameManager Game { get; private set; }
 		public static TelemetryManager Telemetry { get; private set; }
 		public static ICameraManager CameraManager { get; private set; }
+		public static PrefabFactoryPool SpawnedPrefabPool { get; private set; }
 
 		public static void Setup(Bootstrapper bootstrapper) {
 			Constants = bootstrapper.Constants;
 			Collector = bootstrapper.Collector;
 			Input = bootstrapper.Input;
+			SpawnedPrefabPool = bootstrapper.PrefabFactoryPool;
 			EventSystem = Input.EventSystem;
 			SfxManager = bootstrapper.SfxManager;
 			UI = bootstrapper.UI;
