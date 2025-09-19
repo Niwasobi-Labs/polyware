@@ -12,7 +12,7 @@ namespace PolyWare.ActionGame.Projectiles {
 		
 		private Vector3 CalculateMagnetizedDirection() {
 			Vector3 targetDir = target.position - transform.position;
-			return Vector3.Slerp(transform.forward, targetDir, projectileData.MagnetismStrength * Time.fixedDeltaTime).normalized;
+			return Vector3.Slerp(transform.forward, targetDir, projectileDefinition.MagnetismStrength * Time.fixedDeltaTime).normalized;
 		} 
 		
 		private void OnDrawGizmos() {

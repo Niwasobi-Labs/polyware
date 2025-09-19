@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 namespace PolyWare.ActionGame.Projectiles {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Projectile : MonoBehaviour {
-		[FormerlySerializedAs("ProjectileData")] [SerializeField] protected ProjectileData projectileData; 
+		[FormerlySerializedAs("ProjectileData")] [SerializeField] protected ProjectileDefinition projectileDefinition; 
 		private DamageInfo damage;
 		private GameObject invoker;
 

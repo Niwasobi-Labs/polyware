@@ -5,14 +5,8 @@ using UnityEngine.Serialization;
 
 namespace PolyWare.ActionGame.Projectiles {
 	[Serializable]
-	public struct ProjectileAssetInfo {
-		[FormerlySerializedAs("prefab")] public Projectile Prefab;
-		// [FormerlySerializedAs("display")] public ProjectileDisplay Display; task: replace this with a different collection mapping (https://app.clickup.com/t/86b6j5z5c)
-	}
+	public class ProjectileAsset : AssetData<string, ProjectileDefinition> { }
 
-	[Serializable]
-	public class ProjectileAsset : AssetData<string, ProjectileAssetInfo> { }
-
-	[CreateAssetMenu(fileName = "ProjectileIconCollection", menuName = "PolyWare/Collections/Projectile Icons")]
-	public class ProjectileCollection : AssetCollection<string, ProjectileAsset, ProjectileAssetInfo> { }
+	[CreateAssetMenu(fileName = "New Projectile Collection", menuName = "PolyWare/Collections/Projectile Collection")]
+	public class ProjectileCollection : AssetCollection<string, ProjectileAsset, ProjectileDefinition> { }
 }
