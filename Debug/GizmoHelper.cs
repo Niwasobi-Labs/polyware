@@ -85,5 +85,12 @@ namespace PolyWare.Debug {
 				lastPoint = nextPoint;
 			}
 		}
+
+		public static void DrawRotatedCube(Vector3 center, Vector3 size, Quaternion rotation) {
+			Matrix4x4 oldMatrix = Gizmos.matrix;
+			Gizmos.matrix = Matrix4x4.TRS(center, rotation, Vector3.one);
+			Gizmos.DrawWireCube(Vector3.zero, size);
+			Gizmos.matrix = oldMatrix;
+		}
 	}
 }
