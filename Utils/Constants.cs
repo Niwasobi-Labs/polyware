@@ -11,5 +11,10 @@ namespace PolyWare.Utils {
 		public float dialogueSkipMultiplier;
 
 		public bool UseActiveAiming;
+		
+		public static Vector2 UnitBottomLeft = new Vector2(0, 0);
+		public static Vector2 UnitTopLeft = new Vector2(0, 1);
+		public static Vector2 UnitTopRight = new Vector2(1, 1);
+		public static Vector2 UnitBottomRight = new Vector2(1, 0);
 	}
 }
