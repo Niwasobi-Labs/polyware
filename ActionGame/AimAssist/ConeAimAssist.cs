@@ -9,7 +9,12 @@ namespace PolyWare.ActionGame.AimAssist {
 		public ConeAimAssist(AimAssistInfo aimAssistData, Transform spawnPoint) : base(aimAssistData, spawnPoint) { }
 		
 		public override void RunAimAssist() {
-			Physics.OverlapSphereNonAlloc(spawnPoint.position, aimAssistInfo.Range, aimAssistResults, enemyLayerMask);
+			int hits = Physics.OverlapSphereNonAlloc(spawnPoint.position, aimAssistInfo.Range, aimAssistResults, enemyLayerMask);
+			if (hits == 0) {
+				aimAssistTarget = null;
+				return;
+			}
+			
 			float maxAngle = Mathf.Atan2(aimAssistInfo.Radius, aimAssistInfo.Range) * Mathf.Rad2Deg;
 			
 			float closestAngle = float.MaxValue;
