@@ -42,6 +42,10 @@ namespace PolyWare.Debug {
 				Gizmos.DrawLine(start + currentThicknessOffset, end + currentThicknessOffset);
 			}
 		}
+
+		public static void DrawRay(Vector3 start, Vector3 direction, Color color, uint thickness) {
+			DrawLine(start, start + direction, color, thickness);
+		}
 		
 		public enum ConeStyle {
 			Arc,
