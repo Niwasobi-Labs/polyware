@@ -17,7 +17,7 @@ namespace PolyWare.Core.Spawning {
 		}
 		
 		public SpawnLocation NextSpawnPoint() {
-			var randomPoint = center + (UnityEngine.Random.insideUnitSphere * (outerRadius + innerRadius));
+			var randomPoint = center + UnityEngine.Random.insideUnitSphere * outerRadius + Vector3.one * innerRadius;
 			return new SpawnLocation(Vector3.ProjectOnPlane(randomPoint, axisNormal), Quaternion.identity);
 		}
 	}
