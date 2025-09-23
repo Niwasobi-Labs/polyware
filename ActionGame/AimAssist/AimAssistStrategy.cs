@@ -23,7 +23,7 @@ namespace PolyWare.ActionGame.AimAssist {
 		}
 		
 		protected AimAssistStrategy(AimAssistInfo aimAssistData, Transform spawnPoint) {
-			enemyLayerMask = 1 << LayerMask.NameToLayer("Characters") | 1 << LayerMask.NameToLayer("Props");
+			enemyLayerMask = aimAssistData.LayerMask;
 			aimAssistInfo = aimAssistData;
 			this.spawnPoint = spawnPoint;
 		}

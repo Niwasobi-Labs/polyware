@@ -9,5 +9,6 @@ namespace PolyWare.ActionGame.AimAssist {
 		[field: SerializeField] public float Radius { get; private set; } = 1.25f;
 		[field: SerializeField] public float Range { get; private set; } = 1.25f;
 		[field: SerializeField] public AnimationCurve Curve { get; private set; } = AnimationCurve.Linear(0, 0, 1, 1);
+		[field: SerializeField] public LayerMask LayerMask { get; private set; }
 	}
 }
