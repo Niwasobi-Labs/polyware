@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,7 @@ namespace PolyWare.Combat {
 		[ShowInInspector] [FoldoutGroup("Debug Info")] public DamageableValueHandler Shield { get; private set; }
 		
 		public event UnityAction<float, float> OnDamageTaken = delegate {};
+		public event Action OnShieldBreak = delegate {};
 		public event UnityAction<float, float> OnHeal = delegate {};
 		public event UnityAction OnDeath = delegate {};
 
@@ -45,7 +47,13 @@ namespace PolyWare.Combat {
 			if (Shield.Current > 0) {
 				Shield.TakeDamage(damageInfo.Damage);
 
-				if (Shield.Current <= 0 && damageInfo.PenetrateShields) Health.TakeDamage(damageInfo.Damage);
+				if (Shield.Current <= 0) {
+					OnShieldBreak?.Invoke();
+
+					if (damageInfo.PenetrateShields) {
+						Health.TakeDamage(damageInfo.Damage);
+					}
+				}
 			}
 			else {
 				Health.TakeDamage(damageInfo.Damage);
