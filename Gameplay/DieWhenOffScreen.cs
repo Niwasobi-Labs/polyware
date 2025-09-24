@@ -8,7 +8,7 @@ namespace PolyWare.Gameplay {
 		[SerializeField] private float killTimer;
 		
 		private void OnBecameInvisible() {
-			if (killTimer > 0) StartCoroutine(KillTimer());
+			if (killTimer > 0 && gameObject.activeInHierarchy) StartCoroutine(KillTimer());
 			else Kill();
 		}
 
