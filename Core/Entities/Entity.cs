@@ -11,14 +11,16 @@ namespace PolyWare.Core.Entities {
 		public IEntityData EntityData => Data;
 		public GameObject GameObject => gameObject;
 		
+		// todo: give entities a required Definition field to allow manual placement of entities (https://app.clickup.com/t/86b6vaqdv)
 		public abstract T Data { get; protected set; }
-		
+
 		public void Initialize(IEntityData data) {
 			if (data is not T entityData) throw new System.ArgumentException($"Invalid data type for {GetType().Name}");
 			Data = entityData;
 			OnInitialize();
 		}
 		
+		// called after setting up default EntityData
 		protected abstract void OnInitialize();
 	}
 }
