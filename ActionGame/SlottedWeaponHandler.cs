@@ -114,7 +114,9 @@ namespace PolyWare.ActionGame {
 				if (equipment.Definition.ItemID != itemID || equipment is not GunData gun || !gun.NeedsAmmo()) continue;
 				
 				ammoLeft = gun.AddAmmoToReserves(ammoLeft);
-				if (character.IsPlayer) PolyWare.Core.Instance.SfxManager.PlayClip(gun.GunDefinition.ReloadingSfx, character.Transform);
+				
+				// bug: this needs to properly handle local and networked multiplayer (https://app.clickup.com/t/86b6wajfh)
+				if (character.FactionMember.FactionID == 0) PolyWare.Core.Instance.SfxManager.PlayClip(gun.GunDefinition.ReloadingSfx, character.Transform);
 			}
 			
 			return ammoLeft;

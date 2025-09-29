@@ -1,14 +1,14 @@
 using System.Collections;
+using PolyWare.Characters;
 using PolyWare.Combat;
 using PolyWare.Levels;
 using PolyWare.Utils;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PolyWare.ActionGame.Projectiles {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Projectile : MonoBehaviour {
-		[FormerlySerializedAs("ProjectileData")] [SerializeField] protected ProjectileDefinition projectileDefinition; 
+		[SerializeField] protected ProjectileDefinition projectileDefinition; 
 		private DamageInfo damage;
 		private GameObject invoker;
 
@@ -37,6 +37,11 @@ namespace PolyWare.ActionGame.Projectiles {
 
 		private void OnTriggerEnter(Collider other) {
 			if (other.TryGetComponent(out IDamageable damageable)) {
+
+				if (damageable.GameObject == invoker && !projectileDefinition.AllowSelfDamage) return;
+
+				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == damage.FactionID) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
+				
 				damageable.TakeDamage(damage);
 
 				// if (damage.FromPlayer) PlayerCharacter.OnPlayerLandedShot?.Invoke(); bug: this shouldn't be handled this way, use static event
@@ -45,18 +50,12 @@ namespace PolyWare.ActionGame.Projectiles {
 			Kill();
 		}
 
-		public void Initialize(DamageInfo damageInfo, float velocity, Vector3 direction) {
+		public void Initialize(GameObject invokedBy, DamageInfo damageInfo, float velocity, Vector3 direction, Transform newTarget = null) {
+			invoker = invokedBy;
 			transform.forward = direction;
 			damage = damageInfo;
 			speed = velocity;
-			target = null;
-		}
-		
-		public void Initialize(DamageInfo damageInfo, float velocity, Vector3 direction, Transform newTarget) {
-			transform.forward = direction;
 			target = newTarget;
-			damage = damageInfo;
-			speed = velocity;
 		}
 
 		private IEnumerator KillTimer() {

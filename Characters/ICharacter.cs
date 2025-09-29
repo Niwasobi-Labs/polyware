@@ -8,6 +8,6 @@ namespace PolyWare.Characters {
 		public bool Pickup(IPickupable item);
 		public Transform Transform { get; }
 		public IStatsHandler Stats { get; }
-		public bool IsPlayer { get; }
+		public IFactionMember FactionMember { get; }
 	}
 }

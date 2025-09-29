@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Combat;
-using PolyWare.Debug;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -121,8 +120,7 @@ namespace PolyWare.ActionGame.Guns {
 
 		protected Projectile CreateProjectile(Vector3 position, Vector3 direction) {
 			var newProjectile = Core.Instance.SpawnedPrefabPool.SpawnPrefabAt<Projectile>(Core.Instance.Collector.Get<ProjectileCollection>().Get(GunData.GunDefinition.BulletID).Prefab, bulletSpawn.position, bulletSpawn.rotation);
-			newProjectile.Initialize(new DamageInfo(myCharacter.IsPlayer, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, direction, aimAssistStrategy.GetTargetTransform());
-			newProjectile.gameObject.layer = LayerMask.NameToLayer(myCharacter.IsPlayer ? LayerDefinitions.PlayerBullets : LayerDefinitions.EnemyBullets);
+			newProjectile.Initialize(myCharacter.Transform.gameObject, new DamageInfo(myCharacter.FactionMember.FactionID, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, direction, aimAssistStrategy.GetTargetTransform());
 			return newProjectile;
 		}
 		
