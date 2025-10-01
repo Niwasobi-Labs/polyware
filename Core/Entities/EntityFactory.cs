@@ -10,9 +10,9 @@ namespace PolyWare.Core.Entities {
 		}
 
 		public static T CreateWith(IEntityData dataReference, Vector3 position = default, Quaternion rotation = default) {
-			T newEquipment = CreateFrom(dataReference.EntityDefinition, position, rotation);
-			newEquipment.Initialize(dataReference);
-			return newEquipment;
+			T newEntity = CreateFrom(dataReference.EntityDefinition, position, rotation);
+			newEntity.Initialize(dataReference);
+			return newEntity;
 		}
 		
 		public static T CreateWith(IEntitySpawnerData spawnData, Vector3 position = default, Quaternion rotation = default) {
