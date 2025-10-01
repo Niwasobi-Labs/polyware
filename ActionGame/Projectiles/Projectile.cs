@@ -1,22 +1,20 @@
 using System.Collections;
 using PolyWare.Characters;
 using PolyWare.Combat;
+using PolyWare.Core.Entities;
 using PolyWare.Levels;
 using PolyWare.Utils;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.Projectiles {
 	[RequireComponent(typeof(Rigidbody))]
-	public class Projectile : MonoBehaviour {
-		[SerializeField] protected ProjectileDefinition projectileDefinition; 
-		private DamageInfo damage;
-		private GameObject invoker;
-
-		private Rigidbody rigidbdy;
-
-		protected float speed;
-		protected Transform target;
-
+	public class Projectile : Entity<ProjectileData> {
+		public Rigidbody MyRigidbody;
+		
+		public override ProjectileData Data { get; protected set; }
+		
+		private ProjectileMovementHandler movementHandler;
+		
 		private void OnEnable() {
 			Level.OnLevelReset += Kill;
 		}
@@ -24,38 +22,38 @@ namespace PolyWare.ActionGame.Projectiles {
 		private void OnDisable() {
 			Level.OnLevelReset -= Kill;
 		}
-		
+
 		private void Awake() {
-			rigidbdy = GetComponent<Rigidbody>();
+			movementHandler = GetComponent<ProjectileMovementHandler>();
+		}
+
+		protected override void OnInitialize() {
+			if (!MyRigidbody.isKinematic) {
+				MyRigidbody.linearVelocity = MyRigidbody.transform.forward * Data.Speed;
+			}
 		}
 		
 		private void Start() {
-			if (!rigidbdy.isKinematic) rigidbdy.linearVelocity = rigidbdy.transform.forward * speed;
-
 			StartCoroutine(KillTimer());
+		}
+
+		private void FixedUpdate() {
+			movementHandler.Move();
 		}
 
 		private void OnTriggerEnter(Collider other) {
 			if (other.TryGetComponent(out IDamageable damageable)) {
 
-				if (damageable.GameObject == invoker && !projectileDefinition.AllowSelfDamage) return;
+				if (damageable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
 
-				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == damage.FactionID) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
-				
-				damageable.TakeDamage(damage);
+				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == Data.AbilityContext.Faction) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
 
-				// if (damage.FromPlayer) PlayerCharacter.OnPlayerLandedShot?.Invoke(); bug: this shouldn't be handled this way, use static event
+				Data.AbilityContext.Ability.Execute(damageable, Data.AbilityContext);
 			}
 
-			Kill();
-		}
+			if (other.TryGetComponent(out Projectile otherProjectile) && otherProjectile.Data.Faction == Data.Faction) return;
 
-		public void Initialize(GameObject invokedBy, DamageInfo damageInfo, float velocity, Vector3 direction, Transform newTarget = null) {
-			invoker = invokedBy;
-			transform.forward = direction;
-			damage = damageInfo;
-			speed = velocity;
-			target = newTarget;
+			Kill();
 		}
 
 		private IEnumerator KillTimer() {

@@ -1,16 +1,12 @@
 using System.Collections.Generic;
-using PolyWare.Debug;
 using PolyWare.Timers;
 using UnityEngine;
 using UnityEngine.Events;
 
 namespace PolyWare.Combat {
-	public class Health : MonoBehaviour, IDamageable {
-
-		[Tooltip("These values can be overwritten by many systems")]
-		[SerializeField] private HealthData health;
-
-		public GameObject GameObject => gameObject;
+	public class Health {
+		
+		private HealthData health;
 		
 		public event UnityAction<float> OnDamageTaken;
 		public event UnityAction<float> OnHeal;
@@ -26,10 +22,6 @@ namespace PolyWare.Combat {
 
 		public float Max => health.Max;
 		public float Current => health.Current;
-
-		private void Awake() {
-			Initialize(health);
-		}
 
 		public void Initialize(HealthData newHealth) {
 			health = newHealth;

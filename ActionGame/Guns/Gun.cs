@@ -1,13 +1,12 @@
-using System;
 using System.Collections.Generic;
+using PolyWare.Abilities;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Combat;
+using PolyWare.Effects;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
 
 // todo: what if we wanted to use a Gun without a character? Like a turret?
 namespace PolyWare.ActionGame.Guns {
@@ -58,7 +57,7 @@ namespace PolyWare.ActionGame.Guns {
 				ReloadStrategy.None => new NoReload(this),
 				ReloadStrategy.Clip => new ClipReload(this),
 				ReloadStrategy.OneByOne => new OneByOneReload(this),
-				_ => throw new ArgumentOutOfRangeException()
+				_ => throw new System.ArgumentOutOfRangeException()
 			};
 		}
 		
@@ -102,9 +101,9 @@ namespace PolyWare.ActionGame.Guns {
 		private void Shoot() {
 			// if we are reloading but have gotten into this function, that means the reload can be interrupted
 			if (ReloadHandler.IsReloading) ReloadHandler.Cancel();
-			
-			SpawnProjectile();
-			
+
+			UseFireAbility();
+
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
 			fireRateTimer.Start();
@@ -118,17 +117,32 @@ namespace PolyWare.ActionGame.Guns {
 			//if (myCharacter.IsPlayer) PlayerCharacter.OnPlayerFired?.Invoke(GunData.GunDefinition.AmmoConsumptionPerShot); task: use event bus
 		}
 
-		protected Projectile CreateProjectile(Vector3 position, Vector3 direction) {
-			var newProjectile = Core.Instance.SpawnedPrefabPool.SpawnPrefabAt<Projectile>(Core.Instance.Collector.Get<ProjectileCollection>().Get(GunData.GunDefinition.BulletID).Prefab, bulletSpawn.position, bulletSpawn.rotation);
-			newProjectile.Initialize(myCharacter.Transform.gameObject, new DamageInfo(myCharacter.FactionMember.FactionID, GunData.GunDefinition.Damage), GunData.GunDefinition.BulletSpeed, direction, aimAssistStrategy.GetTargetTransform());
-			return newProjectile;
+		private void UseFireAbility() {
+			var context = new AbilityContext(
+				GunData.GunDefinition.FireAbility,
+				myCharacter.FactionMember.FactionID,
+				myCharacter.Transform.gameObject,
+				bulletSpawn.position,
+				bulletSpawn.rotation);
+			
+			context.Add(new DamageEffectContext(GunData.GunDefinition.Damage));
+			
+			context.Add(new ProjectileContext(new ProjectileData(
+				GunData.GunDefinition.Bullet,
+				context.Owner,
+				aimAssistStrategy.GetTargetTransform(),
+				CalculateProjectileDirection(GunData.GunDefinition.Spread),
+				GunData.GunDefinition.BulletSpeed,
+				myCharacter.FactionMember.FactionID,
+				context),
+				GunData.GunDefinition.AmmoConsumptionPerShot,
+				GunData.GunDefinition.Spread,
+				bulletSpawn.up));
+
+			GunData.GunDefinition.FireAbility.Trigger(context);
 		}
 		
-		protected virtual void SpawnProjectile() {
-			CreateProjectile(bulletSpawn.position, CalculateProjectileDirection(GunData.GunDefinition.Spread));
-		}
-
-		protected Vector3 CalculateProjectileDirection(float spread) {
+		public Vector3 CalculateProjectileDirection(float spread) {
 			Vector3 direction = aimAssistStrategy.CalculateAdjustedDirectionToTarget();
 			if (!(spread > 0f)) return direction.normalized;
 			

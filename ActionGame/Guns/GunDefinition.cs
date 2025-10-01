@@ -1,7 +1,8 @@
+using PolyWare.Abilities;
 using PolyWare.Combat;
 using PolyWare.Core.Entities;
-using PolyWare.Items;
 using PolyWare.ActionGame.AimAssist;
+using PolyWare.ActionGame.Projectiles;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -20,8 +21,9 @@ namespace PolyWare.ActionGame.Guns {
 			Projectiles,
 			NumberOnly
 		}
-		
+
 		[field: Title("Guns")]
+		[field: SerializeField] public Ability FireAbility { get; private set; }
 		[field: SerializeField] public DamageInfo Damage { get; private set; }
 		
 		[field: Title("Firing")]
@@ -35,7 +37,7 @@ namespace PolyWare.ActionGame.Guns {
 		
 		[field: Title("Ammo")]
 		[field: SerializeField] public AmmoDisplayMode AmmoDisplay { get; private set; }
-		[field: SerializeField] public string BulletID { get; private set; } 
+		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
 		[field: SerializeField] public int MaxAmmo { get; private set; }
 		[field: SerializeField] public int MaxReserveAmmo { get; private set; }
 		[field: SerializeField] public int AmmoConsumptionPerShot { get; private set; } = 1;
