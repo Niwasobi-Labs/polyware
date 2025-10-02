@@ -1,26 +1,41 @@
 using System;
+using System.Collections.Generic;
+using PolyWare.Abilities;
 using PolyWare.Characters;
 using PolyWare.Debug;
 using PolyWare.Core.Entities;
+using PolyWare.Effects;
 using PolyWare.Interactions;
 using PolyWare.Items;
+using PolyWare.Stats;
 using PolyWare.Timers;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.PowerUps {
-	public abstract class PowerUp : Entity<PowerUpData>, IPickupable {
+	public class PowerUp : Entity<PowerUpData>, IPickupable {
 		protected ICharacter character;
 
-		// todo: remove the user from Pickup and handle powerups through this auto-prop
+		// todo: remove the user from Pickup and handle power-ups through this auto-prop
 		public bool AutoPickup => true;
 		public override PowerUpData Data { get; protected set; }
 		
 		private CountdownTimer lifeTimer;
+		private List<StatModifier> modifiers = new List<StatModifier>();
 
 		protected override void OnInitialize() {
 			lifeTimer = new CountdownTimer(Data.Definition.LifeTime) {
 				OnTimerComplete = () => Destroy(gameObject)
 			};
+
+			for (int i = 0; i < Data.Definition.StatData.Count; i++) {
+				StatModiferData statCtx = Data.Definition.StatData[i];
+				StatModifier modifier = statCtx.Type switch {
+					StatModiferData.OperatorType.Add => new BasicStatModifier(statCtx.StatType, statCtx.Duration, v => v + statCtx.Value),
+					StatModiferData.OperatorType.Multiply => new BasicStatModifier(statCtx.StatType, statCtx.Duration, v => v * statCtx.Value),
+					_ => throw new ArgumentOutOfRangeException()
+				};
+				modifiers.Add(modifier);
+			}
 		}
 
 		protected virtual void Start() {
@@ -38,9 +53,17 @@ namespace PolyWare.ActionGame.PowerUps {
 			}
 			
 			// PolyWare.Core.Instance.SfxManager.PlayClip(Data.PickupSound, transform);
-			OnUse();
-		}
+			var context = new AbilityContext(
+				Data.Definition.OnPickupAbility,
+				character.FactionMember.FactionID,
+				gameObject,
+				new List<GameObject> { character.Transform.gameObject },
+				transform.position,
+				transform.rotation);
+			
+			context.Add(new ApplyStatsEffectContext(modifiers));
 
-		public abstract void OnUse();
+			Data.Definition.OnPickupAbility.Trigger(context);
+		}
 	}
 }
