@@ -122,6 +122,7 @@ namespace PolyWare.ActionGame.Guns {
 				GunData.GunDefinition.FireAbility,
 				myCharacter.FactionMember.FactionID,
 				myCharacter.Transform.gameObject,
+				new List<GameObject> {aimAssistStrategy.GetTargetTransform()?.gameObject },
 				bulletSpawn.position,
 				bulletSpawn.rotation);
 			
