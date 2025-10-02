@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PolyWare.Abilities;
 using PolyWare.Characters;
+using PolyWare.Core;
 using PolyWare.Debug;
 using PolyWare.Core.Entities;
 using PolyWare.Effects;
@@ -20,22 +21,11 @@ namespace PolyWare.ActionGame.PowerUps {
 		public override PowerUpData Data { get; protected set; }
 		
 		private CountdownTimer lifeTimer;
-		private List<StatModifier> modifiers = new List<StatModifier>();
 
 		protected override void OnInitialize() {
 			lifeTimer = new CountdownTimer(Data.Definition.LifeTime) {
 				OnTimerComplete = () => Destroy(gameObject)
 			};
-
-			for (int i = 0; i < Data.Definition.StatData.Count; i++) {
-				StatModiferData statCtx = Data.Definition.StatData[i];
-				StatModifier modifier = statCtx.Type switch {
-					StatModiferData.OperatorType.Add => new BasicStatModifier(statCtx.StatType, statCtx.Duration, v => v + statCtx.Value),
-					StatModiferData.OperatorType.Multiply => new BasicStatModifier(statCtx.StatType, statCtx.Duration, v => v * statCtx.Value),
-					_ => throw new ArgumentOutOfRangeException()
-				};
-				modifiers.Add(modifier);
-			}
 		}
 
 		protected virtual void Start() {
@@ -53,17 +43,18 @@ namespace PolyWare.ActionGame.PowerUps {
 			}
 			
 			// PolyWare.Core.Instance.SfxManager.PlayClip(Data.PickupSound, transform);
-			var context = new AbilityContext(
-				Data.Definition.OnPickupAbility,
-				character.FactionMember.FactionID,
-				gameObject,
-				new List<GameObject> { character.Transform.gameObject },
-				transform.position,
-				transform.rotation);
-			
-			context.Add(new ApplyStatsEffectContext(modifiers));
+			var ctx = new AbilityContextHolder(
+				new AbilityContext(
+					Data.Definition.OnPickupAbility,
+					character.FactionMember.FactionID,
+					gameObject,
+					new List<GameObject> { character.Transform.gameObject },
+					transform.position,
+					transform.rotation
+					)
+				);
 
-			Data.Definition.OnPickupAbility.Trigger(context);
+			Data.Definition.OnPickupAbility.Trigger(ctx);
 		}
 	}
 }

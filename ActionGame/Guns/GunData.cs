@@ -1,4 +1,5 @@
 using System;
+using PolyWare.Core;
 using PolyWare.Core.Entities;
 using UnityEngine;
 
@@ -10,6 +11,13 @@ namespace PolyWare.ActionGame.Guns {
 		[Tooltip("-1 will default to the MaxReserveAmmo")]
 		public int StartingReserveAmmo = -1;
 	}
+
+	public class GunContext : IContext {
+		public GunData Gun;
+		public GunContext(GunData gun) {
+			Gun = gun;
+		}
+	}	
 	
 	[Serializable]
 	public class GunData : WeaponData {

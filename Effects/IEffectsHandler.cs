@@ -1,9 +1,7 @@
-using PolyWare.Combat;
-
 namespace PolyWare.Effects {
 	public interface IEffectsHandler {
-		public void Add(IEffect<IDamageable> effect);
+		public void Add(IEffect effect);
 		public void Update(float deltaTime);
-		public void Remove(IEffect<IDamageable> effect);
+		public void Remove(IEffect effect);
 	}
 }

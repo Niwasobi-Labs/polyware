@@ -26,8 +26,17 @@ namespace PolyWare.Core {
 			contexts[context.GetType()] = context;
 		}
 		
-		public T Get<T>() where T : class, IContext {
-			return contexts[typeof(T)] as T;
+		public T Get<T>() where T : IContext {
+			return (T)contexts[typeof(T)];
+		}
+
+		public bool TryGet<T>(out T context) where T : IContext {
+			if (!contexts.ContainsKey(typeof(T))) {
+				context = default;
+				return false;
+			}
+			context = (T)contexts[typeof(T)];
+			return true;
 		}
 		
 		public void Remove(IContext context) {

@@ -1,24 +1,24 @@
 using System.Collections.Generic;
-using PolyWare.Combat;
+using PolyWare.Core;
 using PolyWare.Effects;
 using UnityEngine;
 
 namespace PolyWare.Abilities {
-	[CreateAssetMenu(fileName = "New Ability", menuName = "PolyWare/Abilities/Ability")]
+	[CreateAssetMenu(menuName = "PolyWare/Ability",  fileName = "New CharacterAbility")]
 	public class Ability : ScriptableObject {
 		public string Name;
 		public string Description;
 		public TargetingStrategyType TargetStrategy;
-		[SerializeReference] protected List<IEffect<IDamageable>> effects;
+		[SerializeReference] protected List<IEffect> effects;
 
-		public void Trigger(AbilityContext context) {
-			var strategy = TargetingStrategy.Create(TargetStrategy);
-			strategy.Start(context);
+		public void Trigger(AbilityContextHolder ctx) {
+			var strategy = AbilityTargetingStrategy.Create(TargetStrategy);
+			strategy.Start(ctx);
 		}
 
-		public void Execute(IDamageable target, AbilityContext context) {
+		public void Execute(IAffectable target, ContextHolder ctx) {
 			for (int i = 0; i < effects.Count; i++) {
-				target.ApplyEffect(effects[i], context);
+				target.Affect(effects[i], ctx);
 			}
 		}
 	}

@@ -1,11 +1,10 @@
 using System.Collections.Generic;
-using PolyWare.Combat;
 
 namespace PolyWare.Effects {
 	public class EffectsHandler : IEffectsHandler {
-		private readonly List<IEffect<IDamageable>> activeEffects = new();
+		private readonly List<IEffect> activeEffects = new();
 
-		public void Add(IEffect<IDamageable> effect) {
+		public void Add(IEffect effect) {
 			effect.OnCompleted += Remove;
 			activeEffects.Add(effect);
 		}
@@ -16,7 +15,7 @@ namespace PolyWare.Effects {
 			}
 		}
 		
-		public void Remove(IEffect<IDamageable> effect) {
+		public void Remove(IEffect effect) {
 			activeEffects.Remove(effect);
 		}
 

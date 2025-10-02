@@ -12,6 +12,14 @@ namespace PolyWare.Stats {
 
 		private readonly CountdownTimer timer;
 
+		public static StatModifier Create(StatModiferData data) {
+			return data.Type switch {
+				StatModiferData.OperatorType.Add => new BasicStatModifier(data.StatType, data.Duration, v => v + data.Value),
+				StatModiferData.OperatorType.Multiply => new BasicStatModifier(data.StatType, data.Duration, v => v * data.Value),
+				_ => throw new ArgumentOutOfRangeException()
+			};	
+		}
+		
 		protected StatModifier(float duration) {
 			if (duration <= 0) return;
 			

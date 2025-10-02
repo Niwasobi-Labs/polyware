@@ -1,7 +1,9 @@
 using System.Collections;
+using PolyWare.Abilities;
 using PolyWare.Characters;
-using PolyWare.Combat;
+using PolyWare.Core;
 using PolyWare.Core.Entities;
+using PolyWare.Effects;
 using PolyWare.Levels;
 using PolyWare.Utils;
 using UnityEngine;
@@ -14,6 +16,7 @@ namespace PolyWare.ActionGame.Projectiles {
 		public override ProjectileData Data { get; protected set; }
 		
 		private ProjectileMovementHandler movementHandler;
+		private ContextHolder contextHolder;
 		
 		private void OnEnable() {
 			Level.OnLevelReset += Kill;
@@ -26,7 +29,7 @@ namespace PolyWare.ActionGame.Projectiles {
 		private void Awake() {
 			movementHandler = GetComponent<ProjectileMovementHandler>();
 		}
-
+		
 		protected override void OnInitialize() {
 			if (!MyRigidbody.isKinematic) {
 				MyRigidbody.linearVelocity = MyRigidbody.transform.forward * Data.Speed;
@@ -41,14 +44,20 @@ namespace PolyWare.ActionGame.Projectiles {
 			movementHandler.Move();
 		}
 
+		public void ProvideContext(ContextHolder ctxHolder) {
+			contextHolder = ctxHolder;
+		}
+		
 		private void OnTriggerEnter(Collider other) {
-			if (other.TryGetComponent(out IDamageable damageable)) {
+			if (other.TryGetComponent(out IAffectable affectable)) {
 
-				if (damageable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
+				if (affectable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
 
-				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == Data.AbilityContext.Faction) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
+				if (affectable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == Data.Faction) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
 
-				Data.AbilityContext.Ability.Execute(damageable, Data.AbilityContext);
+				if (contextHolder.TryGet(out AbilityContext abilityContext)) {
+					abilityContext.Ability.Execute(affectable, contextHolder);
+				}
 			}
 
 			if (other.TryGetComponent(out Projectile otherProjectile) && otherProjectile.Data.Faction == Data.Faction) return;

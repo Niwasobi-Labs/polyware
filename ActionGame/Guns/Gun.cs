@@ -1,18 +1,21 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using PolyWare.Abilities;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Combat;
+using PolyWare.Core.Entities;
 using PolyWare.Effects;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
+using Sirenix.OdinInspector.Editor.Internal;
 using UnityEngine;
 
 // todo: what if we wanted to use a Gun without a character? Like a turret?
 namespace PolyWare.ActionGame.Guns {
 	public class Gun : Weapon {
 
-		[ShowInInspector, ReadOnly]
+		[ShowInInspector, Sirenix.OdinInspector.ReadOnly]
 		public GunData GunData => Data as GunData;
 		
 		[Title("Gun")]
@@ -118,29 +121,29 @@ namespace PolyWare.ActionGame.Guns {
 		}
 
 		private void UseFireAbility() {
-			var context = new AbilityContext(
+			
+			var abilityCtx = new AbilityContext(
 				GunData.GunDefinition.FireAbility,
 				myCharacter.FactionMember.FactionID,
 				myCharacter.Transform.gameObject,
-				new List<GameObject> {aimAssistStrategy.GetTargetTransform()?.gameObject },
+				new List<GameObject> { aimAssistStrategy.GetTargetTransform()?.gameObject },
 				bulletSpawn.position,
 				bulletSpawn.rotation);
-			
-			context.Add(new DamageEffectContext(GunData.GunDefinition.Damage));
-			
-			context.Add(new ProjectileContext(new ProjectileData(
+
+			var abilityContextHolder = new AbilityContextHolder(abilityCtx);
+			abilityContextHolder.Add(new GunContext(GunData));
+
+			var newProjectileData = new ProjectileData(
 				GunData.GunDefinition.Bullet,
-				context.Owner,
+				myCharacter.Transform.gameObject,
 				aimAssistStrategy.GetTargetTransform(),
 				CalculateProjectileDirection(GunData.GunDefinition.Spread),
 				GunData.GunDefinition.BulletSpeed,
-				myCharacter.FactionMember.FactionID,
-				context),
-				GunData.GunDefinition.AmmoConsumptionPerShot,
-				GunData.GunDefinition.Spread,
-				bulletSpawn.up));
+				myCharacter.FactionMember.FactionID);
 
-			GunData.GunDefinition.FireAbility.Trigger(context);
+			abilityContextHolder.Add(new ProjectileContext(newProjectileData, GunData.GunDefinition.AmmoConsumptionPerShot, GunData.GunDefinition.Spread, bulletSpawn.up));
+			
+			GunData.GunDefinition.FireAbility.Trigger(abilityContextHolder);
 		}
 		
 		public Vector3 CalculateProjectileDirection(float spread) {

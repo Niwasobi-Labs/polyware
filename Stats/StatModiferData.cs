@@ -4,7 +4,8 @@ namespace PolyWare.Stats {
 	[Serializable]
 	public class StatModiferData {
 		public enum OperatorType {
-			Add, Multiply
+			Add, 
+			Multiply
 		}
 
 		public StatType StatType = StatType.Attack;

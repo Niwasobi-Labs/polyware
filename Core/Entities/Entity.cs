@@ -11,6 +11,7 @@ namespace PolyWare.Core.Entities {
 		public IEntityData EntityData => Data;
 		public GameObject GameObject => gameObject;
 		
+		
 		// todo: give entities a required Definition field to allow manual placement of entities (https://app.clickup.com/t/86b6vaqdv)
 		public abstract T Data { get; protected set; }
 

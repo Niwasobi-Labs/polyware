@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using PolyWare.Core;
+using PolyWare.Core.Entities;
+using PolyWare.Effects;
 using UnityEngine;
 
 namespace PolyWare.Abilities {
-	public class AbilityContext : ContextHolder {
+	public class AbilityContext : IContext {
 		public Ability Ability;
 		public int Faction;
 		public GameObject Owner;
