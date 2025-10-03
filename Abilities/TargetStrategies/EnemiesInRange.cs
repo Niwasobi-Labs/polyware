@@ -17,7 +17,13 @@ namespace PolyWare.Abilities {
 			var targets = new List<IAffectable>();
 			var results =  new Collider[MaxTargets];
 
-			int hits = Physics.OverlapSphereNonAlloc(contextHolder.Culprit.transform.position, Radius, results, LayerMask.GetMask(damageMask));
+			Vector3 effectOrigin = contextHolder.Culprit.transform.position;
+			
+			if (contextHolder.Targets.Count > 0) {
+				effectOrigin = contextHolder.Targets[0].transform.position;
+			}
+			
+			int hits = Physics.OverlapSphereNonAlloc(effectOrigin, Radius, results, LayerMask.GetMask(damageMask));
 			
 			if (hits == 0) return targets;
 
