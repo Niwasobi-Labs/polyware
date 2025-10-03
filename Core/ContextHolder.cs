@@ -7,11 +7,11 @@ namespace PolyWare.Core {
 	
 	public class ContextHolder {
 		protected readonly Dictionary<Type, IContext> contexts = new Dictionary<Type, IContext>();
-
-		public ContextHolder() {}
 		
-		public ContextHolder(List<IContext> contexts) {
-			foreach (var context in contexts) {
+		public ContextHolder(List<IContext> initialContexts = null) {
+			if (initialContexts == null) return;
+			
+			foreach (var context in initialContexts) {
 				Add(context);
 			}
 		}

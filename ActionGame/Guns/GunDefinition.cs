@@ -23,7 +23,7 @@ namespace PolyWare.ActionGame.Guns {
 		}
 
 		[field: Title("Guns")]
-		[field: SerializeField] public Ability FireAbility { get; private set; }
+		[field: SerializeField] public AbilityDefinition FireAbility { get; private set; }
 		[field: SerializeField] public DamageInfo Damage { get; private set; }
 		
 		[field: Title("Firing")]

@@ -1,38 +1,35 @@
 using System.Collections.Generic;
-using PolyWare.Abilities;
 using PolyWare.Core.Entities;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
+using UnityEngine;
 
 namespace PolyWare.ActionGame.Projectiles {
 	public class ProjectileSpawnStrategy {
-		
-		public List<Projectile> Spawn(ProjectileContext ctx, Vector3 position, Vector3 forward, float spread, int count, Vector3 spawnUp, AbilityContextHolder abilityCtxHolder = null) {
-			return count > 1 ? 
-				SpawnMultipleProjectiles(ctx, position, forward, spread, count, spawnUp, abilityCtxHolder) :
-				new List<Projectile> { SpawnProjectile(ctx, position, forward, abilityCtxHolder) };
+		public static List<Projectile> Spawn(ProjectileSpawnContext context) {
+			return context.Count > 1 ? 
+				SpawnMultipleProjectiles(context) :
+				new List<Projectile> { SpawnProjectile(context, context.Direction) };
 		}
 
-		private List<Projectile> SpawnMultipleProjectiles(ProjectileContext ctx, Vector3 position, Vector3 forward, float spread, int count, Vector3 spawnUp, AbilityContextHolder abilityCtxHolder) {
+		private static List<Projectile> SpawnMultipleProjectiles(ProjectileSpawnContext context) {
 			var projectiles = new List<Projectile>();
-			float angleStep = spread / (count - 1);
-			float startingAngle = -(spread / 2f);
+			// ReSharper disable once PossibleLossOfFraction (we are checking inside of Spawn)
+			float angleStep = context.Spread / (context.Count - 1);
+			float startingAngle = -(context.Spread / 2f);
 			
-			for (int i = 0; i < count; i++) {
+			for (int i = 0; i < context.Count; i++) {
 				float angle = startingAngle + angleStep * i;
-				Vector3 newForward = Quaternion.AngleAxis(angle, spawnUp) * forward;
-				projectiles.Add(SpawnProjectile(ctx, position, newForward, abilityCtxHolder));
+				projectiles.Add(SpawnProjectile(context, Quaternion.AngleAxis(angle, context.AxisNormal) * context.Direction));
 			}
 
 			return projectiles;
 		}
 
-		private Projectile SpawnProjectile(ProjectileContext ctx, Vector3 position, Vector3 forward, AbilityContextHolder abilityCtxHolder) {
-			var newProjectile = EntityFactory<Projectile>.CreateWith(ctx.Data);
-			newProjectile.transform.position = position;
+		private static Projectile SpawnProjectile(ProjectileSpawnContext context, Vector3 forward) {
+			var newProjectile = EntityFactory<Projectile>.CreateWith(context.Projectile);
+			newProjectile.transform.position = context.Origin;
 			newProjectile.transform.forward = forward;
 			
-			if (abilityCtxHolder != null) newProjectile.ProvideAbilityContext(abilityCtxHolder);
+			if (context.AbilityContextHolder != null) newProjectile.ProvideAbilityContext(context.AbilityContextHolder);
 			
 			return newProjectile;
 		}

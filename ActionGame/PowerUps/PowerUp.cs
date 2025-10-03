@@ -5,10 +5,8 @@ using PolyWare.Characters;
 using PolyWare.Core;
 using PolyWare.Debug;
 using PolyWare.Core.Entities;
-using PolyWare.Effects;
 using PolyWare.Interactions;
 using PolyWare.Items;
-using PolyWare.Stats;
 using PolyWare.Timers;
 using UnityEngine;
 
@@ -43,18 +41,10 @@ namespace PolyWare.ActionGame.PowerUps {
 			}
 			
 			// PolyWare.Core.Instance.SfxManager.PlayClip(Data.PickupSound, transform);
-			var ctx = new AbilityContextHolder(
-				new AbilityContext(
-					Data.Definition.OnPickupAbility,
-					character.FactionMember.FactionID,
-					gameObject,
-					new List<GameObject> { character.Transform.gameObject },
-					transform.position,
-					transform.rotation
-					)
-				);
-
-			Data.Definition.OnPickupAbility.Trigger(ctx);
+			var newAbility = Data.Definition.OnPickupAbility.CreateInstance();
+			newAbility.Trigger(new AbilityContextHolder(Data.Definition.OnPickupAbility, gameObject, new List<GameObject>{ character.Transform.gameObject }));
+			
+			Destroy(gameObject);
 		}
 	}
 }

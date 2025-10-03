@@ -16,7 +16,8 @@ namespace PolyWare.ActionGame.Projectiles {
 		public override ProjectileData Data { get; protected set; }
 		
 		private ProjectileMovementHandler movementHandler;
-		private AbilityContextHolder abilityContextHolder;
+		private Ability ability;
+		private AbilityContextHolder abilityCtxHolder;
 		public IFactionMember FactionMember { get; private set; }
 		
 		private void OnEnable() {
@@ -48,24 +49,26 @@ namespace PolyWare.ActionGame.Projectiles {
 		}
 
 		public void ProvideAbilityContext(AbilityContextHolder ctxHolder) {
-			abilityContextHolder = ctxHolder;
+			ability = ctxHolder.AbilityDefinition.CreateInstance();
+			abilityCtxHolder = ctxHolder;
+			abilityCtxHolder.Add(Data);
 		}
 		
 		private void OnTriggerEnter(Collider other) {
+			if (FactionMember != null && other.TryGetComponent(out Projectile otherProjectile) && FactionMember?.FactionID == otherProjectile.FactionMember?.FactionID) return;
+			
 			if (other.TryGetComponent(out IAffectable affectable)) {
 
 				if (affectable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
 
 				if (FactionMember != null && affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember) && FactionMember?.FactionID == otherFactionMember.FactionID) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
 
-				if (abilityContextHolder != null) {
-					abilityContextHolder.AbilityContext.Targets.Add(affectable.GameObject);
-					abilityContextHolder.AbilityContext.Ability.Trigger(abilityContextHolder);
+				if (ability != null) {
+					abilityCtxHolder.Targets.Add(affectable.GameObject);
+					ability.Trigger(abilityCtxHolder);
 				}
 			}
-
-			if (FactionMember != null && other.TryGetComponent(out Projectile otherProjectile) && FactionMember?.FactionID == otherProjectile.FactionMember?.FactionID) return;
-
+			
 			Kill();
 		}
 

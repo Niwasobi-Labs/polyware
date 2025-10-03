@@ -4,11 +4,13 @@ using PolyWare.Abilities;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Combat;
+using PolyWare.Core;
 using PolyWare.Core.Entities;
 using PolyWare.Effects;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
 using Sirenix.OdinInspector.Editor.Internal;
+using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
 // todo: what if we wanted to use a Gun without a character? Like a turret?
@@ -39,7 +41,6 @@ namespace PolyWare.ActionGame.Guns {
 		
 		protected override void OnInitialize() {
 			aimAssistStrategy = AimAssistStrategy.Create(GunData.GunDefinition.AimAssist, bulletSpawn);
-			projectileSpawnStrategy = new ProjectileSpawnStrategy();
 			
 			if (GunData.CurrentAmmo <= 0) GunData.SetCurrentAmmo(GunData.GunDefinition.MaxAmmo);
 			if (GunData.ReserveAmmo <= 0) GunData.AddAmmoToReserves(GunData.GunDefinition.MaxReserveAmmo);
@@ -108,7 +109,7 @@ namespace PolyWare.ActionGame.Guns {
 			// if we are reloading but have gotten into this function, that means the reload can be interrupted
 			if (ReloadHandler.IsReloading) ReloadHandler.Cancel();
 
-			UseFireAbility();
+			FireProjectiles();
 
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
@@ -122,29 +123,28 @@ namespace PolyWare.ActionGame.Guns {
 			
 			//if (myCharacter.IsPlayer) PlayerCharacter.OnPlayerFired?.Invoke(GunData.GunDefinition.AmmoConsumptionPerShot); task: use event bus
 		}
-
-		private void UseFireAbility() {
-
-			var abilityCtxHolder = new AbilityContextHolder(new AbilityContext(
-				GunData.GunDefinition.FireAbility,
-				myCharacter.FactionMember.FactionID,
-				myCharacter.Transform.gameObject,
-				new List<GameObject> (),
-				bulletSpawn.position,
-				bulletSpawn.rotation));
+		
+		private void FireProjectiles() {
+			var abilityCtxHolder = new AbilityContextHolder(GunData.GunDefinition.FireAbility, myCharacter.Transform.gameObject);
 			
-			abilityCtxHolder.Add(new GunContext(GunData));
+			abilityCtxHolder.Add(GunData);
+			
+			ProjectileSpawnStrategy.Spawn(new ProjectileSpawnContext(
+				CreateProjectileData(),
+				GunData.GunDefinition.AmmoConsumptionPerShot,
+				bulletSpawn.position, 
+				CalculateProjectileDirection(), 
+				bulletSpawn.up,
+				GunData.GunDefinition.Spread, 
+				abilityCtxHolder));
+		}
 
-			var newProjectileData = new ProjectileData(
+		private ProjectileData CreateProjectileData() {
+			return new ProjectileData(
 				GunData.GunDefinition.Bullet,
 				myCharacter.Transform.gameObject,
 				aimAssistStrategy.GetTargetTransform(),
 				GunData.GunDefinition.BulletSpeed);
-
-			var projectileCtx = new ProjectileContext(newProjectileData);
-			abilityCtxHolder.Add(projectileCtx);
-
-			projectileSpawnStrategy.Spawn(projectileCtx, bulletSpawn.position, CalculateProjectileDirection(), GunData.GunDefinition.Spread, GunData.GunDefinition.AmmoConsumptionPerShot, bulletSpawn.up, abilityCtxHolder);
 		}
 		
 		public Vector3 CalculateProjectileDirection() {

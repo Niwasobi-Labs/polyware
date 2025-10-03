@@ -7,7 +7,7 @@ namespace PolyWare.Core.Entities {
 	}
 	
 	[Serializable]
-	public class EntityData<T> : IEntityData where T : EntityDefinition {
+	public class EntityData<T> : IEntityData, IContext where T : EntityDefinition {
 		public T Definition { get; }
 		public EntityDefinition EntityDefinition => Definition;
 

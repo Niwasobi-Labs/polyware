@@ -1,7 +1,10 @@
+using System;
 using System.Collections.Generic;
 
 namespace PolyWare.Effects {
 	public class EffectsHandler : IEffectsHandler {
+		public event Action OnEmpty;
+		
 		private readonly List<IEffect> activeEffects = new();
 
 		public void Add(IEffect effect) {
@@ -17,6 +20,7 @@ namespace PolyWare.Effects {
 		
 		public void Remove(IEffect effect) {
 			activeEffects.Remove(effect);
+			if (activeEffects.Count == 0) OnEmpty?.Invoke();
 		}
 
 		public void RemoveAll() {
@@ -24,6 +28,9 @@ namespace PolyWare.Effects {
 				activeEffects[i].Cancel();
 			}
 			activeEffects.Clear();
+			OnEmpty?.Invoke();
 		}
+
+		public bool IsEmpty => activeEffects.Count == 0;
 	}
 }

@@ -8,8 +8,8 @@ namespace PolyWare.Abilities {
 		public List<IAffectable> GetTargets(AbilityContextHolder contextHolder) {
 			var targets = new List<IAffectable>();
 
-			for (int i = 0; i < contextHolder.AbilityContext.Targets.Count; i++) {
-				GameObject target = contextHolder.AbilityContext.Targets[i];
+			for (int i = 0; i < contextHolder.Targets.Count; i++) {
+				GameObject target = contextHolder.Targets[i];
 
 				if (!target.TryGetComponent(out IAffectable affectable)) {
 					Log.Error($"Target is not IAffectable {target.name}");
