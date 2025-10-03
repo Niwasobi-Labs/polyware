@@ -10,7 +10,7 @@ namespace PolyWare.ActionGame {
 		[Serializable]
 		public struct MeleeAttackInfo {
 			public float Cooldown;
-			public DamageInfo Damage;
+			public DamageContext Damage;
 			public AudioClip Sound;
 			public float Range;
 		}

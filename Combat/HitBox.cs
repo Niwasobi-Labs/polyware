@@ -1,5 +1,5 @@
 using System;
-using PolyWare.Abilities;
+using System.Data.Common;
 using PolyWare.Core;
 using PolyWare.Debug;
 using PolyWare.Effects;
@@ -9,7 +9,9 @@ namespace PolyWare.Combat {
 	public class HitBox : MonoBehaviour, IDamageable, IAffectable {
 		[SerializeField] private GameObject owner;
 
+		public event Action<DamageContext> OnDeath;
 		public GameObject GameObject => owner;
+		
 		private IDamageable ownerDamageable;
 		private IAffectable ownerAffectable;
 
@@ -23,10 +25,13 @@ namespace PolyWare.Combat {
 			}
 		}
 
-		public void TakeDamage(DamageInfo damageInfo) => ownerDamageable.TakeDamage(damageInfo);
+		public void TakeDamage(DamageContext damageContext) => ownerDamageable.TakeDamage(damageContext);
 		public void Heal(float healAmount) => ownerDamageable.Heal(healAmount);
 		public void Affect(IEffect effect, ContextHolder ctx) => ownerAffectable.Affect(effect, ctx); 
 		public bool IsAlive() => ownerDamageable.IsAlive();
-		public void Die() => ownerDamageable.Die();
+		public void Die(DamageContext damageContext) {
+			OnDeath?.Invoke(damageContext);
+			ownerDamageable.Die(damageContext);
+		}
 	}
 }

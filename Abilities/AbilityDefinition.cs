@@ -8,10 +8,9 @@ namespace PolyWare.Abilities {
 		public string Name;
 		[TextArea(3, 10)]
 		public string Description;
-		public List<EffectData> OnSuccessEffects;
+		public List<EffectData> OnHit;
+		public List<EffectData> OnKill;
 
-		public Ability CreateInstance() {
-			return new Ability(this);
-		}
+		public Ability CreateInstance() => new (this);
 	}
 }

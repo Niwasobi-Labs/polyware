@@ -8,7 +8,7 @@ namespace PolyWare.ActionGame.Grenades {
 	public class GrenadeDefinition : ItemDefinition {
 		public override IEntityData CreateDefaultInstance() => new GrenadeData(this);
 
-		public DamageInfo Damage;
+		public DamageContext Damage;
 		public float FuseTime = 2.0f;
 	}
 }

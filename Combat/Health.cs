@@ -13,7 +13,7 @@ namespace PolyWare.Combat {
 		public event UnityAction OnRegenStart;
 		public event UnityAction<float> OnRegenUpdate;
 		public event UnityAction<float> OnRegenComplete;
-		public event UnityAction OnDeath;
+		public event UnityAction<DamageContext> OnDeath;
 			
 		public CountdownTimer RegenTimer;
 		public CountdownTimer RegenDelayTimer;
@@ -58,22 +58,22 @@ namespace PolyWare.Combat {
 			return health.Current > 0;
 		}
 		
-		public void Die() {
-			OnDeath?.Invoke();
+		public void Die(DamageContext damageContext) {
+			OnDeath?.Invoke(damageContext);
 		}
 		
-		public void TakeDamage(DamageInfo damageData) {
+		public void TakeDamage(DamageContext ctx) {
 			if (health.Invincible) return;
 			if (health.Current <= 0) return;
 			
 			RegenTimer.Stop();
 			RegenDelayTimer.Restart();
 			
-			health.Current = Mathf.Max(health.Current - damageData.Damage, 0);
+			health.Current = Mathf.Max(health.Current - ctx.Damage, 0);
 
 			OnDamageTaken?.Invoke(health.Current / health.Max);
 			
-			if (health.Current <= 0) Die();
+			if (health.Current <= 0) Die(ctx);
 		}
 		
 		public void Heal(float healAmount) {
