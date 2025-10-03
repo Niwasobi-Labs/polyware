@@ -10,7 +10,7 @@ namespace PolyWare.Abilities {
 		[TextArea(3, 10)] public string Description;
 		
 		[Title("Actions")]
-		[SerializeField] public List<AbilityActionData> OnHitActions = new List<AbilityActionData>();
+		[SerializeField] public List<AbilityActionData> OnSuccessActions = new List<AbilityActionData>();
 		[PropertySpace]
 		[SerializeField] public List<AbilityActionData> OnKillActions = new List<AbilityActionData>();
 		

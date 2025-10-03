@@ -28,7 +28,7 @@ namespace PolyWare.Abilities {
 		}
 
 		protected void TriggerOnHitActions(AbilityContextHolder ctx) {
-			var hitActions = Definition.OnHitActions;
+			var hitActions = Definition.OnSuccessActions;
 			
 			foreach (AbilityActionData hitAction in hitActions) {
 				var targets = hitAction.Target.GetTargets(ctx);
