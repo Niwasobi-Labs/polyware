@@ -4,7 +4,7 @@ using PolyWare.Effects;
 using UnityEngine;
 
 namespace PolyWare.Abilities {
-	public class TargetEffectStrategy : IEffectStrategy {
+	public class TargetActionTargetStrategy : IActionTargetStrategy {
 		public List<IAffectable> GetTargets(AbilityContextHolder contextHolder) {
 			var targets = new List<IAffectable>();
 

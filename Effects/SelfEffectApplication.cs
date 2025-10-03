@@ -3,7 +3,7 @@ using PolyWare.Debug;
 using PolyWare.Effects;
 
 namespace PolyWare.Abilities {
-	public class SelfEffectStrategy : IEffectStrategy {
+	public class SelfActionTargetStrategy : IActionTargetStrategy {
 		public List<IAffectable> GetTargets(AbilityContextHolder contextHolder) {
 			if (contextHolder.Culprit.TryGetComponent(out IAffectable affectable)) return new List<IAffectable> { affectable };
 			

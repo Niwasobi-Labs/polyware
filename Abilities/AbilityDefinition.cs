@@ -1,16 +1,19 @@
 using System.Collections.Generic;
-using PolyWare.Effects;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Abilities {
 	[CreateAssetMenu(fileName = "New AbilityDefinition", menuName = "PolyWare/Ability")]
 	public class AbilityDefinition : ScriptableObject {
+		[Title("Info")]
 		public string Name;
-		[TextArea(3, 10)]
-		public string Description;
-		public List<EffectData> OnHit;
-		public List<EffectData> OnKill;
-
+		[TextArea(3, 10)] public string Description;
+		
+		[Title("Actions")]
+		[SerializeField] public List<AbilityActionData> OnHitActions = new List<AbilityActionData>();
+		[PropertySpace]
+		[SerializeField] public List<AbilityActionData> OnKillActions = new List<AbilityActionData>();
+		
 		public Ability CreateInstance() => new (this);
 	}
 }

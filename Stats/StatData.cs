@@ -8,8 +8,8 @@ namespace PolyWare.Stats {
 	
 	[Serializable]
 	public class StatData {
-		public float Attack;
-		public float Speed;
+		public float Attack = 1;
+		public float Speed = 1;
 		
 		public float this[StatType statType] {
 			get {

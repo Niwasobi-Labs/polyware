@@ -20,36 +20,39 @@ namespace PolyWare.Abilities {
 		public void Trigger(AbilityContextHolder ctx) {
 			isRunning = true;
 
-			TriggerOnHitEffects(ctx);
+			TriggerOnHitActions(ctx);
 			
 			isRunning = false;
 			
 			if (effectsHandler.IsEmpty) Dispose();
 		}
 
-		protected void TriggerOnHitEffects(AbilityContextHolder ctx) {
-			for (int i = 0; i < Definition.OnHit.Count; ++i) {
-				var filteredTargets = Definition.OnHit[i].Strategy.GetTargets(ctx);
+		protected void TriggerOnHitActions(AbilityContextHolder ctx) {
+			var hitActions = Definition.OnHitActions;
+			
+			foreach (AbilityActionData hitAction in hitActions) {
+				var targets = hitAction.Target.GetTargets(ctx);
 				
-				for (int j = 0; j < filteredTargets.Count; ++j) {
-					
-					if (filteredTargets[j] is IDamageable damageable) {
+				for (int j = 0; j < targets.Count; ++j) {
+					if (targets[j] is IDamageable damageable) {
 						damageable.OnDeath += (damage) => {
-							if (WasKilledByThisAbility(damage, ctx)) TriggerOnKillEffects(ctx);
+							if (WasKilledByThisAbility(damage, ctx)) TriggerOnKillActions(ctx);
 						};
 					}
 					
-					ApplyEffectsTo(filteredTargets[j], Definition.OnHit[i].Effects, ctx);
+					ApplyEffectsTo(targets[j], hitAction.Effects, ctx);
 				}
 			}
 		}
 
-		protected void TriggerOnKillEffects(AbilityContextHolder ctx) {
-			for (int i = 0; i < Definition.OnKill.Count; ++i) {
-				var filteredTargets = Definition.OnKill[i].Strategy.GetTargets(ctx);
+		protected void TriggerOnKillActions(AbilityContextHolder ctx) {
+			var killActions = Definition.OnKillActions;
+			
+			foreach (AbilityActionData killAction in killActions) {
+				var targets = killAction.Target.GetTargets(ctx);
 				
-				for (int j = 0; j < filteredTargets.Count; ++j) {
-					ApplyEffectsTo(filteredTargets[j], Definition.OnKill[i].Effects, ctx);
+				for (int j = 0; j < targets.Count; ++j) {
+					ApplyEffectsTo(targets[j], killAction.Effects, ctx);
 				}
 			}
 		}
