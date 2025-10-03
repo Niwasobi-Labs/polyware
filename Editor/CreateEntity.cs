@@ -117,7 +117,7 @@ $@"using PolyWare.Core.Entities;
 using UnityEngine;
 
 namespace {ns} {{
-	[CreateAssetMenu(fileName = ""{name} Definition"", menuName = ""Game/{name}"")]
+	[CreateAssetMenu(menuName = ""PolyWare/Definitions/{name}"", fileName = ""New {name}Definition"")]
 	public class {name}Definition : EntityDefinition {{
 		public override IEntityData CreateDefaultInstance() => new {name}Data(this);
 	}}

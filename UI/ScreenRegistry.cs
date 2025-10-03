@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace PolyWare.UI {
-	[CreateAssetMenu(fileName = "ScreenRegistry", menuName = "PolyWare/Registries/Screen Registry")]
+	[CreateAssetMenu(menuName = "PolyWare/Registries/ScreenRegistry", fileName = "New ScreenRegistry")]
 	public class ScreenRegistry : Registry<PolyWare.UI.Screen> { }
 	
 #if UNITY_EDITOR

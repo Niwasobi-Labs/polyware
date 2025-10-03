@@ -2,7 +2,7 @@ using PolyWare.Core.Entities;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.Projectiles {
-	[CreateAssetMenu(fileName = "New Projectile Definition", menuName = "PolyWare/Projectile")]
+	[CreateAssetMenu(menuName = "PolyWare/Definitions/Projectile", fileName = "New ProjectileDefinition")]
 	public class ProjectileDefinition : EntityDefinition {
 		[Header("Magnetism")] [Range(0, 1)]
 		[field: SerializeField] public float MagnetismStrength { get; private set; }

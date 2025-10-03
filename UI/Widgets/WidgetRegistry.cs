@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace PolyWare.UI {
-	[CreateAssetMenu(fileName = "New Widget Registry", menuName = "PolyWare/Registries/Widget Registry")]
+	[CreateAssetMenu(menuName = "PolyWare/Registries/WidgetRegistry", fileName = "New WidgetRegistry")]
 	public class WidgetRegistry : Registry<Widget> { }
 	
 #if UNITY_EDITOR

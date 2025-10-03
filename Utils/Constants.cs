@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace PolyWare.Utils {
-	[CreateAssetMenu(fileName = "Constants", menuName = "PolyWare/Constants")]
+	[CreateAssetMenu(menuName = "PolyWare", fileName = "New Constants")]
 	public class Constants : ScriptableObject {
 		[FormerlySerializedAs("DialogueCharacterDelay")] [Header("User Interface")]
 		public float dialogueCharacterDelay;

@@ -3,7 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 namespace PolyWare.Levels {
-	[CreateAssetMenu(fileName = "LevelRegistry", menuName = "PolyWare/Registries/Level Registry")]
+	[CreateAssetMenu(menuName = "PolyWare/Registries/LevelRegistry", fileName = "New LevelRegistry")]
 	public class LevelRegistry : Registry<Levels.Level> { }
 	
 #if UNITY_EDITOR

@@ -4,7 +4,7 @@ using PolyWare.Items;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.PowerUps {
-	[CreateAssetMenu(fileName = "New PowerUp", menuName = "PolyWare/Items/PowerUp")]
+	[CreateAssetMenu(menuName = "PolyWare/Definitions/PowerUp", fileName = "New PowerUp")]
 	public class PowerUpDefinition : ItemDefinition {
 		[field: SerializeField] public Ability OnPickupAbility; 
 		[field: SerializeField] public float LifeTime { get; private set; }

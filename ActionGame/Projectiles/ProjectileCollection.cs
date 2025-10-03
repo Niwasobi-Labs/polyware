@@ -1,7 +1,6 @@
 using System;
 using PolyWare.AssetManagement;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PolyWare.ActionGame.Projectiles {
 	[Serializable]

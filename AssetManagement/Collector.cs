@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace PolyWare.AssetManagement {
-	[CreateAssetMenu(fileName = "Collector", menuName = "PolyWare/Collector")]
+	[CreateAssetMenu( menuName = "PolyWare", fileName = "New Collector")]
 	public class Collector : ScriptableObject {
 		[SerializeField] [FormerlySerializedAs("collections")] internal List<Collection> collections = new List<Collection>();
 
