@@ -16,7 +16,8 @@ namespace PolyWare.ActionGame.Projectiles {
 		public override ProjectileData Data { get; protected set; }
 		
 		private ProjectileMovementHandler movementHandler;
-		private ContextHolder contextHolder;
+		private AbilityContextHolder abilityContextHolder;
+		public IFactionMember FactionMember { get; private set; }
 		
 		private void OnEnable() {
 			Level.OnLevelReset += Kill;
@@ -34,6 +35,8 @@ namespace PolyWare.ActionGame.Projectiles {
 			if (!MyRigidbody.isKinematic) {
 				MyRigidbody.linearVelocity = MyRigidbody.transform.forward * Data.Speed;
 			}
+			
+			if (Data.Invoker) FactionMember = Data.Invoker.GetComponent<IFactionMember>();
 		}
 		
 		private void Start() {
@@ -44,8 +47,8 @@ namespace PolyWare.ActionGame.Projectiles {
 			movementHandler.Move();
 		}
 
-		public void ProvideContext(ContextHolder ctxHolder) {
-			contextHolder = ctxHolder;
+		public void ProvideAbilityContext(AbilityContextHolder ctxHolder) {
+			abilityContextHolder = ctxHolder;
 		}
 		
 		private void OnTriggerEnter(Collider other) {
@@ -53,14 +56,15 @@ namespace PolyWare.ActionGame.Projectiles {
 
 				if (affectable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
 
-				if (affectable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == Data.Faction) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
+				if (FactionMember != null && affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember) && FactionMember?.FactionID == otherFactionMember.FactionID) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
 
-				if (contextHolder.TryGet(out AbilityContext abilityContext)) {
-					abilityContext.Ability.Execute(affectable, contextHolder);
+				if (abilityContextHolder != null) {
+					abilityContextHolder.AbilityContext.Targets.Add(affectable.GameObject);
+					abilityContextHolder.AbilityContext.Ability.Trigger(abilityContextHolder);
 				}
 			}
 
-			if (other.TryGetComponent(out Projectile otherProjectile) && otherProjectile.Data.Faction == Data.Faction) return;
+			if (FactionMember != null && other.TryGetComponent(out Projectile otherProjectile) && FactionMember?.FactionID == otherProjectile.FactionMember?.FactionID) return;
 
 			Kill();
 		}

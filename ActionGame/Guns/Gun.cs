@@ -29,6 +29,8 @@ namespace PolyWare.ActionGame.Guns {
 		//private PlayerGunHeatEvent heatEvent;
 		
 		private AimAssistStrategy aimAssistStrategy;
+		private ProjectileSpawnStrategy projectileSpawnStrategy;
+		
 		public ReloadHandler ReloadHandler { get; private set; }
 		
 		private List<Timer> timers;
@@ -37,6 +39,7 @@ namespace PolyWare.ActionGame.Guns {
 		
 		protected override void OnInitialize() {
 			aimAssistStrategy = AimAssistStrategy.Create(GunData.GunDefinition.AimAssist, bulletSpawn);
+			projectileSpawnStrategy = new ProjectileSpawnStrategy();
 			
 			if (GunData.CurrentAmmo <= 0) GunData.SetCurrentAmmo(GunData.GunDefinition.MaxAmmo);
 			if (GunData.ReserveAmmo <= 0) GunData.AddAmmoToReserves(GunData.GunDefinition.MaxReserveAmmo);
@@ -121,32 +124,31 @@ namespace PolyWare.ActionGame.Guns {
 		}
 
 		private void UseFireAbility() {
-			
-			var abilityCtx = new AbilityContext(
+
+			var abilityCtxHolder = new AbilityContextHolder(new AbilityContext(
 				GunData.GunDefinition.FireAbility,
 				myCharacter.FactionMember.FactionID,
 				myCharacter.Transform.gameObject,
-				new List<GameObject> { aimAssistStrategy.GetTargetTransform()?.gameObject },
+				new List<GameObject> (),
 				bulletSpawn.position,
-				bulletSpawn.rotation);
-
-			var abilityContextHolder = new AbilityContextHolder(abilityCtx);
-			abilityContextHolder.Add(new GunContext(GunData));
+				bulletSpawn.rotation));
+			
+			abilityCtxHolder.Add(new GunContext(GunData));
 
 			var newProjectileData = new ProjectileData(
 				GunData.GunDefinition.Bullet,
 				myCharacter.Transform.gameObject,
 				aimAssistStrategy.GetTargetTransform(),
-				CalculateProjectileDirection(GunData.GunDefinition.Spread),
-				GunData.GunDefinition.BulletSpeed,
-				myCharacter.FactionMember.FactionID);
+				GunData.GunDefinition.BulletSpeed);
 
-			abilityContextHolder.Add(new ProjectileContext(newProjectileData, GunData.GunDefinition.AmmoConsumptionPerShot, GunData.GunDefinition.Spread, bulletSpawn.up));
-			
-			GunData.GunDefinition.FireAbility.Trigger(abilityContextHolder);
+			var projectileCtx = new ProjectileContext(newProjectileData);
+			abilityCtxHolder.Add(projectileCtx);
+
+			projectileSpawnStrategy.Spawn(projectileCtx, bulletSpawn.position, CalculateProjectileDirection(), GunData.GunDefinition.Spread, GunData.GunDefinition.AmmoConsumptionPerShot, bulletSpawn.up, abilityCtxHolder);
 		}
 		
-		public Vector3 CalculateProjectileDirection(float spread) {
+		public Vector3 CalculateProjectileDirection() {
+			float spread = GunData.GunDefinition.Spread;
 			Vector3 direction = aimAssistStrategy.CalculateAdjustedDirectionToTarget();
 			if (!(spread > 0f)) return direction.normalized;
 			
