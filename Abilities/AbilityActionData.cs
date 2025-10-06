@@ -7,6 +7,6 @@ namespace PolyWare.Abilities {
 	[Serializable]
 	public class AbilityActionData {
 		[SerializeReference] public IActionTargetStrategy Target;
-		[SerializeReference] public List<IEffect> Effects = new List<IEffect>();
+		[SerializeReference] public List<IEffectFactory> Effects = new ();
 	}
 }

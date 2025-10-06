@@ -61,10 +61,11 @@ namespace PolyWare.Abilities {
 			return damageContext.Culprit == abilityContext.Culprit && damageContext.Ability == Definition;
 		}
 		
-		protected void ApplyEffectsTo(IAffectable target, List<IEffect> effects, AbilityContextHolder ctx) {
+		protected void ApplyEffectsTo(IAffectable target, List<IEffectFactory> effects, AbilityContextHolder ctx) {
 			for (int i = 0; i < effects.Count; ++i) {
-				effectsHandler.Add(effects[i]);
-				target.Affect(effects[i], ctx);
+				var effect = effects[i].Create();
+				effectsHandler.Add(effect);
+				target.Affect(effect, ctx);
 			}
 		}
 		

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace PolyWare.Abilities {
 	[Serializable]
-	public class EnemiesInRange : IActionTargetStrategy {
+	public class EnemiesInRangeActionTargetStrategy : IActionTargetStrategy {
 		public float Radius = 5;
 		public int MaxTargets = 5;
 		
