@@ -40,7 +40,7 @@ namespace PolyWare.ActionGame.PowerUps {
 				return;
 			}
 			
-			// PolyWare.Core.Instance.SfxManager.PlayClip(Data.PickupSound, transform);
+			//ServiceLocator.Global.Get<IAudioService>().PlaySfx(Data.Definition.PickupSound, transform);
 			var newAbility = Data.Definition.OnPickupAbility.CreateInstance();
 			newAbility.Trigger(new AbilityContextHolder(Data.Definition.OnPickupAbility, gameObject, new List<GameObject>{ character.Transform.gameObject }));
 			

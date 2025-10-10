@@ -1,6 +1,8 @@
 using System;
 using PolyWare.ActionGame.Guns;
+using PolyWare.Audio;
 using PolyWare.Characters;
+using PolyWare.Core.Services;
 using PolyWare.Debug;
 using PolyWare.Inventory;
 using PolyWare.Core.Entities;
@@ -116,7 +118,7 @@ namespace PolyWare.ActionGame {
 				ammoLeft = gun.AddAmmoToReserves(ammoLeft);
 				
 				// bug: this needs to properly handle local and networked multiplayer (https://app.clickup.com/t/86b6wajfh)
-				if (character.FactionMember.FactionID == 0) PolyWare.Core.Instance.SfxManager.PlayClip(gun.GunDefinition.ReloadingSfx, character.Transform);
+				if (character.FactionMember.FactionID == 0) ServiceLocator.Global.Get<IAudioService>().PlaySfx(gun.GunDefinition.ReloadingSfx, character.Transform);
 			}
 			
 			return ammoLeft;

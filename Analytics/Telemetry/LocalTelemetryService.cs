@@ -6,7 +6,7 @@ using PolyWare.Debug;
 using UnityEngine;
 
 namespace PolyWare.Analytics.Telemetry {
-	public class TelemetryManager {
+	public class LocalTelemetryService : ITelemetryService {
 		public const string EventSerializationSeparator = " | ";
 		public const string EventSerializationBracketStart = "{ ";
 		public const string EventSerializationBracketEnd = " }";
@@ -17,7 +17,7 @@ namespace PolyWare.Analytics.Telemetry {
 		
 		private StreamWriter writer;
 		
-		public TelemetryManager() {
+		public LocalTelemetryService() {
 			string filePath = Application.persistentDataPath;
 
 			string directory = Path.GetDirectoryName(filePath);
@@ -87,7 +87,7 @@ namespace PolyWare.Analytics.Telemetry {
 			CloseWriter();
 		}
 
-		public void OutputToFile(string path) {
+		private void OutputToFile(string path) {
 			writer.Flush();
 			Log.Error($"Telemetry output flushed to file: {path}");
 		}

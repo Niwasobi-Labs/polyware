@@ -1,16 +1,11 @@
 using System.Collections.Generic;
-using System.ComponentModel;
 using PolyWare.Abilities;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
-using PolyWare.Combat;
-using PolyWare.Core;
-using PolyWare.Core.Entities;
-using PolyWare.Effects;
+using PolyWare.Audio;
+using PolyWare.Core.Services;
 using PolyWare.Timers;
 using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor.Internal;
-using UnityEditor.iOS.Xcode;
 using UnityEngine;
 
 // todo: what if we wanted to use a Gun without a character? Like a turret?
@@ -119,7 +114,7 @@ namespace PolyWare.ActionGame.Guns {
 
 			if (GunData.CurrentAmmo <= 0 && CanReload()) StartReload();
 
-			PolyWare.Core.Instance.SfxManager.PlayClip(GunData.GunDefinition.ShootingSfx, transform);
+			ServiceLocator.Global.Get<IAudioService>().PlaySfx(GunData.GunDefinition.ShootingSfx, transform);
 			
 			//if (myCharacter.IsPlayer) PlayerCharacter.OnPlayerFired?.Invoke(GunData.GunDefinition.AmmoConsumptionPerShot); task: use event bus
 		}

@@ -1,6 +1,5 @@
 using System;
-using PolyWare.Abilities;
-using PolyWare.Core;
+using PolyWare.Utils;
 
 namespace PolyWare.Effects {
 	// todo: add a IEffectFactory to avoid heap allocations

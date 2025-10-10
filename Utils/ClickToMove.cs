@@ -1,3 +1,5 @@
+using PolyWare.Cameras;
+using PolyWare.Core.Services;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -13,7 +15,7 @@ namespace PolyWare.Utils {
 		}
 
 		private void Start() {
-			cam = Core.Instance.CameraManager.CameraRef;
+			cam = ServiceLocator.Global.Get<ICameraService>().ActiveCamera;
 		}
 
 		private void Update() {

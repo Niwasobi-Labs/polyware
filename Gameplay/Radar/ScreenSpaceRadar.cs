@@ -1,3 +1,5 @@
+using PolyWare.Cameras;
+using PolyWare.Core.Services;
 using PolyWare.Debug;
 using PolyWare.Utils;
 using UnityEngine;
@@ -29,21 +31,21 @@ namespace PolyWare.Gameplay {
 		}
 		
 		private void RebuildBox() {
-			Camera cam = Core.Instance.CameraManager.CameraRef;
+			Camera cam = ServiceLocator.Global.Get<ICameraService>().ActiveCamera;
 			
-			Vector3 bottomLeft = cam.ViewportToWorldPoint(Constants.UnitBottomLeft);
-			Vector3 topLeft = cam.ViewportToWorldPoint(Constants.UnitTopLeft);
-			Vector3 topRight = cam.ViewportToWorldPoint(Constants.UnitTopRight);
-			Vector3 bottomRight = cam.ViewportToWorldPoint(Constants.UnitBottomRight);
+			 Vector3 bottomLeft = cam.ViewportToWorldPoint(Constants.UnitBottomLeft);
+			 Vector3 topLeft = cam.ViewportToWorldPoint(Constants.UnitTopLeft);
+			 Vector3 topRight = cam.ViewportToWorldPoint(Constants.UnitTopRight);
+			 Vector3 bottomRight = cam.ViewportToWorldPoint(Constants.UnitBottomRight);
 
-			float width = Vector3.Distance(bottomLeft, bottomRight);
-			float height = Vector3.Distance(bottomLeft, topLeft);
+			 float width = Vector3.Distance(bottomLeft, bottomRight);
+			 float height = Vector3.Distance(bottomLeft, topLeft);
 			
-			currentBox.Center = (bottomLeft + bottomRight + topLeft + topRight) * 0.25f;
-			currentBox.HalfExtents.x = width * 0.5f;
-			currentBox.HalfExtents.y = height * 0.5f;
-			currentBox.HalfExtents.z = cam.farClipPlane;
-			currentBox.Rotation = cam.transform.rotation;
+			 currentBox.Center = (bottomLeft + bottomRight + topLeft + topRight) * 0.25f;
+			 currentBox.HalfExtents.x = width * 0.5f;
+			 currentBox.HalfExtents.y = height * 0.5f;
+			 currentBox.HalfExtents.z = cam.farClipPlane;
+			 currentBox.Rotation = cam.transform.rotation;
 		}
 	}
 }

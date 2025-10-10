@@ -7,7 +7,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 namespace PolyWare.Input {
-	public abstract class InputManager : MonoBehaviour {
+	// todo: this needs to die and be reborn as two
+	public class PlatformAndInputRebinder : MonoBehaviour {
 		
 		// platforms
 		public enum Platform {
@@ -41,8 +42,6 @@ namespace PolyWare.Input {
 		public event Action OnPlatformChange;
 		
 		public void Initialize() {
-			DontDestroyOnLoad(gameObject);
-
 			playerInput.onControlsChanged += OnControlsChanged;
 			OnControlsChanged(playerInput);
 
@@ -98,8 +97,6 @@ namespace PolyWare.Input {
 
 			OnPlatformChange?.Invoke();
 		}
-
-		public abstract void ChangeToActionMap(int actionMap);
 
 		# region Control Rebinding
 		public void StartRebind(IInputActionCollection2 inputActions, string actionName, int bindingIndex, TMP_Text statusText, bool excludeMouse) {

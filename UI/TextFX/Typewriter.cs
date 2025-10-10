@@ -1,4 +1,4 @@
-using PolyWare.Core;
+using PolyWare.Core.Services;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -35,9 +35,10 @@ namespace PolyWare.UI.TextFX {
 		}
 
 		private IEnumerator Reveal(int totalCharacters) {
+			var gameService = ServiceLocator.Global.Get<IGameService>();
 			while (text.maxVisibleCharacters != totalCharacters) {
 				text.maxVisibleCharacters += 1;
-				yield return PolyWare.Utils.Yielders.WaitForSeconds(speedUp ? Instance.Constants.dialogueSkipMultiplier : Instance.Constants.dialogueCharacterDelay);
+				yield return PolyWare.Utils.Yielders.WaitForSeconds(speedUp ? gameService.GameConstants.DialogueSkipMultiplier : gameService.GameConstants.DialogueCharacterDelay);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 using System;
+using PolyWare.Utils;
 
 namespace PolyWare.Core.Entities {
 

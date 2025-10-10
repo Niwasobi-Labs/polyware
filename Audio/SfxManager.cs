@@ -2,31 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace PolyWare.Audio {
-	public class SFXManager : MonoBehaviour {
-		[SerializeField] private AudioSource sFXPrefab;
-		public bool IsPaused { get; private set; }
-		private readonly Queue<AudioSource> audioSourcePool = new();
-
-		public void Initialize() {
-			// pause audio while the game loads to avoid random SFX from game events
-			SetPauseNewAudioSources(true);
+	public class SfxManager : MonoBehaviour {
+		[SerializeField] private AudioSource sfxPrefab;
+		
+		private Queue<AudioSource> audioSourcePool = new();
+		
+		public AudioSource GetPrefab() {
+			return audioSourcePool.Count > 0 ? audioSourcePool.Dequeue() : Instantiate(sfxPrefab, transform);
 		}
 		
-		public void SetPauseNewAudioSources(bool status) {
-			IsPaused = status;
-		}
-		
-		public void PlayRandomClip(AudioClip[] audioClips, Transform playAt, float volume = 1f, bool loop = false) {
-			PlayClip(audioClips[Random.Range(0, audioClips.Length - 1)], playAt, volume, loop);
-		}
-
-		public void PlayClip(AudioClip audioClip, Transform playAt, float volume = 1f, bool loop = false, Func<bool> stopCondition = null) {
-			if (!audioClip || IsPaused) return;
-			
-			AudioSource newAudioSource = audioSourcePool.Count > 0 ? audioSourcePool.Dequeue() : Instantiate(sFXPrefab, transform);
+		public void PlaySfx(AudioClip audioClip, Transform playAt, float volume = 1f, bool loop = false, Func<bool> stopCondition = null) {
+			AudioSource newAudioSource = GetPrefab();
 			newAudioSource.gameObject.SetActive(true);
 
 			newAudioSource.gameObject.transform.SetPositionAndRotation(playAt.position, playAt.rotation);
@@ -46,8 +34,8 @@ namespace PolyWare.Audio {
 			}
 
 			StartCoroutine(StopWhenConditionMet(newAudioSource, stopCondition));
-		}
-
+		}	
+		
 		private IEnumerator StopWhenConditionMet(AudioSource source, Func<bool> condition) {
 			while (source && !condition()) yield return null;
 

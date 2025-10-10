@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using PolyWare.Debug;
 
-namespace PolyWare.Core {
+namespace PolyWare.Utils {
 	public interface IContext { }
 	
 	public class ContextHolder {

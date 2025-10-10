@@ -1,16 +1,11 @@
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace PolyWare.Utils {
-	[CreateAssetMenu(menuName = "PolyWare", fileName = "New Constants")]
-	public class Constants : ScriptableObject {
-		[FormerlySerializedAs("DialogueCharacterDelay")] [Header("User Interface")]
-		public float dialogueCharacterDelay;
-
-		[FormerlySerializedAs("DialogueSkipMultiplier")] [Range(1, 10)]
-		public float dialogueSkipMultiplier;
-
-		public bool UseActiveAiming;
+	public abstract class Constants : ScriptableObject {
+		[Title("User Interface")]
+		[field: SerializeField] public float DialogueCharacterDelay { get; private set;} = 0.1f;
+		[Range(1, 10)] [field: SerializeField] public float DialogueSkipMultiplier { get; private set;} = 1f;
 		
 		public static Vector2 UnitBottomLeft = new Vector2(0, 0);
 		public static Vector2 UnitTopLeft = new Vector2(0, 1);

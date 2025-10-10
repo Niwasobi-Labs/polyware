@@ -38,7 +38,7 @@ namespace PolyWare.Analytics.Telemetry {
 				stringBuilder.Append(LevelPrefix);
 				stringBuilder.Append(levelName);
 				
-				stringBuilder.Append(TelemetryManager.EventSerializationSeparator);
+				stringBuilder.Append(LocalTelemetryService.EventSerializationSeparator);
 				
 				stringBuilder.Append(LevelTimePrefix);
 				stringBuilder.Append(levelTime);
@@ -62,7 +62,7 @@ namespace PolyWare.Analytics.Telemetry {
 				stringBuilder.Append(LevelPrefix);
 				stringBuilder.Append(levelName);
 
-				stringBuilder.Append(TelemetryManager.EventSerializationSeparator);
+				stringBuilder.Append(LocalTelemetryService.EventSerializationSeparator);
 				
 				stringBuilder.Append(LevelTimePrefix);
 				stringBuilder.Append(levelTime);

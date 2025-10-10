@@ -1,8 +1,13 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Cameras {
 	public class CameraFollow : MonoBehaviour {
+		[Title("Targeting")]
+		[ShowInInspector] public Transform Target { get; private set; }
+		
+		[Title("Smoothing")]
 		[SerializeField] private float smoothTime = 20f;
 		[SerializeField] private float transitionSpeedDampener = 3f;
 
@@ -18,11 +23,10 @@ namespace PolyWare.Cameras {
 		
 		private Vector3 leadVelocity = Vector3.zero;
 		private Vector3 moveVelocity = Vector3.zero;
-
-		[field: Title("Movement Settings")]
-		[field: ReadOnly]
 		
-		public Transform Target { get; private set; }
+		private bool transitioningToNewTarget = false;
+		private Transform previousTarget;
+		private Transform defaultTarget;
 
 		private void FixedUpdate() {
 			if (isPaused || !Target) return;
@@ -38,10 +42,13 @@ namespace PolyWare.Cameras {
 				transform.position = Vector3.SmoothDamp(transform.position, CalculateNewPos(), ref moveVelocity, smoothTime * Time.fixedDeltaTime);	
 			}
 		}
-
-		private bool transitioningToNewTarget = false;
-
+		
+		public void SwapToLastTarget() {
+			if (previousTarget) SetTarget(previousTarget);
+		}
+		
 		public void SetTarget(Transform newTarget) {
+			if (Target) previousTarget = Target;
 			Target = newTarget;
 			transitioningToNewTarget = true;
 		}
@@ -55,15 +62,16 @@ namespace PolyWare.Cameras {
 			transform.position = CalculateTargetPos();
 		}
 
-		public void ToggleAimingMode(bool status, Vector3 aimingDirection) {
+		// todo: subscribe to the aim event instead of a public call
+		private void ToggleAimingMode(bool status, Vector3 aimingDirection) {
 			isAiming = status;
 
 			if (isAiming)  targetAimingOffset = aimingDirection.normalized * aimingLead;
 			else  targetAimingOffset = Vector3.zero;
 		}
-
+		
 		private Vector3 CalculateTargetPos() {
-			return Target.position + targetAimingOffset;
+			return Target ? Target.position + targetAimingOffset : Vector3.zero;
 		}
 
 		private Vector3 CalculateNewPos() {

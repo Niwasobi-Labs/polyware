@@ -1,10 +1,12 @@
-using PolyWare.Core;
 using PolyWare.Core.Events;
+using PolyWare.Core.Services;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.UI {
-	public class Screen : MonoBehaviour {
-		[Header("Screen")] [SerializeField] private bool persistant = true;
+	public class UIScreen : MonoBehaviour {
+		[Title("UI Screen")]
+		[SerializeField] private bool persistant = true;
 
 		[SerializeField] private bool focusOnOpen = true;
 		[SerializeField] private bool rememberFocusOnClose;
@@ -52,19 +54,19 @@ namespace PolyWare.UI {
 		}
 
 		public void Focus() {
-			if (Instance.UI.IsMouseActive) return;
+			// if (Instance.UI.IsMouseActive) return; todo: reenable this
 
 			if (lastSelectedObject) {
-				Instance.EventSystem.SetSelectedGameObject(lastSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : lastSelectedObject.gameObject);
+				ServiceLocator.Global.Get<IEventSystemService>().SetSelectedGameObject(lastSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : lastSelectedObject.gameObject);
 				lastSelectedObject = null;
 			}
 			else if (defaultSelectedObject) {
-				Instance.EventSystem.SetSelectedGameObject(defaultSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : defaultSelectedObject);
+				ServiceLocator.Global.Get<IEventSystemService>().SetSelectedGameObject(defaultSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : defaultSelectedObject);
 			}
 		}
 
 		private void RememberCurrentlySelectedObject() {
-			lastSelectedObject = Instance.EventSystem.currentSelectedGameObject;
+			lastSelectedObject = ServiceLocator.Global.Get<IEventSystemService>().GetSelectedGameObject();
 		}
 	}
 }
