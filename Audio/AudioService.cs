@@ -18,14 +18,14 @@ namespace PolyWare.Audio {
 			IsPaused = status;
 		}
 		
-		public void PlayRandomSfx(AudioClip[] audioClips, Transform playAt, float volume = 1f, bool loop = false) {
-			PlaySfx(audioClips[Random.Range(0, audioClips.Length - 1)], playAt, volume, loop);
+		public void PlayRandomSfx(AudioClip[] audioClips, Vector3 playAt, AudioChannel channel, float volume = 1f, bool loop = false) {
+			PlaySfx(audioClips[Random.Range(0, audioClips.Length - 1)], playAt, channel, volume, loop);
 		}
 
-		public void PlaySfx(AudioClip audioClip, Transform playAt, float volume = 1f, bool loop = false, Func<bool> stopCondition = null) {
+		public void PlaySfx(AudioClip audioClip, Vector3 playAt, AudioChannel channel, float volume = 1f, bool loop = false, Func<bool> stopCondition = null) {
 			if (!audioClip || IsPaused) return;
 
-			sfxManager.PlaySfx(audioClip, playAt, volume, loop,  stopCondition);
+			sfxManager.PlaySfx(audioClip, playAt, channel, volume, loop,  stopCondition);
 		}	
 	}
 }

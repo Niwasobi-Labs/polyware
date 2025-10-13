@@ -6,18 +6,28 @@ using UnityEngine;
 namespace PolyWare.Audio {
 	public class SfxManager : MonoBehaviour {
 		[SerializeField] private AudioSource sfxPrefab;
+		[SerializeField] private AudioSource uiSfxPrefab;
 		
-		private Queue<AudioSource> audioSourcePool = new();
+		private Queue<AudioSource> sfxPool = new();
+		private Queue<AudioSource> uiSfxPool = new();
 		
-		public AudioSource GetPrefab() {
-			return audioSourcePool.Count > 0 ? audioSourcePool.Dequeue() : Instantiate(sfxPrefab, transform);
+		public AudioSource GetPrefab(AudioChannel channel) {
+			switch (channel) {
+				case AudioChannel.Sfx:
+					return sfxPool.Count > 0 ? sfxPool.Dequeue() : Instantiate(sfxPrefab, transform);
+				case AudioChannel.UISfx:
+					return uiSfxPool.Count > 0 ? uiSfxPool.Dequeue() : Instantiate(uiSfxPrefab, transform);
+				case AudioChannel.Music: // music should not be handled inside of the SFX manager
+				default:
+					return null;
+			}
 		}
 		
-		public void PlaySfx(AudioClip audioClip, Transform playAt, float volume = 1f, bool loop = false, Func<bool> stopCondition = null) {
-			AudioSource newAudioSource = GetPrefab();
+		public void PlaySfx(AudioClip audioClip, Vector3 playAt, AudioChannel channel, float volume = 1f, bool loop = false, Func<bool> stopCondition = null) {
+			AudioSource newAudioSource = GetPrefab(channel);
 			newAudioSource.gameObject.SetActive(true);
 
-			newAudioSource.gameObject.transform.SetPositionAndRotation(playAt.position, playAt.rotation);
+			newAudioSource.gameObject.transform.SetPositionAndRotation(playAt, Quaternion.identity);
 
 			newAudioSource.clip = audioClip;
 
@@ -33,24 +43,36 @@ namespace PolyWare.Audio {
 				stopCondition = () => userCondition() || (!loop && newAudioSource.time >= newAudioSource.clip.length);
 			}
 
-			StartCoroutine(StopWhenConditionMet(newAudioSource, stopCondition));
+			StartCoroutine(StopWhenConditionMet(newAudioSource, channel, stopCondition));
 		}	
 		
-		private IEnumerator StopWhenConditionMet(AudioSource source, Func<bool> condition) {
+		private IEnumerator StopWhenConditionMet(AudioSource source, AudioChannel channel, Func<bool> condition) {
 			while (source && !condition()) yield return null;
 
 			if (!source) yield break;
 
 			source.Stop();
-			ReleaseAudioSource(source);
+			ReleaseAudioSource(source, channel);
 		}
 
-		private void ReleaseAudioSource(AudioSource source) {
+		private void ReleaseAudioSource(AudioSource source, AudioChannel channel) {
 			source.Stop();
 			source.clip = null;
 			source.loop = false;
 			source.gameObject.SetActive(false);
-			audioSourcePool.Enqueue(source);
+			switch (channel) {
+				case AudioChannel.Sfx:
+					sfxPool.Enqueue(source);
+					break;
+				case AudioChannel.UISfx:
+					uiSfxPool.Enqueue(source);
+					break;
+				case AudioChannel.Music:
+				default:
+					throw new ArgumentOutOfRangeException(nameof(channel), channel, null);
+			}
 		}
+		
+		
 	}
 }

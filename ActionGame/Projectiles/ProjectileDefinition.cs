@@ -7,6 +7,7 @@ namespace PolyWare.ActionGame.Projectiles {
 		[Header("Magnetism")] [Range(0, 1)]
 		[field: SerializeField] public float MagnetismStrength { get; private set; }
 		[field: SerializeField] public bool AllowSelfDamage { get; private set; }
+		[field: SerializeField] public AudioClip[] ImpactSounds { get; private set; }
 		
 		public override IEntityData CreateDefaultInstance() => new ProjectileData(this);
 	}

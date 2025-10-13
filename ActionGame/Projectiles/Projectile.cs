@@ -1,8 +1,10 @@
 using System.Collections;
 using PolyWare.Abilities;
+using PolyWare.Audio;
 using PolyWare.Characters;
 using PolyWare.Core;
 using PolyWare.Core.Entities;
+using PolyWare.Core.Services;
 using PolyWare.Effects;
 using PolyWare.Levels;
 using PolyWare.Utils;
@@ -78,6 +80,7 @@ namespace PolyWare.ActionGame.Projectiles {
 		}
 
 		private void Kill() {
+			ServiceLocator.Global.Get<IAudioService>().PlayRandomSfx(Data.Definition.ImpactSounds, transform.position, AudioChannel.Sfx);
 			Destroy(gameObject);
 		}
 	}

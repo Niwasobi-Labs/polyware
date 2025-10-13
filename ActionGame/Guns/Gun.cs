@@ -114,7 +114,7 @@ namespace PolyWare.ActionGame.Guns {
 
 			if (GunData.CurrentAmmo <= 0 && CanReload()) StartReload();
 
-			ServiceLocator.Global.Get<IAudioService>().PlaySfx(GunData.GunDefinition.ShootingSfx, transform);
+			ServiceLocator.Global.Get<IAudioService>().PlayRandomSfx(GunData.GunDefinition.ShootingSfx, transform.position, AudioChannel.Sfx);
 			
 			//if (myCharacter.IsPlayer) PlayerCharacter.OnPlayerFired?.Invoke(GunData.GunDefinition.AmmoConsumptionPerShot); task: use event bus
 		}

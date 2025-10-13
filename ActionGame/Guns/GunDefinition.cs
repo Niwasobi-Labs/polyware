@@ -17,27 +17,18 @@ namespace PolyWare.ActionGame.Guns {
 			Auto
 		}
 
-		public enum AmmoDisplayMode {
-			Projectiles,
-			NumberOnly
-		}
-
-		[field: Title("Guns")]
+		[field: Title("Shooting")]
 		[field: SerializeField] public AbilityDefinition FireAbility { get; private set; }
 		[field: SerializeField] public DamageContext Damage { get; private set; }
-		
-		[field: Title("Firing")]
 		[field: SerializeField] public FireMode FiringMode { get; private set; }
-		[field: SerializeField] public AimAssistInfo AimAssist { get; private set; }
-
+		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
+		[field: SerializeField] public AudioClip[] ShootingSfx { get; private set; }
 		[field: SerializeField] public float FireRate { get; private set; } = 1.0f;
 		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
 		[field: SerializeField] public float Range { get; private set; } = 25.0f;
 		[field: SerializeField] public float Spread { get; private set; }
 		
 		[field: Title("Ammo")]
-		[field: SerializeField] public AmmoDisplayMode AmmoDisplay { get; private set; }
-		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
 		[field: SerializeField] public int MaxAmmo { get; private set; }
 		[field: SerializeField] public int MaxReserveAmmo { get; private set; }
 		[field: SerializeField] public int AmmoConsumptionPerShot { get; private set; } = 1;
@@ -56,12 +47,9 @@ namespace PolyWare.ActionGame.Guns {
 		[field: SerializeField] public float OverHeatTime { get; private set; } = 3f;
 		
 		[field: Title("Aim Assist")] 
+		[field: SerializeField] public AimAssistInfo AimAssist { get; private set; }
 		[field: SerializeField] public bool UseLaserSight { get; private set; }
 		[Tooltip("Percentage of the Gun's Range. eg. 1 = Range, 0.5 = Half")]
 		[field: SerializeField] [Range(0, 1)] public float RangeOfLaserSight { get; private set; } = 1;
-		
-		[field: Title("Audio")] 
-		[field: SerializeField] public AudioClip ShootingSfx { get; private set; }
-		
 	}
 }

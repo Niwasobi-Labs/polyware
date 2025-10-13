@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
 using PolyWare.Abilities;
+using PolyWare.Audio;
 using PolyWare.Characters;
 using PolyWare.Core;
 using PolyWare.Debug;
 using PolyWare.Core.Entities;
+using PolyWare.Core.Services;
 using PolyWare.Interactions;
 using PolyWare.Items;
 using PolyWare.Timers;
@@ -40,7 +42,7 @@ namespace PolyWare.ActionGame.PowerUps {
 				return;
 			}
 			
-			//ServiceLocator.Global.Get<IAudioService>().PlaySfx(Data.Definition.PickupSound, transform);
+			ServiceLocator.Global.Get<IAudioService>().PlaySfx(Data.Definition.OnPickupAudio, transform.position, AudioChannel.Sfx);
 			var newAbility = Data.Definition.OnPickupAbility.CreateInstance();
 			newAbility.Trigger(new AbilityContextHolder(Data.Definition.OnPickupAbility, gameObject, new List<GameObject>{ character.Transform.gameObject }));
 			
