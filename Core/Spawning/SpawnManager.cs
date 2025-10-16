@@ -1,21 +1,21 @@
 using System.Collections;
 using PolyWare.Utils;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Core.Spawning {
 	public abstract class SpawnManager : MonoBehaviour {
 		[SerializeField] private bool spawnOnStart = false;
 		[SerializeField] protected SpawnPointStrategyType spawnPointStrategyType = SpawnPointStrategyType.Linear;
-		[SerializeField] protected Transform[] spawnPoints;
+		[SerializeField] [field: ShowIf("spawnPointStrategyType", SpawnPointStrategyType.RandomRadiusOnAxis)] protected float innerRadius;
+		[SerializeField] [field: ShowIf("spawnPointStrategyType", SpawnPointStrategyType.RandomRadiusOnAxis)] protected float outerRadius;
+		[SerializeField] [field: HideIf("spawnPointStrategyType", SpawnPointStrategyType.RandomRadiusOnAxis)] protected Transform[] spawnPoints;
 		[SerializeField] protected uint spawnCount;
 		[SerializeField] protected bool random;
 		[SerializeField] protected bool loop;
 		[SerializeField] protected float loopDelay;
 		
 		protected ISpawnPointStrategy spawnPointStrategy;
-		[Header("Random Radius Only")]
-		[SerializeField] protected float innerRadius;
-		[SerializeField] protected float outerRadius;
 
 		protected enum SpawnPointStrategyType {
 			Linear,
