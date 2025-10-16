@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using PolyWare.Analytics.Telemetry;
+using PolyWare.Cameras;
 using PolyWare.Core.Services;
 using PolyWare.Timers;
 using PolyWare.Utils;
@@ -39,7 +40,7 @@ namespace PolyWare.Levels {
 			// levels can't start until there is a game service. Wait until there is one.
 			// this happens when the level is loaded quicker than the core scenes, or you are
 			// editing a level in the editor and press play without the core scenes loaded
-			while (ServiceLocator.Global == null || !ServiceLocator.Global.Has<IGameService>()) {
+			while (ServiceLocator.Global == null || !ServiceLocator.Global.Has<IGameService>() || !ServiceLocator.Global.Has<ICameraService>()) {
 				yield return Yielders.WaitForEndOfFrame;
 			}
 			
