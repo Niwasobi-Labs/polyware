@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using PolyWare.Abilities;
 using PolyWare.Core.Entities;
 using UnityEngine;
 
 namespace PolyWare.ActionGame.Projectiles {
 	public class ProjectileSpawnStrategy {
+		
 		public static List<Projectile> Spawn(ProjectileSpawnContext context) {
 			return context.Count > 1 ? 
 				SpawnMultipleProjectiles(context) :
@@ -29,7 +31,7 @@ namespace PolyWare.ActionGame.Projectiles {
 			newProjectile.transform.position = context.Origin;
 			newProjectile.transform.forward = forward;
 			
-			if (context.AbilityContextHolder != null) newProjectile.ProvideAbilityContext(context.AbilityContextHolder);
+			if (context.AbilityContextHolder != null) newProjectile.ProvideAbilityContext(new AbilityContextHolder(context.AbilityContextHolder));
 			
 			return newProjectile;
 		}

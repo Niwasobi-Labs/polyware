@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PolyWare.Debug;
 
 namespace PolyWare.Utils {
@@ -41,6 +42,10 @@ namespace PolyWare.Utils {
 		
 		public void Remove(IContext context) {
 			contexts.Remove(context.GetType());
+		}
+
+		public Dictionary<Type, IContext>.ValueCollection GetAllContexts() {
+			return contexts.Values;
 		}
 	}
 }
