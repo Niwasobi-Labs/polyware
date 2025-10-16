@@ -1,15 +1,21 @@
 using System.Collections;
+using System.Numerics;
 using PolyWare.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 namespace PolyWare.Core.Spawning {
 	public abstract class SpawnManager : MonoBehaviour {
 		[SerializeField] private bool spawnOnStart = false;
+		
+		[Title("Spawn Locations")]
 		[SerializeField] protected SpawnPointStrategyType spawnPointStrategyType = SpawnPointStrategyType.Linear;
 		[SerializeField] [field: ShowIf("spawnPointStrategyType", SpawnPointStrategyType.RandomRadiusOnAxis)] protected float innerRadius;
 		[SerializeField] [field: ShowIf("spawnPointStrategyType", SpawnPointStrategyType.RandomRadiusOnAxis)] protected float outerRadius;
-		[SerializeField] [field: HideIf("spawnPointStrategyType", SpawnPointStrategyType.RandomRadiusOnAxis)] protected Transform[] spawnPoints;
+		[SerializeField] [field: ShowIf("@spawnPointStrategyType == SpawnPointStrategyType.Linear || spawnPointStrategyType == SpawnPointStrategyType.Random")] protected Transform[] spawnPoints;
+		
+		[Title("Spawn Data")]
 		[SerializeField] protected uint spawnCount;
 		[SerializeField] protected bool random;
 		[SerializeField] protected bool loop;
@@ -20,7 +26,8 @@ namespace PolyWare.Core.Spawning {
 		protected enum SpawnPointStrategyType {
 			Linear,
 			Random,
-			RandomRadiusOnAxis
+			RandomRadiusOnAxis,
+			RandomScreenPoint
 		}
 
 		protected virtual void Awake() {
@@ -28,6 +35,7 @@ namespace PolyWare.Core.Spawning {
 				SpawnPointStrategyType.Linear => new LinearSpawnPointStrategy(spawnPoints),
 				SpawnPointStrategyType.Random => new RandomSpawnPointStrategy(spawnPoints),
 				SpawnPointStrategyType.RandomRadiusOnAxis => new RandomRadiusAlongAxisSpawnPointStrategy(transform.position, innerRadius, outerRadius, transform.up),
+				SpawnPointStrategyType.RandomScreenPoint => new RandomWithinScreenSpawnPointStrategy(transform.up),
 				_ => spawnPointStrategy
 			};
 		}
