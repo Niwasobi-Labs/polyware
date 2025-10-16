@@ -8,7 +8,7 @@ namespace PolyWare.Stats {
 			Multiply
 		}
 
-		public StatType StatType = StatType.Attack;
+		public StatType StatType = StatType.Strength;
 		public OperatorType Type =  OperatorType.Add;
 		public float Value = 10f;
 		public float Duration = 5f;
