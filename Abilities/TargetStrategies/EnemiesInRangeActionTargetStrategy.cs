@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PolyWare.Characters;
 using PolyWare.Effects;
+using PolyWare.Utils;
 using UnityEngine;
 
 namespace PolyWare.Abilities {
@@ -9,8 +10,6 @@ namespace PolyWare.Abilities {
 	public class EnemiesInRangeActionTargetStrategy : IActionTargetStrategy {
 		public float Radius = 5;
 		public int MaxTargets = 5;
-		
-		private const string damageMask = "Damage";
 		
 		public List<IAffectable> GetTargets(AbilityContextHolder contextHolder) {
 			var targets = new List<IAffectable>();
@@ -22,7 +21,7 @@ namespace PolyWare.Abilities {
 				effectOrigin = contextHolder.Targets[0].transform.position;
 			}
 			
-			int hits = Physics.OverlapSphereNonAlloc(effectOrigin, Radius, results, LayerMask.GetMask(damageMask));
+			int hits = Physics.OverlapSphereNonAlloc(effectOrigin, Radius, results, Constants.DamageLayerMask);
 			
 			if (hits == 0) return targets;
 
