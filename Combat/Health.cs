@@ -28,7 +28,7 @@ namespace PolyWare.Combat {
 
 		protected readonly List<Timer> timers = new List<Timer>();
 
-		public float MaxHealth => myCharacter != null ? health.Max + myCharacter.Stats.GetModifiedStat(StatType.Vitality) : health.Max;
+		public float MaxHealth => health.MaxHealth(myCharacter);
 		public float CurrentHealth => health.Current;
 
 		private ICharacter myCharacter;

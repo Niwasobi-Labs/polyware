@@ -29,7 +29,7 @@ namespace PolyWare.Stats {
 		}
 
 		public void Update(float deltaTime) {
-			timer.Tick(deltaTime);
+			timer?.Tick(deltaTime);
 		}
 		
 		public void Dispose() {

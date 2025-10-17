@@ -11,6 +11,8 @@ namespace PolyWare.Stats {
 		protected readonly Dictionary<StatType, StatEvaluator> evaluators = new();
 		
 		public override void Initialize() {
+			evaluators.Clear();
+			
 			foreach (StatEvaluator value in data) {
 				try {
 					evaluators.Add(value.Stat, value);

@@ -19,7 +19,7 @@ namespace PolyWare.Stats {
 		public float GetModifiedStat(StatType statType) {
 			var q = new StatQuery(statType, baseData[statType]);
 			ModifierManager.PerformQuery(this, q);
-			return statEvaluators && statEvaluators.Contains(statType)? statEvaluators.Evaluate(statType, q.Value) : q.Value;
+			return statEvaluators && statEvaluators.Contains(statType) ? statEvaluators.Evaluate(statType, q.Value) : q.Value;
 		}
 
 		public void Update(float deltaTime) {
