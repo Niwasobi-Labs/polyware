@@ -3,8 +3,10 @@ using PolyWare.Abilities;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
 using PolyWare.Audio;
+using PolyWare.Combat;
 using PolyWare.Core.Services;
 using PolyWare.Timers;
+using PolyWare.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -120,9 +122,14 @@ namespace PolyWare.ActionGame.Guns {
 		}
 		
 		private void FireProjectiles() {
-			var abilityCtxHolder = new AbilityContextHolder(GunData.GunDefinition.FireAbility, myCharacter.Transform.gameObject);
-			
-			abilityCtxHolder.Add(GunData);
+			var abilityCtxHolder = new AbilityContextHolder(
+				GunData.GunDefinition.FireAbility,
+				myCharacter.Transform.gameObject,
+				null,
+				new List<IContext> {
+					GunData,
+					new DamageContext(myCharacter.Transform.gameObject, GunData.GunDefinition.Damage, GunData.GunDefinition.FireAbility)
+				});
 			
 			ProjectileSpawnStrategy.Spawn(new ProjectileSpawnContext(
 				CreateProjectileData(),

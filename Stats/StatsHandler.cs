@@ -8,6 +8,7 @@ namespace PolyWare.Stats {
 			ModifierManager = modifierManager;
 			baseData = baseBases;
 			statEvaluators = statEvaluatorCollection;
+			statEvaluators?.Initialize();
 		}
 
 		public bool AddModifier(StatModifier modifier) {

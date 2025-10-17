@@ -30,6 +30,10 @@ namespace PolyWare.Utils {
 		public T Get<T>() where T : IContext {
 			return (T)contexts[typeof(T)];
 		}
+		
+		public bool Has<T>() where T : IContext {
+			return contexts.ContainsKey(typeof(T));
+		}
 
 		public bool TryGet<T>(out T context) where T : IContext {
 			if (!contexts.ContainsKey(typeof(T))) {
