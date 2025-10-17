@@ -3,6 +3,7 @@ using PolyWare.Combat;
 using PolyWare.Core.Entities;
 using PolyWare.ActionGame.AimAssist;
 using PolyWare.ActionGame.Projectiles;
+using PolyWare.Stats;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace PolyWare.ActionGame.Guns {
 		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
 		[field: SerializeField] public AudioClip[] ShootingSfx { get; private set; }
 		[field: SerializeField] public float FireRate { get; private set; } = 1.0f;
+		[field: SerializeReference] public IFireRateEvaluator FireRateEvaluator { get; private set; } = new DefaultFireRateEvaluator();
 		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
 		[field: SerializeField] public float Range { get; private set; } = 25.0f;
 		[field: SerializeField] public float Spread { get; private set; }

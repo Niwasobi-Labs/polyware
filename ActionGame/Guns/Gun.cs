@@ -110,6 +110,7 @@ namespace PolyWare.ActionGame.Guns {
 
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
+			fireRateTimer.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter.Transform.gameObject, GunData.GunDefinition.FireRate));
 			fireRateTimer.Start();
 
 			if (GunData.GunDefinition.CanOverheat) AddHeat(GunData.GunDefinition.HeatPerShot);
