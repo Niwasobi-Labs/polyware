@@ -34,17 +34,20 @@ namespace PolyWare.Abilities {
 				var targets = hitAction.Target.GetTargets(ctx);
 				
 				for (int j = 0; j < targets.Count; ++j) {
-					if (targets[j] is IDamageable damageable) {
-						damageable.OnDeath += (damage) => {
-							if (WasKilledByThisAbility(damage, ctx)) TriggerOnKillActions(ctx);
-						};
-					}
-					
+					SubscribeToTargetDeath(targets[j], ctx);
 					ApplyEffectsTo(targets[j], hitAction.Effects, ctx);
 				}
 			}
 		}
 
+		private void SubscribeToTargetDeath(IAffectable target, AbilityContextHolder ctx) {
+			if (target is IDamageable damageable) {
+				damageable.OnDeath += (damage) => {
+					if (WasKilledByThisAbility(damage, ctx)) TriggerOnKillActions(ctx);
+				};
+			}
+		}
+		
 		protected void TriggerOnKillActions(AbilityContextHolder ctx) {
 			var killActions = Definition.OnKillActions;
 			
