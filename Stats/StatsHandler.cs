@@ -2,10 +2,12 @@ namespace PolyWare.Stats {
 	public class StatsHandler : IStatsHandler {
 		public readonly StatModifierManager ModifierManager;
 		private readonly StatData baseData;
+		private readonly StatEvaluatorCollection statEvaluators;
 
-		public StatsHandler(StatModifierManager modifierManager, StatData baseBases) {
+		public StatsHandler(StatModifierManager modifierManager, StatData baseBases, StatEvaluatorCollection statEvaluatorCollection) {
 			ModifierManager = modifierManager;
 			baseData = baseBases;
+			statEvaluators = statEvaluatorCollection;
 		}
 
 		public bool AddModifier(StatModifier modifier) {
@@ -16,7 +18,7 @@ namespace PolyWare.Stats {
 		public float GetModifiedStat(StatType statType) {
 			var q = new StatQuery(statType, baseData[statType]);
 			ModifierManager.PerformQuery(this, q);
-			return q.Value;
+			return statEvaluators && statEvaluators.Contains(statType)? statEvaluators.Evaluate(statType, q.Value) : q.Value;
 		}
 
 		public void Update(float deltaTime) {
