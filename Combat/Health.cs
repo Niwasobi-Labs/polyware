@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using PolyWare.Characters;
+using PolyWare.Stats;
 using PolyWare.Timers;
+using PolyWare.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,11 +11,16 @@ namespace PolyWare.Combat {
 		
 		private HealthData health;
 		
-		public event UnityAction<float> OnDamageTaken;
-		public event UnityAction<float> OnHeal;
+		public struct HealthContext : IContext {
+			public float Current;
+			public float Max;
+		}
+		
+		public event UnityAction<HealthContext> OnDamageTaken;
+		public event UnityAction<HealthContext> OnHeal;
 		public event UnityAction OnRegenStart;
-		public event UnityAction<float> OnRegenUpdate;
-		public event UnityAction<float> OnRegenComplete;
+		public event UnityAction<HealthContext> OnRegenUpdate;
+		public event UnityAction<HealthContext> OnRegenComplete;
 		public event UnityAction<DamageContext> OnDeath;
 			
 		public CountdownTimer RegenTimer;
@@ -20,13 +28,17 @@ namespace PolyWare.Combat {
 
 		protected readonly List<Timer> timers = new List<Timer>();
 
-		public float Max => health.Max;
-		public float Current => health.Current;
+		public float MaxHealth => myCharacter != null ? health.Max + myCharacter.Stats.GetModifiedStat(StatType.Vitality) : health.Max;
+		public float CurrentHealth => health.Current;
 
-		public void Initialize(HealthData newHealth) {
+		private ICharacter myCharacter;
+		
+		public void Initialize(HealthData newHealth, ICharacter character = null) {
 			health = newHealth;
-			health.Current = newHealth.Max;
+			myCharacter = character;
+			
 			SetupTimers();
+			health.Current = MaxHealth;
 		}
 		
 		public void Update() {
@@ -71,7 +83,7 @@ namespace PolyWare.Combat {
 			
 			health.Current = Mathf.Max(health.Current - ctx.Damage, 0);
 
-			OnDamageTaken?.Invoke(health.Current / health.Max);
+			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 			
 			if (health.Current <= 0) Die(ctx);
 		}
@@ -79,25 +91,25 @@ namespace PolyWare.Combat {
 		public void Heal(float healAmount) {
 			if (!health.CanHeal) return;
 			
-			health.Current = Mathf.Min(health.Current + healAmount, health.Max);
-			OnHeal?.Invoke(health.Current / health.Max);
+			health.Current = Mathf.Min(health.Current + healAmount, MaxHealth);
+			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 		}
 
 		public void StartRegen() {
 			if (!health.CanRegen) return;
 
-			RegenTimer.StartAt(1 - health.Current / health.Max);
+			RegenTimer.StartAt(1 - health.Current / MaxHealth);
 			OnRegenStart?.Invoke();
 		}
 
 		private void UpdateRegen() {
-			health.Current = Mathf.Lerp(0, Max, 1 - RegenTimer.Progress);
-			OnRegenUpdate?.Invoke(health.Current / health.Max);
+			health.Current = Mathf.Lerp(0, MaxHealth, 1 - RegenTimer.Progress);
+			OnRegenUpdate?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 		}
 
 		private void CompleteRegen() {
-			health.Current = Max;
-			OnRegenComplete?.Invoke(health.Current / health.Max);
+			health.Current = MaxHealth;
+			OnRegenComplete?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 		}
 	}
 }
