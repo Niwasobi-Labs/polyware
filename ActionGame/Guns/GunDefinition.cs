@@ -20,6 +20,7 @@ namespace PolyWare.ActionGame.Guns {
 		[field: Title("Shooting")]
 		[field: SerializeField] public AbilityDefinition FireAbility { get; private set; }
 		[field: SerializeField] public DamageContext Damage { get; private set; }
+		[field: SerializeReference] public IDamageEvaluator BulletDamageEvaluator { get; private set; } = new DefaultDamageEvaluator();
 		[field: SerializeField] public FireMode FiringMode { get; private set; }
 		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
 		[field: SerializeField] public AudioClip[] ShootingSfx { get; private set; }
