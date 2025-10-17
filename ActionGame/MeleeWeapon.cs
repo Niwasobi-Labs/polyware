@@ -1,10 +1,16 @@
+using System.Collections.Generic;
+using PolyWare.Abilities;
 using PolyWare.Characters;
 using PolyWare.Combat;
+using PolyWare.Effects;
 using PolyWare.Timers;
+using PolyWare.Utils;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.ActionGame {
+
+	
 	public class Melee : Weapon {
 		private CountdownTimer cooldownTimer;
 		private Collider[] meleeResults;
@@ -29,14 +35,23 @@ namespace PolyWare.ActionGame {
 			if (hits == 0) return;
 
 			for (int i = 0; i < hits; i++) {
-				if (!meleeResults[i] || !meleeResults[i].TryGetComponent(out IDamageable damageable)) continue;
+				if (!meleeResults[i] || !meleeResults[i].TryGetComponent(out IDamageable damageable) || !meleeResults[i].TryGetComponent(out IAffectable affectable)) continue;
 
 				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == myCharacter.FactionMember.FactionID) continue; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj)
-
-				damageable.TakeDamage(MeleeData.Definition.MeleeInfo.Damage);
-
-				cooldownTimer.Start();
+				
+				Ability abilityInstance = MeleeData.MeleeDefinition.MeleeInfo.MeleeAbility.CreateInstance();
+				abilityInstance.Trigger(new AbilityContextHolder(
+					abilityInstance.Definition, 
+					myCharacter.Transform.gameObject,
+					new List<GameObject> { affectable.GameObject },
+					new List<IContext> {
+						MeleeData,
+						new DamageContext(myCharacter.Transform.gameObject, MeleeData.MeleeDefinition.MeleeInfo.Damage, abilityInstance.Definition)
+					})
+				);
 			}
+			
+			cooldownTimer.Start();
 		}
 
 		public override void StopUsing() {
