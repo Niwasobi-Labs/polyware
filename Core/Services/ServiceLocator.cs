@@ -39,6 +39,17 @@ namespace PolyWare.Core.Services {
 		public T Get<T>() where T : IService {
 			return manager.Get<T>();
 		}
+		
+		public bool TryGet<T>(out T service) where T : IService {
+			if (!Has<T>()) {
+				service = default;
+				return false;
+			}
+			
+			service = Get<T>();
+			return true;
+
+		}
 
 		public bool Has<T>() where T : IService {
 			return manager.Has<T>();
