@@ -1,3 +1,4 @@
+using FMODUnity;
 using PolyWare.Abilities;
 using PolyWare.Combat;
 using PolyWare.Core.Entities;
@@ -24,7 +25,7 @@ namespace PolyWare.ActionGame.Guns {
 		[field: SerializeReference] public IDamageEvaluator BulletDamageEvaluator { get; private set; } = new DefaultDamageEvaluator();
 		[field: SerializeField] public FireMode FiringMode { get; private set; }
 		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
-		[field: SerializeField] public AudioClip[] ShootingSfx { get; private set; }
+		[field: SerializeField] public EventReference ShootingSound { get; private set; }
 		[field: SerializeField] public float FireRate { get; private set; } = 1.0f;
 		[field: SerializeReference] public IFireRateEvaluator FireRateEvaluator { get; private set; } = new DefaultFireRateEvaluator();
 		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
@@ -40,7 +41,7 @@ namespace PolyWare.ActionGame.Guns {
 		[field: SerializeField] public ReloadStrategy ReloadType { get; private set; }
 		[field: SerializeField] public float ReloadTime { get; private set; } = 2.0f;
 		[field: SerializeField] [field: ShowIf("ReloadType", ReloadStrategy.OneByOne)] public int AmmoPerReload { get; private set; } = 1;
-		[field: SerializeField] public AudioClip ReloadingSfx { get; private set; }
+		[field: SerializeField] public EventReference ReloadingSfx { get; private set; }
 
 		[field: Title("Heating")] 
 		[field: SerializeField] public bool CanOverheat { get; private set; }

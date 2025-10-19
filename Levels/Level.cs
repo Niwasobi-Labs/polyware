@@ -72,7 +72,7 @@ namespace PolyWare.Levels {
 			OnLevelUpdate();
 		}
 		
-		public void LevelComplete() {
+		public void CompleteLevel() {
 			levelTimer.Stop();
 
 			ServiceLocator.Global.Get<ITelemetryService>().LogEvent(new LevelTelemetryEvents.LevelComplete(levelName, TimeFormatter.GetFormattedTime(levelTimer)));

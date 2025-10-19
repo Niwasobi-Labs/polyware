@@ -80,7 +80,7 @@ namespace PolyWare.ActionGame.Projectiles {
 		}
 
 		private void Kill() {
-			ServiceLocator.Global.Get<IAudioService>().PlayRandomSfx(Data.Definition.ImpactSounds, transform.position, AudioChannel.Sfx);
+			ServiceLocator.Global.Get<IAudioService>().PlayOneShot(Data.Definition.ImpactSound, transform.position);
 			Destroy(gameObject);
 		}
 	}

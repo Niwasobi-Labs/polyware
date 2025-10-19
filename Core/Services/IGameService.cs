@@ -8,5 +8,6 @@ namespace PolyWare.Core.Services {
 		public ICharacter GetLocalPlayerCharacter { get; }
 		public void StartGame();
 		public void RestartCurrentLevel();
+		public void QuickCompleteCurrentLevel();
 	}
 }

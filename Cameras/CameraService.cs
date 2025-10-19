@@ -1,9 +1,12 @@
+using FMODUnity;
 using PolyWare.Core.Services;
 using UnityEngine;
 
 namespace PolyWare.Cameras {
 	public class CameraService : MonoBehaviour, ICameraService {
 		public Camera ActiveCamera { get; private set; }
+		[SerializeField] private StudioListener fmodListener;
+		public StudioListener FMODListener => fmodListener;
 
 		private void Awake() {
 			ServiceLocator.Global.Register<ICameraService>(this);

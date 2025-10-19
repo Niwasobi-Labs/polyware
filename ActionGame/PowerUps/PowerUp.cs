@@ -42,7 +42,7 @@ namespace PolyWare.ActionGame.PowerUps {
 				return;
 			}
 			
-			ServiceLocator.Global.Get<IAudioService>().PlaySfx(Data.Definition.OnPickupAudio, transform.position, AudioChannel.Sfx);
+			ServiceLocator.Global.Get<IAudioService>().PlayOneShot(Data.Definition.PickupSound, transform.position);
 			var newAbility = Data.Definition.OnPickupAbility.CreateInstance();
 			newAbility.Trigger(new AbilityContextHolder(Data.Definition.OnPickupAbility, gameObject, new List<GameObject>{ character.Transform.gameObject }));
 			
