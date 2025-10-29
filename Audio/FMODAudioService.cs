@@ -35,6 +35,11 @@ namespace PolyWare.Audio {
 			if (IsPaused || sound.IsNull) return;
 			
 			RuntimeManager.PlayOneShot(sound, worldPos);
-		}	
+		}
+
+		// todo: consider pooling if needed
+		public IAudioEventInstance GetInstance(EventReference sound) {
+			return new FMODEventInstance(sound);
+		}
 	}
 }

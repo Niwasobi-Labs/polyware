@@ -15,5 +15,6 @@ namespace PolyWare.Audio {
 		// public void PlayRandomSfx(AudioClip[] audioClips, Vector3 playAt, AudioChannel channel, float volume = 1f, bool loop = false);
 		// public void PlaySfx(AudioClip audioClip, Vector3 playAt, AudioChannel channel, float volume = 1f, bool loop = false, Func<bool> stopCondition = null);
 		public void PlayOneShot(EventReference sound, Vector3 worldPosition);
+		public IAudioEventInstance GetInstance(EventReference sound);
 	}
 }
