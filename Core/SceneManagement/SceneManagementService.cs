@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using PolyWare.Utils;
 
 namespace PolyWare.Core.SceneManagement {
 	public class SceneManagementService : ISceneManagementService {
