@@ -1,7 +1,6 @@
-using PolyWare.AssetManagement;
 using UnityEngine;
 
-namespace Alpaca.Collections {
+namespace PolyWare.Core {
 	[CreateAssetMenu(menuName = "PolyWare/Collections/ColorCollection", fileName = "New ColorCollection")]
 	public class ColorCollection : StringCollection<Color> { }
 }

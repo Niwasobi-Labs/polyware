@@ -1,17 +1,10 @@
 using System.Collections.Generic;
-using PolyWare.Abilities;
-using PolyWare.ActionGame.AimAssist;
-using PolyWare.ActionGame.Projectiles;
-using PolyWare.Audio;
-using PolyWare.Combat;
-using PolyWare.Core.Services;
-using PolyWare.Timers;
-using PolyWare.Utils;
+using PolyWare.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 // todo: what if we wanted to use a Gun without a character? Like a turret?
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class Gun : Weapon {
 
 		[ShowInInspector, Sirenix.OdinInspector.ReadOnly]
@@ -33,7 +26,7 @@ namespace PolyWare.ActionGame.Guns {
 		public ReloadHandler ReloadHandler { get; private set; }
 		
 		private List<Timer> timers;
-		private CountdownWithPredicateTimer fireRateTimer;
+		private CountdownTimerWithPredicate fireRate;
 		private CountdownTimer overheatTimer;
 		
 		protected override void OnInitialize() {
@@ -46,14 +39,13 @@ namespace PolyWare.ActionGame.Guns {
 			
 			laserSight?.SetRange(GunData.GunDefinition.Range * GunData.GunDefinition.RangeOfLaserSight);
 			
-			fireRateTimer = new CountdownWithPredicateTimer(GunData.GunDefinition.FireRate, CheckAdditionalFireRateLogic);
+			fireRate = new CountdownTimerWithPredicate(GunData.GunDefinition.FireRate, CheckAdditionalFireRateLogic);
 
-			overheatTimer = new CountdownTimer(GunData.GunDefinition.OverHeatTime) {
-				OnTimerTick = OnOverheatUpdate,
-				OnTimerComplete = Cooldown
-			};
+			overheatTimer = new CountdownTimer(GunData.GunDefinition.OverHeatTime);
+			overheatTimer.OnTimerTick += OnOverheatUpdate;
+			overheatTimer.OnTimerComplete += Cooldown;
 
-			timers = new List<Timer>(3) { fireRateTimer, overheatTimer };
+			timers = new List<Timer>(3) { fireRate, overheatTimer };
 		}
 
 		private void SetupReload() {
@@ -91,7 +83,7 @@ namespace PolyWare.ActionGame.Guns {
 			return true;
 		}
 
-		public override bool CanUse => GunData.CurrentAmmo > 0 && !ReloadHandler.IsPreventingUse && !fireRateTimer.IsRunning && !overheatTimer.IsRunning;
+		public override bool CanUse => GunData.CurrentAmmo > 0 && !ReloadHandler.IsPreventingUse && !fireRate.IsRunning && !overheatTimer.IsRunning;
 
 		public override void Use() {
 			triggerPulled = true;
@@ -110,8 +102,8 @@ namespace PolyWare.ActionGame.Guns {
 
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
-			fireRateTimer.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter.Transform.gameObject, GunData.GunDefinition.FireRate));
-			fireRateTimer.Start();
+			fireRate.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter.Transform.gameObject, GunData.GunDefinition.FireRate));
+			fireRate.Start();
 
 			if (GunData.GunDefinition.CanOverheat) AddHeat(GunData.GunDefinition.HeatPerShot);
 

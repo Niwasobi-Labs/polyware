@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 
 // based on https://github.com/adammyhre/Unity-Event-Bus
-namespace PolyWare.Core.Events {
+namespace PolyWare.Core {
     /// <summary>
     /// Contains methods and properties related to event buses and event types in the Unity application.
     /// </summary>

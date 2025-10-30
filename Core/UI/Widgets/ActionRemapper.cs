@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class ActionRemapper : Widget {
 		// todo: re-implement this widget on a per project basis, or remove it entirely
 		// [Header("-- UI Fields --")] [SerializeField]

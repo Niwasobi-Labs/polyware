@@ -1,4 +1,4 @@
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	public interface IStatsHandler {
 		public bool AddModifier(StatModifier modifier);
 		public float GetModifiedStat(StatType type);

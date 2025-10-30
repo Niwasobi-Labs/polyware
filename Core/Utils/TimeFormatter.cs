@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PolyWare.Timers {
+namespace PolyWare.Core {
 	public static class TimeFormatter {
 		public static string FormatCurrentTimeOfStopwatch(System.Diagnostics.Stopwatch stopwatch, bool includeHours = true, bool includeMinutes = true, bool includeSeconds = true, bool includeMilliseconds = true) {
 			TimeSpan duration = stopwatch.Elapsed;

@@ -1,7 +1,7 @@
-using PolyWare.Timers;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public class TimedRadar : Radar {
 		[SerializeField] private float tickRate;
 		

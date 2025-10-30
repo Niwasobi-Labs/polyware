@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PolyWare.Editor;
 using UnityEngine;
 
-namespace PolyWare.AssetManagement {
+namespace PolyWare.Core {
 	public abstract class Registry<T> : ScriptableObject where T : Component {
 		
 		[SerializeField] internal PrefabSearchMode searchMode = PrefabSearchMode.Global;
@@ -19,13 +18,13 @@ namespace PolyWare.AssetManagement {
 			prefabDictionary = new Dictionary<Type, T>();
 
 			foreach (T prefab in allPrefabs.Where(prefab => !prefabDictionary.TryAdd(prefab.GetType(), prefab)))
-				Debug.Log.Error("Duplicate prefab type found: " + prefab.name);
+				Log.Error("Duplicate prefab type found: " + prefab.name);
 		}
 
 		public T GetPrefab(Type prefabType, Transform parent = null) {
 			if (prefabDictionary.TryGetValue(prefabType, out T prefab)) return Instantiate(prefab, parent);
 
-			Debug.Log.Error($"Could not find prefab of type: {prefabType}");
+			Log.Error($"Could not find prefab of type: {prefabType}");
 			return null;
 		}
 	}

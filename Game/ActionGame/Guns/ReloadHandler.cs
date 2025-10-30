@@ -1,7 +1,7 @@
-using PolyWare.Timers;
+using PolyWare.Core;
 using UnityEngine.Events;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public abstract class ReloadHandler : IReloadHandler {
 		protected readonly Gun gun;
 		protected readonly CountdownTimer timer;
@@ -27,10 +27,9 @@ namespace PolyWare.ActionGame.Guns {
 		
 		protected ReloadHandler(Gun gun) {
 			this.gun = gun;
-			
-			timer = new CountdownTimer(gun.GunData.GunDefinition.ReloadTime) {
-				OnTimerComplete = OnComplete
-			};
+
+			timer = new CountdownTimer(gun.GunData.GunDefinition.ReloadTime);
+			timer.OnTimerComplete += OnComplete;
 		}
 
 		protected void RaiseReloadEvent(float progress, ReloadEventData.State state) {

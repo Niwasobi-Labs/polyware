@@ -1,8 +1,7 @@
 using FMODUnity;
-using PolyWare.Core.Services;
 using UnityEngine;
 
-namespace PolyWare.Audio {
+namespace PolyWare.Core {
 	public enum AudioChannel {
 		Music,
 		Sfx,

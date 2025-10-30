@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	public enum StatType {
 		Strength, 
 		Speed,
@@ -12,12 +13,12 @@ namespace PolyWare.Stats {
 	
 	[Serializable]
 	public class StatData {
-		public float Strength = 1;
-		public float Speed = 1;
-		public float Dexterity = 1;
-		public float Vitality = 1;
-		public float Damage = 1;	
-		public float Luck = 1;
+		[field: SerializeField] public float Strength { get; private set; } = 1;
+		[field: SerializeField] public float Speed { get; private set; } = 1;
+		[field: SerializeField] public float Dexterity { get; private set; } = 1;
+		[field: SerializeField] public float Vitality { get; private set; } = 1;
+		[field: SerializeField] public float Damage { get; private set; } = 1;	
+		[field: SerializeField] public float Luck { get; private set; } = 1;
 		
 		public float this[StatType statType] {
 			get {

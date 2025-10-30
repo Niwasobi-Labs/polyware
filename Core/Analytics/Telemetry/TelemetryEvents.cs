@@ -1,5 +1,5 @@
-namespace PolyWare.Analytics {
-	public enum EventID {
+namespace PolyWare.Core {
+	public enum TelemetryEventId {
 		// game specific events (0-9,999)
 		// polyware specific events (10,000 - 19,999)
 		GameStart = 10000,

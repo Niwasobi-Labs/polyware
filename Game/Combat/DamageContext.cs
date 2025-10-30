@@ -1,9 +1,8 @@
 using System;
-using PolyWare.Abilities;
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	[Serializable]
 	public struct DamageContext : IContext {
 		[HideInInspector] public GameObject Culprit;

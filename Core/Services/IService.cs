@@ -1,4 +1,4 @@
-namespace PolyWare.Core.Services {
+namespace PolyWare.Core {
 	public interface IService {
 		
 	}

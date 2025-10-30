@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	public class StatModifierManager {
 		private readonly LinkedList<StatModifier> modifiers = new LinkedList<StatModifier>();
 		

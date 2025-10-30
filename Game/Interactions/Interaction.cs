@@ -2,7 +2,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PolyWare.Interactions {
+namespace PolyWare.Game {
 	public class Interaction : ProximityTarget, IInteractable {
 		[Title("Interaction")]public bool DisablePrompt;
 

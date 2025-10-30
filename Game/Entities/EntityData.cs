@@ -1,7 +1,7 @@
+using PolyWare.Core;
 using System;
-using PolyWare.Utils;
 
-namespace PolyWare.Core.Entities {
+namespace PolyWare.Game {
 
 	public interface IEntityData {
 		public EntityDefinition EntityDefinition { get; }

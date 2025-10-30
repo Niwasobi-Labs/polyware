@@ -1,4 +1,4 @@
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	public class MeleeData : WeaponData {
 		public MeleeData(EquipmentDefinition definition) : base(definition) { }
 		

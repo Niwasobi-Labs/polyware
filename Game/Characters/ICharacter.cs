@@ -1,8 +1,6 @@
-using PolyWare.Items;
-using PolyWare.Stats;
 using UnityEngine;
 
-namespace PolyWare.Characters {
+namespace PolyWare.Game {
 	public interface ICharacter {
 		public void Interact();
 		public bool Pickup(IPickupable item);

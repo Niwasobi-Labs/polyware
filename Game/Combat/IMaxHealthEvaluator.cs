@@ -1,6 +1,4 @@
-using PolyWare.Characters;
-
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	public interface IMaxHealthEvaluator {
 		public float Evaluate(ICharacter character, HealthData healthData);
 	}

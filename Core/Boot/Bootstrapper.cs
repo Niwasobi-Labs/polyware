@@ -1,15 +1,9 @@
-using PolyWare.Analytics;
-using PolyWare.AssetManagement;
-using PolyWare.Core.SceneManagement;
-using PolyWare.Core.Services;
-using PolyWare.Input;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PolyWare.Core {
 	public class Bootstrapper : MonoBehaviour {
 		
-		[SerializeField] private Collector collector;
 		[SerializeField] private SceneGroupCollection sceneGroupCollection;
 		[SerializeField] private string initialSceneGroupID;
 		
@@ -23,7 +17,6 @@ namespace PolyWare.Core {
 		}
 
 		private void SetupCoreServices() {
-			ServiceLocator.Global.Register<IAssetManagementService>(new AssetManagementService(collector));
 			ServiceLocator.Global.Register<ITelemetryService>(new LocalTelemetryService());
 			ServiceLocator.Global.Register<ISceneManagementService>(new SceneManagementService(new SimpleSceneGroupManager(), sceneGroupCollection));
 			ServiceLocator.Global.Register<IInputService>(new NullInputService());

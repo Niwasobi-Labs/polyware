@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Debug {
+namespace PolyWare.Core {
 	public static class GizmoHelper {
 		private const float thicknessOffset = 0.01f;
 

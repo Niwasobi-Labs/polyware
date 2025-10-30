@@ -1,7 +1,7 @@
-using PolyWare.Debug;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	public class StraightProjectileMovementHandler : ProjectileMovementHandler {
 		public override void Move() {
 			if (projectile.Data.Target) projectile.transform.forward = CalculateMagnetizedDirection(); 

@@ -1,12 +1,12 @@
 using System.Text;
 
-namespace PolyWare.Analytics {
+namespace PolyWare.Core {
 	public class LevelTelemetryEvents {
 		public const string LevelPrefix = "level: ";
 		public const string LevelTimePrefix = "level time: ";
 		
 		public readonly struct LevelStart : ITelemetryEvent {
-			public int EventID => (int)Analytics.EventID.LevelStart;
+			public int EventID => (int)TelemetryEventId.LevelStart;
 			public string EventName => eventName;
 			private const string eventName = "LevelStarted";
 			private readonly string levelName;
@@ -22,7 +22,7 @@ namespace PolyWare.Analytics {
 		}
 		
 		public readonly struct LevelComplete : ITelemetryEvent {
-			public int EventID => (int)Analytics.EventID.LevelComplete;
+			public int EventID => (int)TelemetryEventId.LevelComplete;
 			public string EventName => eventName;
 			private const string eventName = "LevelCompleted";
 			
@@ -46,7 +46,7 @@ namespace PolyWare.Analytics {
 		}
 
 		public readonly struct LevelReset : ITelemetryEvent {
-			public int EventID => (int)Analytics.EventID.LevelReset;
+			public int EventID => (int)TelemetryEventId.LevelReset;
 			public string EventName => eventName;
 			private const string eventName = "LevelReset";
 			

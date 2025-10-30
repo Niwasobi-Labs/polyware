@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Timers {
+namespace PolyWare.Core {
 	public class IntervalTimer : CountdownTimer {
 		public IntervalTimer(float time, float interval) : base(time) {
 			this.interval = interval;

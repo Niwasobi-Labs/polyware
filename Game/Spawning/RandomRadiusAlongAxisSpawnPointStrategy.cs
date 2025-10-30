@@ -1,7 +1,6 @@
-using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.Core.Spawning {
+namespace PolyWare.Game {
 	public class RandomRadiusAlongAxisSpawnPointStrategy : ISpawnPointStrategy {
 		
 		private readonly Vector3 center;

@@ -1,9 +1,7 @@
-using PolyWare.Core.Events;
-using PolyWare.Core.Services;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class UIScreen : MonoBehaviour {
 		[Title("UI Screen")]
 		[SerializeField] private bool persistant = true;

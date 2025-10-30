@@ -1,7 +1,6 @@
 using System;
-using PolyWare.Core.Entities;
 
-namespace PolyWare.Inventory {
+namespace PolyWare.Game {
 	[Serializable]
 	public class EntitySlotInventory<TEntity, TData> : SlotInventory<TData> where TEntity : Entity<TData> where TData : IEntityData {
 		public EntitySlotInventory(int capacity) : base(capacity) { }

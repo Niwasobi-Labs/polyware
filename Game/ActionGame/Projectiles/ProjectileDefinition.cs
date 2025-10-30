@@ -1,8 +1,7 @@
 using FMODUnity;
-using PolyWare.Core.Entities;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	[CreateAssetMenu(menuName = "PolyWare/Definitions/Projectile", fileName = "New ProjectileDefinition")]
 	public class ProjectileDefinition : EntityDefinition {
 		[Header("Magnetism")] [Range(0, 1)]

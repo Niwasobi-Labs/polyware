@@ -1,8 +1,6 @@
-using PolyWare.ActionGame.Grenades;
-using PolyWare.Inventory;
 using UnityEngine.Events;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	public interface IGrenadeHandler {
 		event UnityAction<InventorySlot<GrenadeDefinition>> OnActiveGrenadeUpdate;
 		bool Pickup(Grenade grenade);

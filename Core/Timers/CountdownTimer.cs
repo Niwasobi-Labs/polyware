@@ -1,8 +1,8 @@
 using System;
 
-namespace PolyWare.Timers {
+namespace PolyWare.Core {
 	public class CountdownTimer : Timer {
-		public Action OnTimerComplete = delegate { };
+		public event Action OnTimerComplete = delegate { };
 		
 		public CountdownTimer(float value) : base(value) { }
 		
@@ -25,18 +25,5 @@ namespace PolyWare.Timers {
 		}
 		
 		public virtual bool IsFinished => Time <= 0;
-	}
-
-	/// <summary>
-	/// countdown timer that when time runs out, it will check a predicate before it stops running
-	/// </summary>
-	public class CountdownWithPredicateTimer : CountdownTimer {
-		private readonly Func<bool> completionCondition;
-
-		public CountdownWithPredicateTimer(float value, Func<bool> predicate) : base(value) {
-			completionCondition = predicate;
-		}
-
-		public override bool IsFinished => Time <= 0 && completionCondition();
 	}
 }

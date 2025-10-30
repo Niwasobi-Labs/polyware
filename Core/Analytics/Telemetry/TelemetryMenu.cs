@@ -2,9 +2,8 @@
 using UnityEditor;
 using UnityEngine;
 using System.IO;
-using PolyWare.Debug;
 
-namespace PolyWare.Analytics {
+namespace PolyWare.Core {
 	public static class TelemetryMenu { 
 		// Path to the telemetry directory
 		private static string GetTelemetryDirectory() {

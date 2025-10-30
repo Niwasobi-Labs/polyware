@@ -1,4 +1,4 @@
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class OneByOneReload : ReloadHandler {
 		
 		public OneByOneReload(Gun gun) : base(gun) { }

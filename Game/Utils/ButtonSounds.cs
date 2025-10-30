@@ -1,9 +1,9 @@
 using FMODUnity;
-using PolyWare.Core.Services;
+using PolyWare.Core;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PolyWare.Audio {
+namespace PolyWare.Game {
 	public class ButtonSounds : MonoBehaviour, ISelectHandler, ISubmitHandler {
 		public EventReference SelectSound;
 		public EventReference SubmitSound;

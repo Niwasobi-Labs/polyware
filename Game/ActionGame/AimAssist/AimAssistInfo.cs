@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.AimAssist {
+namespace PolyWare.Game {
 	[Serializable]
 	public class AimAssistInfo {
 		public const float DefaultMaxVerticalAngle = 18f;

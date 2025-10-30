@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Debug;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class ScreenStack {
 		private readonly Dictionary<Type, UIScreen> screenCache = new();
 		private readonly Stack<UIScreen> screenStack = new();

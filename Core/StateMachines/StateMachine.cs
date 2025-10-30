@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace PolyWare.StateMachines {
+namespace PolyWare.Core {
     public class StateMachine {
         StateNode currentNode;
         readonly Dictionary<Type, StateNode> nodes = new();

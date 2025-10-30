@@ -1,7 +1,7 @@
 ﻿using System;
 
 // based on https://github.com/adammyhre/Unity-Event-Bus
-namespace PolyWare.Core.Events {
+namespace PolyWare.Core {
     public interface IEventBinding<T> {
         public Action<T> OnEvent { get; set; }
         public Action OnEventNoArgs { get; set; }

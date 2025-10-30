@@ -1,8 +1,7 @@
 using System;
-using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public abstract class Radar : MonoBehaviour {
 		[SerializeField] private IRadarStrategy.RadarStrategyType type;
 		[SerializeField] private RadarSettings settings;

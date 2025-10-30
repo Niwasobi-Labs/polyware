@@ -1,7 +1,6 @@
-using PolyWare.Core.Events;
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public struct DigitalNavigationEvent : IEvent { }
 	public struct CancelEvent : IEvent { }
 	

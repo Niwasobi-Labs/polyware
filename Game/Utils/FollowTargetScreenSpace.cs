@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	[RequireComponent(typeof(RectTransform))]
 	public class FollowTargetScreenSpace : MonoBehaviour {
 		[SerializeField] private Vector3 offset;

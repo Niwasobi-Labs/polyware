@@ -1,10 +1,10 @@
 #if UNITY_EDITOR
 using System.IO;
-using PolyWare.Debug;
+using PolyWare.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	public class CreateWeaponWindow : EditorWindow {
 		private string entityName = "NewWeapon";
 		private string nameSpace = "PolyWare.Weapons";

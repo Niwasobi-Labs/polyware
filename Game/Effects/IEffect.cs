@@ -1,8 +1,7 @@
 using System;
-using PolyWare.Utils;
+using PolyWare.Core;
 
-namespace PolyWare.Effects {
-	// todo: add a IEffectFactory to avoid heap allocations
+namespace PolyWare.Game {
 	public interface IEffect {
 		event Action<IEffect> OnCompleted;
 		public void Apply(IAffectable target, ContextHolder ctx);

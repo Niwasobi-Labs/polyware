@@ -1,9 +1,8 @@
 using System;
-using PolyWare.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	[Serializable]
 	public struct HealthData {
 		public float InitialMaxHealth;

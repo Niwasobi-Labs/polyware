@@ -1,4 +1,4 @@
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	public class StatQuery {
 		public readonly StatType StatType;
 		public float Value;

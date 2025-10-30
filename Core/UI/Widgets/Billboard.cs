@@ -1,8 +1,6 @@
-using PolyWare.Cameras;
-using PolyWare.Core.Services;
 using UnityEngine;
 
-namespace PolyWare.UI.Utils {
+namespace PolyWare.Core {
 	public class Billboard : MonoBehaviour {
 		private void FixedUpdate() {
 			transform.LookAt(ServiceLocator.Global.Get<ICameraService>().ActiveCamera.transform, Vector3.up);

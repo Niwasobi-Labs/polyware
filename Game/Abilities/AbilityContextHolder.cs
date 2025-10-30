@@ -1,9 +1,9 @@
+using PolyWare.Core;
 using System;
 using System.Collections.Generic;
-using PolyWare.Utils;
 using UnityEngine;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	public class AbilityContextHolder : ContextHolder {
 		public AbilityDefinition AbilityDefinition;
 		public GameObject Culprit;

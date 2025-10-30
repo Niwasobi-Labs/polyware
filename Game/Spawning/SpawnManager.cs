@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Numerics;
-using PolyWare.Utils;
+using PolyWare.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 
-namespace PolyWare.Core.Spawning {
+namespace PolyWare.Game {
 	public abstract class SpawnManager : MonoBehaviour {
 		[SerializeField] private bool spawnOnStart = false;
 		

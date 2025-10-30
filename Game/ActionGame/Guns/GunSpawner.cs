@@ -1,9 +1,7 @@
 using System;
-using PolyWare.Core.Entities;
-using PolyWare.Core.Spawning;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class GunSpawner : SpawnManager {
 
 		[Serializable]

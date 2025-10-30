@@ -1,6 +1,4 @@
-using PolyWare.Characters;
-
-namespace PolyWare.Items {
+namespace PolyWare.Game {
 	public interface IEquipable {
 		void Equip(ICharacter character);
 		bool Unequip();

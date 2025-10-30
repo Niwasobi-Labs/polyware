@@ -1,4 +1,4 @@
-namespace PolyWare.Items {
+namespace PolyWare.Game {
 	public interface IUsable {
 		bool CanUse { get; }
 		void Use();

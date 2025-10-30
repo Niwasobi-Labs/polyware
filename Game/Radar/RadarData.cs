@@ -1,7 +1,7 @@
+using PolyWare.Core;
 using System.Collections.Generic;
-using PolyWare.Debug;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public class RadarData {
 		public class ScanData {
 			public int Count => Results.Count;

@@ -1,18 +1,8 @@
-using System;
-using System.Collections.Generic;
-using PolyWare.Abilities;
-using PolyWare.Audio;
-using PolyWare.Characters;
 using PolyWare.Core;
-using PolyWare.Debug;
-using PolyWare.Core.Entities;
-using PolyWare.Core.Services;
-using PolyWare.Interactions;
-using PolyWare.Items;
-using PolyWare.Timers;
+using System.Collections.Generic;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.PowerUps {
+namespace PolyWare.Game {
 	public class PowerUp : Entity<PowerUpData>, IPickupable {
 		protected ICharacter character;
 
@@ -23,9 +13,8 @@ namespace PolyWare.ActionGame.PowerUps {
 		private CountdownTimer lifeTimer;
 
 		protected override void OnInitialize() {
-			lifeTimer = new CountdownTimer(Data.Definition.LifeTime) {
-				OnTimerComplete = () => Destroy(gameObject)
-			};
+			lifeTimer = new CountdownTimer(Data.Definition.LifeTime);
+			lifeTimer.OnTimerComplete += () => Destroy(gameObject);
 		}
 
 		protected virtual void Start() {

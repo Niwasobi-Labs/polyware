@@ -1,6 +1,4 @@
-using PolyWare.Core.Entities;
-
-namespace PolyWare.Items {
+namespace PolyWare.Game {
 	public abstract class ItemDefinition : EntityDefinition {
 		public string ItemID; // todo: make an enum of sorts
 		public string Name;

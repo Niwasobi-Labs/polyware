@@ -1,9 +1,7 @@
 using System;
-using PolyWare.Core;
-using PolyWare.Core.Entities;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	[Serializable]
 	public class GunSpawnData : WeaponSpawnData {
 		[Tooltip("-1 will default to the MaxAmmo")]

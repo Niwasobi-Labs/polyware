@@ -1,8 +1,8 @@
+using PolyWare.Core;
 using System;
-using PolyWare.AssetManagement;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	[Serializable]
 	public class ProjectileAsset : AssetData<string, ProjectileDefinition> { }
 

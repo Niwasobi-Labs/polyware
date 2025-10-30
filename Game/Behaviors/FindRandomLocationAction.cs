@@ -1,12 +1,12 @@
+using PolyWare.Core;
 using System;
-using PolyWare.Debug;
 using Unity.Behavior;
 using UnityEngine;
-using Action = Unity.Behavior.Action;
 using Unity.Properties;
 using UnityEngine.AI;
+using Action = Unity.Behavior.Action;
 
-namespace PolyWare.Behaviors {
+namespace PolyWare.Game {
     [Serializable, GeneratePropertyBag]
     [NodeDescription(name: "FindRandomLocation", story: "[Agent] finds random [Location] within [Radius] units", category: "Action/Navigation", id: "517bdb0cb6f8dd071eda997a44e821b5")]
     public partial class FindRandomLocationAction : Action {

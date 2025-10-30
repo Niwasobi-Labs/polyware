@@ -1,11 +1,10 @@
-using PolyWare.Core.Services;
+using PolyWare.Core;
 using System.Collections;
-using PolyWare.Core.Game;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace PolyWare.UI.TextFX {
+namespace PolyWare.Game {
 	public class Typewriter : MonoBehaviour {
 		[SerializeField] [FormerlySerializedAs("Text")] private TMP_Text text;
 
@@ -39,7 +38,7 @@ namespace PolyWare.UI.TextFX {
 			var gameService = ServiceLocator.Global.Get<IGameService>();
 			while (text.maxVisibleCharacters != totalCharacters) {
 				text.maxVisibleCharacters += 1;
-				yield return PolyWare.Utils.Yielders.WaitForSeconds(speedUp ? gameService.GameConstants.DialogueSkipMultiplier : gameService.GameConstants.DialogueCharacterDelay);
+				yield return Yielders.WaitForSeconds(speedUp ? gameService.GameConstants.DialogueSkipMultiplier : gameService.GameConstants.DialogueCharacterDelay);
 			}
 		}
 	}

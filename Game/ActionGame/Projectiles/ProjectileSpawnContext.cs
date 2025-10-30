@@ -1,8 +1,7 @@
-using PolyWare.Abilities;
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	public struct ProjectileSpawnContext : IContext {
 		public readonly ProjectileData Projectile;
 		public readonly int Count;

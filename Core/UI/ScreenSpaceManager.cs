@@ -1,7 +1,6 @@
-using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class ScreenSpaceManager : MonoBehaviour {
 		[SerializeField] protected ScreenRegistry screenRegistry;
 		

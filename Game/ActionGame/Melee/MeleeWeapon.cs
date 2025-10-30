@@ -1,14 +1,9 @@
 using System.Collections.Generic;
-using PolyWare.Abilities;
-using PolyWare.Characters;
-using PolyWare.Combat;
-using PolyWare.Effects;
-using PolyWare.Timers;
-using PolyWare.Utils;
+using PolyWare.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 
 	
 	public class Melee : Weapon {

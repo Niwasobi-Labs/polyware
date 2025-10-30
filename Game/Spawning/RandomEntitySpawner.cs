@@ -1,7 +1,6 @@
-using PolyWare.Core.Spawning;
 using UnityEngine;
 
-namespace PolyWare.Core.Entities {
+namespace PolyWare.Game {
 	public class RandomEntitySpawner<T, T2, T3> : IEntitySpawner<T> where T : IEntity where T2 : EntityDefinition where T3 : IEntitySpawnData {
 		private readonly EntitySpawnerData<T2, T3>[] data;
 		

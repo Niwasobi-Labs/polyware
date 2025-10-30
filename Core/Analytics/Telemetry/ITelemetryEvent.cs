@@ -1,6 +1,6 @@
 using System.Text;
 
-namespace PolyWare.Analytics {
+namespace PolyWare.Core {
 	public interface ITelemetryEvent {
 		/// <summary>
 		/// EventIDs must be unique and have a limit of 10000 for game specific events

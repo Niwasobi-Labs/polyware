@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	public class Yielders : MonoBehaviour {
 		public static WaitForEndOfFrame WaitForEndOfFrame = new();
 

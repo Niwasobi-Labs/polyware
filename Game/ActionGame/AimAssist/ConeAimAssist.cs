@@ -1,8 +1,8 @@
 using System.Linq;
-using PolyWare.Debug;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.AimAssist {
+namespace PolyWare.Game {
 	public class ConeAimAssist : AimAssistStrategy {
 		protected readonly Collider[] aimAssistResults = new Collider[10];
 		

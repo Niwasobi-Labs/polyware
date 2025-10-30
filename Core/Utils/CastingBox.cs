@@ -1,8 +1,6 @@
-using PolyWare.Cameras;
-using PolyWare.Core.Services;
 using UnityEngine;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	public struct CastingBox {
 		public Vector3 Center;
 		public Vector3 HalfExtents;

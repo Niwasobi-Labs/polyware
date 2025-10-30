@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using PolyWare.Debug;
-using PolyWare.Effects;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	public class TargetActionTargetStrategy : IActionTargetStrategy {
 		public List<IAffectable> GetTargets(AbilityContextHolder contextHolder) {
 			var targets = new List<IAffectable>();

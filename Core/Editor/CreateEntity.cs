@@ -1,10 +1,9 @@
 #if UNITY_EDITOR
 using System.IO;
-using PolyWare.Debug;
 using UnityEditor;
 using UnityEngine;
 
-namespace PolyWare.Editor {
+namespace PolyWare.Core {
 	public class CreateEntityWindow : EditorWindow {
 		private string entityName = "NewEntity";
 		private string nameSpace = "PolyWare.Gameplay";

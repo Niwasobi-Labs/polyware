@@ -1,12 +1,11 @@
 using System;
-using PolyWare.Debug;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-namespace PolyWare.Input {
+namespace PolyWare.Core {
 	// todo: this needs to die and be reborn as two
 	public class PlatformAndInputRebinder : MonoBehaviour {
 		

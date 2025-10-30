@@ -1,6 +1,6 @@
 using Sirenix.OdinInspector;
 
-namespace PolyWare.Inventory {
+namespace PolyWare.Game {
 	public class SlotInventory<T> : IInventory<T> {
 		[ShowInInspector] public T[] Slots { get; private set; }
 

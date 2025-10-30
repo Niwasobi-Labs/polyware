@@ -1,8 +1,8 @@
+using PolyWare.Core;
 using System;
-using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public interface IRadarStrategy {
 		public enum RadarStrategyType {
 			SphereCast,

@@ -1,12 +1,9 @@
 using System.Collections.Generic;
-using PolyWare.Characters;
-using PolyWare.Stats;
-using PolyWare.Timers;
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	public class Health {
 		
 		private HealthData health;
@@ -47,19 +44,18 @@ namespace PolyWare.Combat {
 		
 		private void SetupTimers() {
 			if (RegenTimer == null) {
-				timers.Add(RegenTimer = new CountdownTimer(health.RegenTime) {
-					OnTimerTick = UpdateRegen,
-					OnTimerComplete = CompleteRegen
-				});
+				RegenTimer = new CountdownTimer(health.RegenTime);
+				RegenTimer.OnTimerTick += UpdateRegen;
+				RegenTimer.OnTimerComplete += CompleteRegen;
+				timers.Add(RegenTimer);
 			}
 			else {
 				RegenTimer.SetInitialTime(health.RegenTime);
 			}
 
 			if (RegenDelayTimer == null) {
-				timers.Add(RegenDelayTimer = new CountdownTimer(health.RegenDelayTime) {
-					OnTimerComplete = StartRegen
-				});
+				RegenDelayTimer = new CountdownTimer(health.RegenDelayTime);
+				RegenDelayTimer.OnTimerComplete += StartRegen;
 			}
 			else {
 				RegenDelayTimer.SetInitialTime(health.RegenDelayTime);

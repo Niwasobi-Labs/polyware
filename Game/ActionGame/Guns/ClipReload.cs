@@ -1,4 +1,4 @@
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class ClipReload : ReloadHandler {
 		
 		public ClipReload(Gun gun) : base(gun) { }

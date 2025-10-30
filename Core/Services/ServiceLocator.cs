@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 
-namespace PolyWare.Core.Services {
+namespace PolyWare.Core {
 	public class ServiceLocator {
 		private static ServiceLocator _globalServiceLocator;
 		private static readonly Dictionary<Scene, ServiceLocator> _sceneLocators = new Dictionary<Scene, ServiceLocator>();

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PolyWare.Effects {
+namespace PolyWare.Game {
 	public class EffectsHandler : IEffectsHandler {
 		public event Action OnEmpty;
 		

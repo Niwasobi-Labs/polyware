@@ -1,8 +1,8 @@
 using System.Text;
 
-namespace PolyWare.Analytics {
+namespace PolyWare.Core {
 	public readonly struct GameStartTelemetryEvent : ITelemetryEvent {
-		public int EventID => (int)PolyWare.Analytics.EventID.LevelStart;
+		public int EventID => (int)TelemetryEventId.LevelStart;
 		public string EventName => eventName;
 		private const string eventName = "GameStarted";
 		

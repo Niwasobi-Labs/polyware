@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Effects {
+namespace PolyWare.Game {
 	public interface IEffectsHandler {
 		public event Action OnEmpty;
 		

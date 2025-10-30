@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	public abstract class Constants : ScriptableObject {
 		[Title("User Interface")]
 		[field: SerializeField] public float DialogueCharacterDelay { get; private set;} = 0.1f;

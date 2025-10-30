@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 
 // based on https://github.com/adammyhre/Unity-Event-Bus
-namespace PolyWare.Core.Events {
+namespace PolyWare.Core {
     /// <summary>
     /// A utility class, PredefinedAssemblyUtil, provides methods to interact with predefined assemblies.
     /// It allows to get all types in the current AppDomain that implement from a specific Interface type.

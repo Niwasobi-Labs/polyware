@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	public class LoadingProgress : IProgress<float> {
 		public event Action<float> OnProgress;
 

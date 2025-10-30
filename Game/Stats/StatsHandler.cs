@@ -1,4 +1,4 @@
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	public class StatsHandler : IStatsHandler {
 		public readonly StatModifierManager ModifierManager;
 		private readonly StatData baseData;
@@ -13,7 +13,7 @@ namespace PolyWare.Stats {
 
 		public bool AddModifier(StatModifier modifier) {
 			ModifierManager.AddModifier(modifier);
-			return true; // todo: allow for future modifiers to have add conditions
+			return true;
 		}
 		
 		public float GetModifiedStat(StatType statType) {

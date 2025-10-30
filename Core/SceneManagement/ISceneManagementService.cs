@@ -1,8 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using PolyWare.Core.Services;
 
-namespace PolyWare.Core.SceneManagement {
+namespace PolyWare.Core {
 	public interface ISceneManagementService : IService {
 		event Action<string> OnSceneGroupLoaded;
 		event Action<float> OnSceneGroupLoadProgress;

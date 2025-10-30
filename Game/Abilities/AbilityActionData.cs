@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Effects;
 using UnityEngine;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	[Serializable]
 	public class AbilityActionData {
 		[SerializeReference] public IActionTargetStrategy Target;

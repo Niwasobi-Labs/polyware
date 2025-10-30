@@ -1,8 +1,7 @@
-using PolyWare.Cameras;
-using PolyWare.Core.Services;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Core.Spawning {
+namespace PolyWare.Game {
 	public class RandomWithinScreenSpawnPointStrategy : ISpawnPointStrategy {
 		private readonly Vector3 axisNormal;
 

@@ -1,13 +1,8 @@
 using System;
-using PolyWare.ActionGame.Grenades;
-using PolyWare.Characters;
-using PolyWare.Core.Entities;
-using PolyWare.Interactions;
-using PolyWare.Inventory;
 using Sirenix.OdinInspector;
 using UnityEngine.Events;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	[Serializable]
 	public class DynamicGrenadeHandler : IGrenadeHandler {
 		// todo: standardize this to clean up this script and offloading inventory management

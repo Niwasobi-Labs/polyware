@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.StateMachines {
+namespace PolyWare.Core {
 	public class FuncPredicate : IPredicate {
 		private readonly Func<bool> predicate;
 		

@@ -1,7 +1,7 @@
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Effects {
+namespace PolyWare.Game {
 	public interface IAffectable {
 		public GameObject GameObject { get; }
 		public void Affect(IEffect effect, ContextHolder ctx);

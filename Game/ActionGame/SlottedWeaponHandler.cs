@@ -1,16 +1,10 @@
 using System;
-using PolyWare.ActionGame.Guns;
-using PolyWare.Audio;
-using PolyWare.Characters;
-using PolyWare.Core.Services;
-using PolyWare.Debug;
-using PolyWare.Inventory;
-using PolyWare.Core.Entities;
+using PolyWare.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	[Serializable]
 	public class SlottedWeaponHandler : IWeaponHandler {
 

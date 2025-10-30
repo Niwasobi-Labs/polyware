@@ -2,10 +2,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
-using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.Analytics {
+namespace PolyWare.Core {
 	public class LocalTelemetryService : ITelemetryService {
 		public const string EventSerializationSeparator = " | ";
 		public const string EventSerializationBracketStart = "{ ";

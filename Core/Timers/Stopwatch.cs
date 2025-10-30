@@ -1,4 +1,4 @@
-namespace PolyWare.Timers {
+namespace PolyWare.Core {
 	public class Stopwatch : Timer {
 		public Stopwatch() : base(0) { }
 		

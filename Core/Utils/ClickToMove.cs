@@ -1,10 +1,8 @@
-using PolyWare.Cameras;
-using PolyWare.Core.Services;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	[RequireComponent(typeof(NavMeshAgent))]
 	public class ClickToMove : MonoBehaviour {
 		private NavMeshAgent agent;

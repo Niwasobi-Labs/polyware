@@ -1,6 +1,6 @@
 using UnityEngine.Events;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	public interface IWeaponHandler {
 		event UnityAction<Weapon> OnEquip;
 		event UnityAction<Weapon> OnUnequip;

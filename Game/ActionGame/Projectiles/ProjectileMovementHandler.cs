@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	public abstract class ProjectileMovementHandler : MonoBehaviour {
 		protected Projectile projectile;
 

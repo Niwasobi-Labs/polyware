@@ -1,8 +1,7 @@
 using System;
-using PolyWare.Core.Entities;
 using UnityEngine.Events;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	[Serializable]
 	public class WeaponSpawnData : IEntitySpawnData {
 		//public int StartingCondition;

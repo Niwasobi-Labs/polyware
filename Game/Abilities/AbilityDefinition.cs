@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	[CreateAssetMenu(fileName = "New AbilityDefinition", menuName = "PolyWare/Ability")]
 	public class AbilityDefinition : ScriptableObject {
 		[Title("Info")]

@@ -1,4 +1,4 @@
-namespace PolyWare.StateMachines {
+namespace PolyWare.Core {
 	public interface IState {
 		void Update() { }
 		void FixedUpdate() { }

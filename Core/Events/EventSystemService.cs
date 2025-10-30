@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace PolyWare.Core.Services {
+namespace PolyWare.Core {
 	public class EventSystemService : MonoBehaviour, IEventSystemService {
 		[SerializeField] private EventSystem eventSystem;
 

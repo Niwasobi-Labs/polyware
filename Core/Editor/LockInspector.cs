@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 
-namespace PolyWare.Editor {
+namespace PolyWare.Core {
 	public class LockInspector {
 		[MenuItem("PolyWare/Lock Inspector %l")]
 		public static void Lock() {

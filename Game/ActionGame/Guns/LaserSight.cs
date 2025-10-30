@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class LaserSight : MonoBehaviour {
 		[SerializeField][Required] private LineRenderer lineRenderer;
 		

@@ -1,9 +1,7 @@
 using System.Collections.Generic;
-using PolyWare.Abilities;
-using PolyWare.Core.Entities;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	public class ProjectileSpawnStrategy {
 		
 		public static List<Projectile> Spawn(ProjectileSpawnContext context) {

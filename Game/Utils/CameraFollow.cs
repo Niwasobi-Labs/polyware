@@ -2,7 +2,7 @@ using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.Cameras {
+namespace PolyWare.Game {
 	public class CameraFollow : MonoBehaviour {
 		[Title("Targeting")]
 		[ShowInInspector] public Transform Target { get; private set; }

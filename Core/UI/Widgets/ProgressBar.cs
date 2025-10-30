@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PolyWare.UI.Widgets {
+namespace PolyWare.Core {
 	public class ProgressBar : MonoBehaviour {
 		[SerializeField] private Image fill;
 

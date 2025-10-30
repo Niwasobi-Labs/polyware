@@ -1,15 +1,9 @@
+using PolyWare.Core;
 using System;
 using System.Collections;
-using PolyWare.Analytics;
-using PolyWare.Cameras;
-using PolyWare.Core.Game;
-using PolyWare.Core.Services;
-using PolyWare.Timers;
-using PolyWare.UI;
-using PolyWare.Utils;
 using UnityEngine;
 
-namespace PolyWare.Levels {
+namespace PolyWare.Game {
 	public abstract class Level : MonoBehaviour {
 		[SerializeField] private string levelName;
 		[SerializeField] private Transform playerStart;

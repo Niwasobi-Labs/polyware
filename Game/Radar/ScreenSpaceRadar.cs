@@ -1,8 +1,7 @@
-using PolyWare.Debug;
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public class ScreenSpaceRadar : IRadarStrategy {
 		
 		private CastingBox currentCastingBox;

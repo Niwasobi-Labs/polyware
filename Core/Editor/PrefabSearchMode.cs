@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Editor {
+namespace PolyWare.Core {
 	[Serializable]
 	public enum PrefabSearchMode {
 		Global,

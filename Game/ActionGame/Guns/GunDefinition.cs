@@ -1,14 +1,8 @@
 using FMODUnity;
-using PolyWare.Abilities;
-using PolyWare.Combat;
-using PolyWare.Core.Entities;
-using PolyWare.ActionGame.AimAssist;
-using PolyWare.ActionGame.Projectiles;
-using PolyWare.Stats;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	[CreateAssetMenu(menuName = "PolyWare/Definitions/Gun", fileName = "New GunDefinition")]
 	public class GunDefinition : EquipmentDefinition {
 		

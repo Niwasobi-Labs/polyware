@@ -1,9 +1,8 @@
 using FMOD.Studio;
 using FMODUnity;
-using PolyWare.Debug;
 using STOP_MODE = FMOD.Studio.STOP_MODE;
 
-namespace PolyWare.Audio {
+namespace PolyWare.Core {
 	public struct FMODEventInstance : IAudioEventInstance {
 		private EventInstance sound;
 

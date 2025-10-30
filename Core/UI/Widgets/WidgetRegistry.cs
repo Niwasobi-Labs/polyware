@@ -1,8 +1,7 @@
-using PolyWare.AssetManagement;
 using UnityEditor;
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	[CreateAssetMenu(menuName = "PolyWare/Registries/WidgetRegistry", fileName = "New WidgetRegistry")]
 	public class WidgetRegistry : Registry<Widget> { }
 	

@@ -1,10 +1,7 @@
 using System;
-using PolyWare.Abilities;
-using PolyWare.Combat;
-using PolyWare.Core.Entities;
 using UnityEngine;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	[CreateAssetMenu(menuName = "PolyWare/Definitions/Melee", fileName = "New MeleeDefinition")]
 	public class MeleeDefinition : EquipmentDefinition {
 		public override IEntityData CreateDefaultInstance() => new MeleeData(this);

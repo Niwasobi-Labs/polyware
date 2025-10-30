@@ -1,6 +1,4 @@
-using PolyWare.Core.Services;
-
-namespace PolyWare.Input {
+namespace PolyWare.Core {
 	public interface IInputService : IService {
 		void ChangeToActionMap(int actionMap);
 	}

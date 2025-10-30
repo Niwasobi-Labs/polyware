@@ -1,10 +1,7 @@
 using FMODUnity;
-using PolyWare.Cameras;
-using PolyWare.Core.Services;
-using PolyWare.Debug;
 using UnityEngine;
 
-namespace PolyWare.Audio {
+namespace PolyWare.Core {
 	public class FMODAudioService : MonoBehaviour, IAudioService {
 		public bool IsPaused { get; private set; }
 		

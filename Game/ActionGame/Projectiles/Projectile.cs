@@ -1,16 +1,8 @@
 using System.Collections;
-using PolyWare.Abilities;
-using PolyWare.Audio;
-using PolyWare.Characters;
 using PolyWare.Core;
-using PolyWare.Core.Entities;
-using PolyWare.Core.Services;
-using PolyWare.Effects;
-using PolyWare.Levels;
-using PolyWare.Utils;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	[RequireComponent(typeof(Rigidbody))]
 	public class Projectile : Entity<ProjectileData> {
 		public Rigidbody MyRigidbody;

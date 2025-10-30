@@ -1,4 +1,4 @@
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	public enum Element {
 		Kinetic,
 		Energy,

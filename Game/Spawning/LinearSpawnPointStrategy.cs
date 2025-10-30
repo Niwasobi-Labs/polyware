@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Core.Spawning {
+namespace PolyWare.Game {
 	public class LinearSpawnPointStrategy : ISpawnPointStrategy {
 		private readonly Transform[] spawnPoints;
 		private int index = 0;

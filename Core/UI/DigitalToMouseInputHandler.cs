@@ -1,8 +1,6 @@
-using PolyWare.Core.Events;
-using PolyWare.Core.Services;
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class DigitalToMouseInputHandler : MonoBehaviour {
 		public bool IsMouseActive { get; private set; }
 		private EventBinding<DigitalNavigationEvent> digitalNavEventHandler;

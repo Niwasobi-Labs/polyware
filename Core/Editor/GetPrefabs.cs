@@ -1,10 +1,9 @@
 #if UNITY_EDITOR
 using System.Collections.Generic;
-using Log = PolyWare.Debug.Log;
 using UnityEngine;
 using UnityEditor;
 
-namespace PolyWare.Editor {
+namespace PolyWare.Core {
 	public static class GetPrefabs {
 		// ReSharper disable Unity.PerformanceAnalysis
 		public static List<T> GetAllPrefabsWithComponent<T>(bool allowDuplicates, PrefabSearchMode searchMode, string startingPath) where T : Component {

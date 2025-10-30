@@ -1,7 +1,6 @@
-using PolyWare.Core.Entities;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Projectiles {
+namespace PolyWare.Game {
 	public class ProjectileData : EntityData<ProjectileDefinition> {
 		public GameObject Invoker;
 		public Transform Target;

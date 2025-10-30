@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.StateMachines {
+namespace PolyWare.Core {
 	/// <summary>
 	/// Represents a predicate that encapsulates an action and evaluates to true once the action has been invoked.
 	/// </summary>

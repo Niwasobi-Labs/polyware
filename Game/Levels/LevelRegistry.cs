@@ -1,17 +1,17 @@
-using PolyWare.AssetManagement;
+using PolyWare.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace PolyWare.Levels {
+namespace PolyWare.Game {
 	[CreateAssetMenu(menuName = "PolyWare/Registries/LevelRegistry", fileName = "New LevelRegistry")]
-	public class LevelRegistry : Registry<Levels.Level> { }
+	public class LevelRegistry : Registry<Level> { }
 	
 #if UNITY_EDITOR
 	[CustomEditor(typeof(LevelRegistry))]
-	public class LevelRegistryEditor : UnityEditor.Editor {
+	public class LevelRegistryEditor : Editor {
 		public override void OnInspectorGUI() {
 			if (GUILayout.Button("Refresh")) {
-				RegistryEditor.RefreshRegistry<Levels.Level>(target);
+				RegistryEditor.RefreshRegistry<Level>(target);
 				EditorUtility.SetDirty(target);
 			}
 			DrawDefaultInspector();

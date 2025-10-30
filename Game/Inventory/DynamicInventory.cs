@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 
-namespace PolyWare.Inventory {
+namespace PolyWare.Game {
 	[Serializable]
 	public class DynamicInventory<T> : IInventory<T> {
 		[ShowInInspector] public List<T> Items { get; protected set; }

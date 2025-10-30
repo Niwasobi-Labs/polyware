@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace PolyWare.Core.Services {
+namespace PolyWare.Core {
 	public class ServiceManager {
 		private Dictionary<Type, IService> services = new Dictionary<Type, IService>();
 		

@@ -1,15 +1,15 @@
 using System;
 
-namespace PolyWare.Timers {
+namespace PolyWare.Core {
 	public abstract class Timer {
 		protected float initialTime;
 		protected float Time { get; set; }
 		
 		public bool IsRunning { get; protected set; }
 
-		public Action OnTimerStart = delegate { };
-		public Action OnTimerTick = delegate { };
-		public Action OnTimerStop = delegate { };
+		public event Action OnTimerStart;
+		public event Action OnTimerTick;
+		public event Action OnTimerStop;
 
 		public float Progress => Time / initialTime;
 		

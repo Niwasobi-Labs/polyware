@@ -1,4 +1,4 @@
-namespace PolyWare.Debug {
+namespace PolyWare.Core {
 	public static class Log {
 		// ReSharper disable Unity.PerformanceAnalysis	
 		public static void Message(string message) => UnityEngine.Debug.Log(message);

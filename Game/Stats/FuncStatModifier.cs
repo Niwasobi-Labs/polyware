@@ -1,11 +1,11 @@
 using System;
 
-namespace PolyWare.Stats {
-	public class BasicStatModifier : StatModifier {
+namespace PolyWare.Game {
+	public class FuncStatModifier : StatModifier {
 		private readonly StatType type;
 		private readonly Func<float, float> operation;
 
-		public BasicStatModifier(StatType type, float duration, Func<float, float> operation) : base(duration) {
+		public FuncStatModifier(StatType type, float duration, Func<float, float> operation) : base(duration) {
 			this.type = type;
 			this.operation = operation;
 		}

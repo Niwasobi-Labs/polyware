@@ -1,4 +1,4 @@
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public enum ReloadStrategy {
 		None,
 		Clip,

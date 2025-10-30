@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using PolyWare.Core.Services;
-using PolyWare.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PolyWare.Core.SceneManagement {
+namespace PolyWare.Core {
 	public class SimpleSceneGroupManager : ISceneGroupManager {
 		public event Action<string> OnSceneLoad;
 		public event Action<string> OnSceneUnload;

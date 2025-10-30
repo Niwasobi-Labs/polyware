@@ -1,11 +1,7 @@
-using PolyWare.Characters;
-using PolyWare.Core.Entities;
-using PolyWare.Interactions;
-using PolyWare.Items;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PolyWare.ActionGame {
+namespace PolyWare.Game {
 	// todo: remove IUsable and replace with other terminology (maybe specific to subclasses)
 	public abstract class Weapon : Entity<WeaponData>, IEquipable, IUsable, IPickupable, IDroppable {
 		[InfoBox("Component disabled by default to prevent logic when in world")]

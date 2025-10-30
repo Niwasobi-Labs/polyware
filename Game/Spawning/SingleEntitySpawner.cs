@@ -1,7 +1,6 @@
-using PolyWare.Core.Entities;
 using UnityEngine;
 
-namespace PolyWare.Core.Spawning {
+namespace PolyWare.Game {
 	// todo: expand this to support a drop down of any type of entity and entity spawn data
 	public class SingleEntitySpawner : MonoBehaviour, IEntitySpawner<IEntity> {
 		

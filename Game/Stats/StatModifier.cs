@@ -1,8 +1,7 @@
 using System;
-using PolyWare.Timers;
-using Unity.VisualScripting.YamlDotNet.Core;
+using PolyWare.Core;
 
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	public abstract class StatModifier : IDisposable {
 		
 		public bool MarkedForRemoval { get; private set; }
@@ -14,8 +13,8 @@ namespace PolyWare.Stats {
 
 		public static StatModifier Create(StatModiferData data) {
 			return data.Type switch {
-				StatModiferData.OperatorType.Add => new BasicStatModifier(data.StatType, data.Duration, v => v + data.Value),
-				StatModiferData.OperatorType.Multiply => new BasicStatModifier(data.StatType, data.Duration, v => v * data.Value),
+				StatModiferData.OperatorType.Add => new FuncStatModifier(data.StatType, data.Duration, v => v + data.Value),
+				StatModiferData.OperatorType.Multiply => new FuncStatModifier(data.StatType, data.Duration, v => v * data.Value),
 				_ => throw new ArgumentOutOfRangeException()
 			};	
 		}

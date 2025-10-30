@@ -1,8 +1,6 @@
-using PolyWare.Characters;
-using PolyWare.Stats;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class StatMultiplierFireRateEvaluator : IFireRateEvaluator {
 		public StatType Stat;
 

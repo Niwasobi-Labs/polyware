@@ -1,3 +1,3 @@
-namespace PolyWare.Core.Entities {
+namespace PolyWare.Game {
 	public interface IEntitySpawnData {}
 }

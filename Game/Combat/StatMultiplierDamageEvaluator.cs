@@ -1,9 +1,7 @@
 using System;
-using PolyWare.Characters;
-using PolyWare.Stats;
 using UnityEngine;
 
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	[Serializable]
 	public class StatMultiplierDamageEvaluator : IDamageEvaluator {
 		[SerializeField] private StatType stat;

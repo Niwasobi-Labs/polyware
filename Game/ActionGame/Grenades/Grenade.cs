@@ -1,20 +1,15 @@
-using PolyWare.Core.Entities;
-using PolyWare.Debug;
-using PolyWare.Interactions;
-using PolyWare.Items;
-using PolyWare.Timers;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Grenades {
+namespace PolyWare.Game {
 	public class Grenade : Entity<GrenadeData>, IPickupable, IThrowable {
 		public override GrenadeData Data { get; protected set; }
 		
 		private CountdownTimer fuseTimer;
 
 		protected override void OnInitialize() {
-			fuseTimer = new CountdownTimer(Data.Definition.FuseTime) {
-				OnTimerComplete = Explode
-			};
+			fuseTimer = new CountdownTimer(Data.Definition.FuseTime);
+			fuseTimer.OnTimerComplete += Explode;
 		}
 
 		protected virtual void Update() {

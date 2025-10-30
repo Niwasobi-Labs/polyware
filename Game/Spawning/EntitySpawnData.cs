@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Core.Entities {
+namespace PolyWare.Game {
 
 	public interface IEntitySpawnerData {
 		public EntityDefinition Definition { get; }

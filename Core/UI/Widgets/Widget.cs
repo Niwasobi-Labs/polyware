@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class Widget : MonoBehaviour {
 		public virtual void Open() {
 			gameObject.SetActive(true);

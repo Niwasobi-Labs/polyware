@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Combat;
-using PolyWare.Effects;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	public class Ability : IDisposable {
 		public AbilityDefinition Definition;
 		

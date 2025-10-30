@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	[Serializable]
 	public class RadarSettings {
 		public enum DistantUpdateType {

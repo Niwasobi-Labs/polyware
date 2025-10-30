@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public class SphereCastRadar : IRadarStrategy {
 		private Collider[] results;
 		

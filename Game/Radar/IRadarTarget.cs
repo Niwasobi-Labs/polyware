@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public interface IRadarTarget {
 		public GameObject GameObject { get; }
 		public Sprite Sprite { get; }

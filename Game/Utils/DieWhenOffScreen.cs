@@ -1,7 +1,8 @@
 using System.Collections;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	// must be put alongside a renderer
 	public class DieWhenOffScreen : MonoBehaviour {
 		[SerializeField] private GameObject target;
@@ -13,7 +14,7 @@ namespace PolyWare.Gameplay {
 		}
 
 		private IEnumerator KillTimer() {
-			yield return Utils.Yielders.WaitForSeconds(killTimer);
+			yield return Yielders.WaitForSeconds(killTimer);
 			
 			Kill();
 		}

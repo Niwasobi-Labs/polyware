@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using PolyWare.Characters;
-using PolyWare.Effects;
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	public class EnemiesOnScreenTargetStrategy : IActionTargetStrategy {
 		private const string damageMask = "Damage";
 		public readonly int MaxTargets = 1024;

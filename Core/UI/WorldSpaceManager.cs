@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.UI {
+namespace PolyWare.Core {
 	public class WorldSpaceManager : MonoBehaviour {
 
 		private Canvas canvas;

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace PolyWare.Interactions {
+namespace PolyWare.Game {
 	public class ProximityTarget : MonoBehaviour, IProximityTarget {
 		[Header("Proxmity Target")]
 		public GameObject TargetOverride;

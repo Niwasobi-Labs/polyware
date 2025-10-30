@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Core.Spawning {
+namespace PolyWare.Game {
 	public struct SpawnLocation {
 		public Vector3 Position;
 		public Quaternion Rotation;

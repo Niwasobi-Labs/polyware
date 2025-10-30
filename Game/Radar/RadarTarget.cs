@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.Gameplay {
+namespace PolyWare.Game {
 	public class RadarTarget : MonoBehaviour, IRadarTarget {
 		public Sprite Sprite => sprite;
 		public GameObject GameObject => gameObject;

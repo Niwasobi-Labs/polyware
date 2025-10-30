@@ -1,11 +1,8 @@
-using PolyWare.Items;
-
-namespace PolyWare.Inventory {
+namespace PolyWare.Game {
 	public enum InventoryError {
 		InvalidItem = -1,
 		InventoryFull = -2,
 	}
-	
 	
 	public class InventorySlot<T> where T : ItemDefinition {
 		public InventorySlot(T item, int startingStack) {

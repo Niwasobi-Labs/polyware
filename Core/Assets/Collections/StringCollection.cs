@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace PolyWare.Core {
+	[Serializable]
+	public struct StringAssetInfo<T> {
+		public string Name;
+		public T Asset;
+	}
+	
+	public abstract class StringCollection<T> : Collection<string, T> {
+		[SerializeField] private List<StringAssetInfo<T>> items = new ();
+
+		public override void Initialize() {
+			foreach (var value in items) {
+				try {
+					dictionary.Add(value.Name, value.Asset);
+				}
+				catch (Exception e) {
+					Log.Error(e.Message);
+				}
+			}
+		}
+	}
+}

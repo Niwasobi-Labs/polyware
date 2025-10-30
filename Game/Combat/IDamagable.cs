@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	public interface IDamageable {
 		
 		event Action<DamageContext> OnDeath;

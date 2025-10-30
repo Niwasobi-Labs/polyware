@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using PolyWare.Debug;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	public interface IContext { }
 	
 	public class ContextHolder {

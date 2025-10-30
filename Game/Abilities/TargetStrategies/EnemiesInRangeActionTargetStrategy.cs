@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Characters;
-using PolyWare.Effects;
-using PolyWare.Utils;
+using PolyWare.Core;
 using UnityEngine;
 
-namespace PolyWare.Abilities {
+namespace PolyWare.Game {
 	[Serializable]
 	public class EnemiesInRangeActionTargetStrategy : IActionTargetStrategy {
 		public float Radius = 5;

@@ -1,10 +1,8 @@
+using PolyWare.Core;
 using System;
-using PolyWare.Utils;
-using PolyWare.Debug;
-using PolyWare.Effects;
 using UnityEngine;
 
-namespace PolyWare.Combat {
+namespace PolyWare.Game {
 	public class HitBox : MonoBehaviour, IDamageable, IAffectable {
 		[SerializeField] private GameObject owner;
 

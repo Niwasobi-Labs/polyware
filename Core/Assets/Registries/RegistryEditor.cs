@@ -1,9 +1,8 @@
 #if UNITY_EDITOR
-using PolyWare.Editor;
 using UnityEditor;
 using UnityEngine;
 
-namespace PolyWare.AssetManagement {
+namespace PolyWare.Core {
 	public static class RegistryEditor {
 		public static void RefreshRegistry<T>(Object target) where T : Component {
 			var registry = (Registry<T>)target;

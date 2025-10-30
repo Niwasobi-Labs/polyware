@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PolyWare.ActionGame.Guns {
+namespace PolyWare.Game {
 	public class DefaultFireRateEvaluator : IFireRateEvaluator {
 		public float Evaluate(GameObject culprit, float baseFireRate) => baseFireRate;
 	}

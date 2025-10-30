@@ -1,6 +1,6 @@
 using System;
 
-namespace PolyWare.Stats {
+namespace PolyWare.Game {
 	[Serializable]
 	public class StatModiferData {
 		public enum OperatorType {

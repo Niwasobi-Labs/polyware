@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace PolyWare.Utils {
+namespace PolyWare.Core {
 	public readonly struct AsyncOperationGroup {
 		public readonly List<AsyncOperation> Operations;
 
