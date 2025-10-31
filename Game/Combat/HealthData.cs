@@ -15,8 +15,8 @@ namespace PolyWare.Game {
 		[ShowIf("CanRegen")] public float RegenDelayTime;
 		[ShowIf("CanRegen")] public float RegenTime;
 
-		public float MaxHealth(ICharacter character = null) {
-			return maxHealthEvaluator?.Evaluate(character, this) ?? InitialMaxHealth;
+		public float MaxHealth(IStatsHandler statsHandler = null) {
+			return maxHealthEvaluator?.Evaluate(statsHandler, this) ?? InitialMaxHealth;
 		}
 	}
 }

@@ -25,14 +25,20 @@ namespace PolyWare.Game {
 
 		protected readonly List<Timer> timers = new List<Timer>();
 
-		public float MaxHealth => health.MaxHealth(myCharacter);
+		public float MaxHealth => health.MaxHealth(statsHandler);
 		public float CurrentHealth => health.Current;
 
-		private ICharacter myCharacter;
+		public GameObject GameObject { get; private set; }
+
+		private IStatsHandler statsHandler;
 		
-		public void Initialize(HealthData newHealth, ICharacter character = null) {
+		public void Initialize(HealthData newHealth, GameObject owner) {
 			health = newHealth;
-			myCharacter = character;
+			
+			GameObject = owner;
+			if (owner && owner.TryGetComponent(out ICharacter character)) {
+				statsHandler = character.Stats;
+			}
 			
 			SetupTimers();
 			health.Current = MaxHealth;
