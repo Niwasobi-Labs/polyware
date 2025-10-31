@@ -49,6 +49,10 @@ namespace PolyWare.Game {
 			cooldownTimer.Start();
 		}
 
+		public override void ForceUse() {
+			// noop
+		}
+
 		public override void StopUsing() {
 			// noop
 		}

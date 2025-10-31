@@ -7,6 +7,7 @@ namespace PolyWare.Game {
 		bool Pickup(Weapon newWeapon);
 		void Equip(Weapon weapon);
 		void Use();
+		void ForceUse();
 		void StopUsing();
 		bool DropCurrent();
 		bool Cycle(bool left = false);

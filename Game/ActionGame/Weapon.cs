@@ -65,6 +65,7 @@ namespace PolyWare.Game {
 		
 		// IUsable
 		public abstract void Use();
+		public abstract void ForceUse();
 		public abstract void StopUsing();
 	}
 }

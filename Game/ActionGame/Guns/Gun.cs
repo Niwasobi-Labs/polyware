@@ -88,6 +88,11 @@ namespace PolyWare.Game {
 		public override void Use() {
 			triggerPulled = true;
 		}
+
+		public override void ForceUse() {
+			FireProjectiles();
+		}
+		
 		public override void StopUsing() {
 			triggerPulled = false;
 		}
