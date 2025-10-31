@@ -10,6 +10,8 @@ namespace PolyWare.Game {
 		}
 
 		public static bool CanDamageEachOther(GameObject culprit, GameObject victim) {
+			if (!culprit || !victim) return true;
+			
 			if (culprit.TryGetComponent(out IFactionMember culpritFaction) && victim.TryGetComponent(out IFactionMember victimFaction)) {
 				return culpritFaction.FactionID != victimFaction.FactionID || victimFaction.FactionInfo.AllowFriendlyFire;
 			}

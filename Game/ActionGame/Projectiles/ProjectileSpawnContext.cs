@@ -11,7 +11,7 @@ namespace PolyWare.Game {
 		public readonly float Spread;
 		public readonly AbilityContextHolder AbilityContextHolder;
 		
-		public ProjectileSpawnContext(ProjectileData projectile, int count, Vector3 origin, Vector3 direction, Vector3 axisNormal, float spread, AbilityContextHolder abilityContextHolder) {
+		public ProjectileSpawnContext(ProjectileData projectile, int count, Vector3 origin, Vector3 direction, Vector3 axisNormal, float spread, AbilityContextHolder abilityContextHolder = null) {
 			Projectile = projectile;
 			Count = count;
 			Origin = origin;
