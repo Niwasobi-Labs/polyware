@@ -18,6 +18,7 @@ namespace PolyWare.Core {
 		public SceneManagementService(ISceneGroupManager sceneGroupManager, SceneGroupCollection sceneGroupCollection) {
 			manager = sceneGroupManager;
 			sceneGroups = sceneGroupCollection;
+			sceneGroups.Initialize();
 		}
 		
 		public async Task LoadSceneGroup(string sceneGroupName) {

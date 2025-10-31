@@ -9,7 +9,7 @@ namespace PolyWare.Game {
 		[SerializeField] protected List<StatEvaluator> data = new ();
 		
 		public override void Initialize() {
-			dictionary.Clear();
+			dictionary = new Dictionary<StatType, StatEvaluator>();
 			
 			foreach (StatEvaluator value in data) {
 				try {

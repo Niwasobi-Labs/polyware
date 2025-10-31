@@ -13,6 +13,8 @@ namespace PolyWare.Core {
 		[SerializeField] private List<StringAssetInfo<T>> items = new ();
 
 		public override void Initialize() {
+			dictionary = new Dictionary<string, T>();
+			
 			foreach (var value in items) {
 				try {
 					dictionary.Add(value.Name, value.Asset);

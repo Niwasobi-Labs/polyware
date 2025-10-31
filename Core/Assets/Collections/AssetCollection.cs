@@ -16,6 +16,8 @@ namespace PolyWare.Core {
 		[SerializeField] private List<TAsset> items = new();
 
 		public override void Initialize() {
+			dictionary = new Dictionary<TKey, TValue>();
+			
 			foreach (TAsset value in items)
 				try {
 					dictionary.Add(value.AssetID, value.Asset);
