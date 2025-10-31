@@ -55,7 +55,7 @@ namespace PolyWare.Game {
 
 				if (affectable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
 
-				if (FactionMember != null && affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember) && FactionMember?.FactionID == otherFactionMember.FactionID) return; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj) 
+				if (FactionMember != null && affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember) && FactionMember?.FactionID == otherFactionMember.FactionID && !otherFactionMember.FactionInfo.AbsorbFriendlyHits) return; 
 
 				if (ability != null) {
 					abilityCtxHolder.Targets.Add(affectable.GameObject);
