@@ -1,4 +1,5 @@
 using FMODUnity;
+using PrimeTween;
 using UnityEngine;
 
 namespace PolyWare.Core {
@@ -27,6 +28,10 @@ namespace PolyWare.Core {
 		
 		public void SetPaused(bool isPaused) {
 			
+		}
+
+		public void Shake(CameraShakeSettings shakeSettings) {
+			Tween.ShakeCamera(ActiveCamera, shakeSettings.Strength, shakeSettings.Duration,  shakeSettings.Frequency, shakeSettings.StartDelay, shakeSettings.EndDelay);
 		}
 	}
 }

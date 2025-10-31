@@ -8,5 +8,6 @@ namespace PolyWare.Core {
 		public void SetTarget(Transform target);
 		public void SwapToPreviousTarget();
 		public void SetPaused(bool isPaused);
+		public void Shake(CameraShakeSettings shakeSettings);
 	}
 }
