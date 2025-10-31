@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace PolyWare.Game {
 	public static class EntityFactory<T> where T : IEntity {
-		
 		public static T CreateFrom(EntityDefinition entityDefinition, Vector3 position = default, Quaternion rotation = default) {
 			var instance = Object.Instantiate(entityDefinition.Prefab, position, rotation).GetComponent<T>();
 			instance.Initialize(entityDefinition.CreateDefaultInstance());

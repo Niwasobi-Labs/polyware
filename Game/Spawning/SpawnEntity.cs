@@ -1,0 +1,58 @@
+using PolyWare.Core;
+using Sirenix.OdinInspector;
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace PolyWare.Game {
+	public class SpawnEntity : MonoBehaviour {
+		[SerializeField] private UnityMonoEvents whenToSpawn = UnityMonoEvents.None;
+		[SerializeField] private EntityDefinition entity;
+		[SerializeField] private int destroyAfterSpawning = 1;
+
+		[SerializeField] [HideIf("whenToSpawn", UnityMonoEvents.OnDestroy)]
+		private float spawnDelay = 0;
+
+		public UnityEvent<GameObject> OnSpawn;
+
+		private CountdownTimer spawnTimer;
+		private int spawnCount;
+
+		private void OnEnable() {
+			spawnTimer = new CountdownTimer(spawnDelay);
+			spawnTimer.OnTimerComplete += Spawn;
+
+			if (whenToSpawn == UnityMonoEvents.OnEnable) spawnTimer.Start();
+		}
+
+		private void Awake() {
+			if (whenToSpawn == UnityMonoEvents.OnAwake) spawnTimer.Start();
+		}
+
+		private void Start() {
+			if (whenToSpawn == UnityMonoEvents.OnStart) spawnTimer.Start();
+		}
+
+		private void Update() {
+			spawnTimer.Tick(Time.deltaTime);
+			if (whenToSpawn == UnityMonoEvents.OnUpdate && !spawnTimer.IsRunning) spawnTimer.Start();
+		}
+
+		private void OnDisable() {
+			if (whenToSpawn == UnityMonoEvents.OnDisable) spawnTimer.Start();
+		}
+
+		private void OnDestroy() {
+			if (whenToSpawn == UnityMonoEvents.OnDestroy && spawnCount < destroyAfterSpawning) spawnTimer.Start();
+		}
+
+		public void Spawn() {
+			if (!entity) return;
+			
+			IEntity newEntity = EntityFactory<IEntity>.CreateFrom(entity, transform.position, transform.rotation);
+			OnSpawn?.Invoke(newEntity.GameObject);
+
+			spawnCount++;
+			if (spawnCount >= destroyAfterSpawning) Destroy(gameObject);
+		}
+	}
+}
