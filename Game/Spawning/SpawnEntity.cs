@@ -17,17 +17,17 @@ namespace PolyWare.Game {
 		private CountdownTimer spawnTimer;
 		private int spawnCount;
 
-		private void OnEnable() {
+		private void Awake() {
 			spawnTimer = new CountdownTimer(spawnDelay);
 			spawnTimer.OnTimerComplete += Spawn;
-
-			if (whenToSpawn == UnityMonoEvents.OnEnable) spawnTimer.Start();
-		}
-
-		private void Awake() {
+			
 			if (whenToSpawn == UnityMonoEvents.OnAwake) spawnTimer.Start();
 		}
-
+		
+		private void OnEnable() {
+			if (whenToSpawn == UnityMonoEvents.OnEnable) spawnTimer.Start();
+		}
+		
 		private void Start() {
 			if (whenToSpawn == UnityMonoEvents.OnStart) spawnTimer.Start();
 		}
