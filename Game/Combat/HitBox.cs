@@ -7,7 +7,7 @@ namespace PolyWare.Game {
 		[SerializeField] private GameObject owner;
 
 		public event Action<DamageContext> OnDeath;
-		public event Action<DamageContext> OnDamageTaken;
+		public event Action<DamageContext> OnHit;
 		public GameObject GameObject => owner;
 		
 		private IDamageable ownerDamageable;
@@ -24,7 +24,7 @@ namespace PolyWare.Game {
 		}
 
 		public void TakeDamage(DamageContext damageContext) {
-			OnDamageTaken?.Invoke(damageContext);
+			OnHit?.Invoke(damageContext);
 			ownerDamageable.TakeDamage(damageContext);
 		}
 

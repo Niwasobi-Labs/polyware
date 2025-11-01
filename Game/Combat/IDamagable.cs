@@ -5,7 +5,7 @@ namespace PolyWare.Game {
 	public interface IDamageable {
 		
 		event Action<DamageContext> OnDeath;
-		event Action<DamageContext> OnDamageTaken;
+		event Action<DamageContext> OnHit;
 		
 		public GameObject GameObject { get; } // todo: replace with Entity (https://app.clickup.com/t/86b6vbg95)
 		public void TakeDamage(DamageContext damageContext);
