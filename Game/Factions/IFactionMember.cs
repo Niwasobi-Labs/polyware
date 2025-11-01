@@ -16,7 +16,7 @@ namespace PolyWare.Game {
 				return culpritFaction.FactionID != victimFaction.FactionID || victimFaction.FactionInfo.AllowFriendlyFire;
 			}
 
-			return false;
+			return true;
 		}
 	}
 }
