@@ -4,6 +4,7 @@ namespace PolyWare.Game {
 	public interface ICharacter {
 		public void Interact();
 		public bool Pickup(IPickupable item);
+		public GameObject GameObject { get; }
 		public Transform Transform { get; }
 		public IStatsHandler Stats { get; }
 		public IFactionMember FactionMember { get; }
