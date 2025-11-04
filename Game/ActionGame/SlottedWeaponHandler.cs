@@ -117,7 +117,7 @@ namespace PolyWare.Game {
 				ammoLeft = gun.AddAmmoToReserves(ammoLeft);
 				
 				// bug: this needs to properly handle local and networked multiplayer (https://app.clickup.com/t/86b6wajfh)
-				if (character.FactionMember.FactionID == 0) ServiceLocator.Global.Get<IAudioService>().PlayOneShot(gun.GunDefinition.ReloadingSfx, character.Transform.position);
+				if (character.FactionMember.FactionInfo.ID == 0) ServiceLocator.Global.Get<IAudioService>().PlayOneShot(gun.GunDefinition.ReloadingSfx, character.Transform.position);
 			}
 			
 			return ammoLeft;

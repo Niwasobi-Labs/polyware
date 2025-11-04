@@ -31,8 +31,8 @@ namespace PolyWare.Game {
 
 			for (int i = 0; i < hits; i++) {
 				if (!meleeResults[i] || !meleeResults[i].TryGetComponent(out IDamageable damageable) || !meleeResults[i].TryGetComponent(out IAffectable affectable)) continue;
-
-				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && factionMember.FactionID == myCharacter.FactionMember.FactionID) continue; // todo: support friendlyFire setting (https://app.clickup.com/t/86b6wa8mj)
+				
+				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && !myCharacter.FactionMember.CanDamage(factionMember)) continue;
 				
 				Ability abilityInstance = MeleeData.MeleeDefinition.MeleeInfo.MeleeAbility.CreateInstance();
 				abilityInstance.Trigger(new AbilityContextHolder(
@@ -41,7 +41,7 @@ namespace PolyWare.Game {
 					new List<GameObject> { affectable.GameObject },
 					new List<IContext> {
 						MeleeData,
-						new DamageContext(myCharacter.Transform.gameObject, MeleeData.MeleeDefinition.MeleeInfo.Damage, abilityInstance.Definition)
+						new DamageContext(MeleeData.MeleeDefinition.EvaluateMeleeDamage(myCharacter?.Stats), myCharacter?.Transform.gameObject, abilityInstance.Definition)
 					})
 				);
 			}

@@ -12,7 +12,6 @@ namespace PolyWare.Game {
 		private ProjectileMovementHandler movementHandler;
 		private Ability ability;
 		private AbilityContextHolder abilityCtxHolder;
-		public IFactionMember FactionMember { get; private set; }
 		
 		private void OnEnable() {
 			Level.OnLevelReset += Kill;
@@ -30,8 +29,6 @@ namespace PolyWare.Game {
 			if (!MyRigidbody.isKinematic) {
 				MyRigidbody.linearVelocity = MyRigidbody.transform.forward * Data.Speed;
 			}
-			
-			if (Data.Invoker) FactionMember = Data.Invoker.GetComponent<IFactionMember>();
 		}
 		
 		private void Start() {
@@ -49,14 +46,16 @@ namespace PolyWare.Game {
 		}
 		
 		private void OnTriggerEnter(Collider other) {
-			if (FactionMember != null && other.TryGetComponent(out Projectile otherProjectile) && FactionMember?.FactionID == otherProjectile.FactionMember?.FactionID) return;
-			
 			if (other.TryGetComponent(out IAffectable affectable)) {
-
-				if (affectable.GameObject == Data.Invoker && !Data.Definition.AllowSelfDamage) return;
-
-				if (FactionMember != null && affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember) && FactionMember?.FactionID == otherFactionMember.FactionID && !otherFactionMember.FactionInfo.AbsorbFriendlyHits) return; 
-
+				if (affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember)) {
+					if (!FactionSystem.CanDamageEachOther(Data.FactionContext, otherFactionMember.FactionInfo)) {
+						if (FactionSystem.IsFriendly(Data.FactionContext, otherFactionMember.FactionInfo) && otherFactionMember.FactionInfo.AbsorbFriendlyHits) {
+							Kill();
+						}
+						return;
+					}
+				}
+				
 				if (ability != null) {
 					abilityCtxHolder.Targets.Add(affectable.GameObject);
 					ability.Trigger(abilityCtxHolder);
@@ -65,7 +64,7 @@ namespace PolyWare.Game {
 			
 			Kill();
 		}
-
+		
 		private IEnumerator KillTimer() {
 			yield return Yielders.WaitForSeconds(10);
 			Kill();

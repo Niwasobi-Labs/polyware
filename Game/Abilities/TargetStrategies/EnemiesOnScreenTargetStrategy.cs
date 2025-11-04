@@ -19,10 +19,10 @@ namespace PolyWare.Game {
 			for (int i = 0; i < hits; ++i) {
 				if (!results[i]) continue;
 				if (!results[i].TryGetComponent(out IAffectable affectable)) continue;
-				if (contextHolder.Culprit.TryGetComponent(out IFactionMember friendlyFaction) && affectable.GameObject.TryGetComponent(out IFactionMember targetFaction) && friendlyFaction == targetFaction) continue;
+				if (contextHolder.TryGet(out FactionContext factionContext) && affectable.GameObject.TryGetComponent(out IFactionMember targetFaction) && !FactionSystem.CanDamageEachOther(factionContext, targetFaction.FactionInfo)) continue;
 				targets.Add(affectable);
 			}
-
+			
 			return targets;
 		}
 	}

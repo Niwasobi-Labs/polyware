@@ -107,7 +107,7 @@ namespace PolyWare.Game {
 
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
-			fireRate.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter.Transform.gameObject, GunData.GunDefinition.FireRate));
+			fireRate.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.FireRate));
 			fireRate.Start();
 
 			if (GunData.GunDefinition.CanOverheat) AddHeat(GunData.GunDefinition.HeatPerShot);
@@ -126,7 +126,8 @@ namespace PolyWare.Game {
 				null,
 				new List<IContext> {
 					GunData,
-					new DamageContext(myCharacter.Transform.gameObject, GunData.GunDefinition.Damage, GunData.GunDefinition.FireAbility)
+					new DamageContext(GunData.GunDefinition.BulletDamageEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.Damage), myCharacter?.Transform.gameObject, GunData.GunDefinition.FireAbility),
+					myCharacter?.FactionMember.FactionInfo
 				});
 			
 			ProjectileSpawnStrategy.Spawn(new ProjectileSpawnContext(
@@ -142,7 +143,7 @@ namespace PolyWare.Game {
 		private ProjectileData CreateProjectileData() {
 			return new ProjectileData(
 				GunData.GunDefinition.Bullet,
-				myCharacter.Transform.gameObject,
+				myCharacter.FactionMember.FactionInfo,
 				aimAssistStrategy.GetTargetTransform(),
 				GunData.GunDefinition.BulletSpeed);
 		}

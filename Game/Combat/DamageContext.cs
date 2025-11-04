@@ -5,17 +5,17 @@ using UnityEngine;
 namespace PolyWare.Game {
 	[Serializable]
 	public struct DamageContext : IContext {
-		[HideInInspector] public GameObject Culprit;
 		[HideInInspector] public AbilityDefinition Ability;
+		public GameObject Culprit;
 		public float Damage;
 		public Element Element;
 
-		public DamageContext(GameObject culprit, DamageContext damageContext, AbilityDefinition ability) : this(culprit, damageContext.Element, damageContext.Damage, ability) { }
+		public DamageContext(DamageContext damageContext, GameObject culprit, AbilityDefinition ability) : this(damageContext.Element, damageContext.Damage, culprit, ability) { }
 
-		public DamageContext(GameObject culprit, Element element, float damage, AbilityDefinition ability) {
-			Culprit = culprit;
+		public DamageContext(Element element, float damage, GameObject culprit, AbilityDefinition ability) {
 			Element = element;
 			Damage = damage;
+			Culprit =  culprit;
 			Ability = ability;
 		}
 	}

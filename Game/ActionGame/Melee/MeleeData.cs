@@ -3,6 +3,5 @@ namespace PolyWare.Game {
 		public MeleeData(EquipmentDefinition definition) : base(definition) { }
 		
 		public MeleeDefinition MeleeDefinition => Definition as MeleeDefinition;
-		
 	}
 }
