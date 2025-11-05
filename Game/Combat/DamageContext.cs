@@ -6,7 +6,7 @@ namespace PolyWare.Game {
 	[Serializable]
 	public struct DamageContext : IContext {
 		[HideInInspector] public AbilityDefinition Ability;
-		public GameObject Culprit;
+		[HideInInspector] public GameObject Culprit;
 		public float Damage;
 		public Element Element;
 
