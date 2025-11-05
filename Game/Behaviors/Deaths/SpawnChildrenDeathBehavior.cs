@@ -8,6 +8,7 @@ namespace PolyWare.Game {
 		[SerializeField] public int Count;
 		[SerializeField] public float SpreadAngle;
 		[SerializeField] public float Distance;
+		[SerializeField] public float LaunchForce;
 		
 		public override IBehavior Create(ICharacter parent) {
 			return new SpawnChildrenDeathBehavior(parent, this);
@@ -19,12 +20,14 @@ namespace PolyWare.Game {
 		private readonly int count;
 		private readonly float spreadAngle;
 		private readonly float distance;
+		private readonly float launchForce;
 		
 		public SpawnChildrenDeathBehavior(ICharacter character, SpawnChildrenDeathBehaviorFactory factory) : base(character) {
 			prefab = factory.Prefab;
 			count = factory.Count;
 			spreadAngle = factory.SpreadAngle;
 			distance = factory.Distance;
+			launchForce = factory.LaunchForce;
 		}
 		
 		public override void Start() {
@@ -43,8 +46,17 @@ namespace PolyWare.Game {
 				float angle = startingAngle + angleStep * i;
 				IEntity childSlime = EntityFactory<IEntity>.CreateFrom(prefab);
 				Vector3 newRotation = Quaternion.AngleAxis(angle, parent.Transform.up) * -parent.Transform.forward;
-				Vector3 newPosition = parent.Transform.position + (newRotation * distance);
-				childSlime.GameObject.transform.position = newPosition;
+				newRotation.Normalize();
+
+				if (childSlime.GameObject.TryGetComponent(out Rigidbody rigidbody)) {
+					Vector3 newPosition = parent.Transform.position + (newRotation * 1); // avoid full overlap
+					childSlime.GameObject.transform.position = newPosition;
+					rigidbody.AddForce(newRotation * launchForce, ForceMode.Impulse);
+				}
+				else {
+					Vector3 newPosition = parent.Transform.position + (newRotation * distance);
+					childSlime.GameObject.transform.position = newPosition;	
+				}
 			}
 		}
 	}

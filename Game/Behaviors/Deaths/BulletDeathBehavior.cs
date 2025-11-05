@@ -4,7 +4,7 @@ using PolyWare.Core;
 
 namespace PolyWare.Game {
 	[Serializable]
-	public class BulletDeathBehaviorFactory : IBehaviorFactory {
+	public class BulletDeathBehaviorFactory : DeathBehaviorFactory {
 		public ProjectileDefinition Bullet;
 		public float SpawnSpreadAngle;
 		public int BulletsToSpawn;
@@ -12,7 +12,7 @@ namespace PolyWare.Game {
 		public DamageContext DamageContext;
 		public AbilityDefinition Ability;
 		
-		public IBehavior Create(ICharacter parent) {
+		public override IBehavior Create(ICharacter parent) {
 			return new BulletDeathBehavior(parent, this);
 		}
 	}

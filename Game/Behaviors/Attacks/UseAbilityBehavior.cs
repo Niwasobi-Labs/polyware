@@ -46,7 +46,11 @@ namespace PolyWare.Game {
 		public override void Tick(float dt) {
 			cooldownTimer.Tick(dt);
 		}
-		
+
+		public override void OnPlayerHit(ICharacter player) {
+				
+		}
+
 		public override void Complete() {
 			// no-op
 		}
