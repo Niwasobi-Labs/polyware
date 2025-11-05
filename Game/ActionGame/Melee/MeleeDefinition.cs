@@ -12,7 +12,6 @@ namespace PolyWare.Game {
 			public float Cooldown;
 			public DamageContext Damage;
 			[SerializeReference] public IDamageEvaluator DamageEvaluator = new DefaultDamageEvaluator();
-			public AudioClip Sound;
 			public float Range;
 		}
 	}

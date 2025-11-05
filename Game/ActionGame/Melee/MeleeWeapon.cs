@@ -50,7 +50,7 @@ namespace PolyWare.Game {
 		}
 
 		public override void ForceUse() {
-			// noop
+			Use();
 		}
 
 		public override void StopUsing() {
