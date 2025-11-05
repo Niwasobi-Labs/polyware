@@ -49,11 +49,12 @@ namespace Alpaca.UI {
 			for (int i = 0; i < currentImageCount; i++) {
 				if (current <= 0) {
 					imageList[i].SetFillAmount(0);
-					break;
+					continue;
 				}
 				if (current < unitsPerImage) {
 					imageList[i].SetFillAmount(current / (float)unitsPerImage);
-					break;
+					current = 0;
+					continue;
 				}
 				imageList[i].SetFillAmount(1);
 				current -= unitsPerImage;
