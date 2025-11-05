@@ -21,11 +21,11 @@ namespace PolyWare.Core {
 		public void SetTarget(Transform target) {
 			
 		}
-		
-		public void SwapToPreviousTarget() {
+
+		public void FollowPlayer() {
 			
 		}
-		
+
 		public void SetPaused(bool isPaused) {
 			
 		}

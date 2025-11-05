@@ -6,7 +6,7 @@ namespace PolyWare.Core {
 		public FMODUnity.StudioListener FMODListener { get; }
 		public void SetActiveCamera(Camera newActiveCamera);
 		public void SetTarget(Transform target);
-		public void SwapToPreviousTarget();
+		public void FollowPlayer();
 		public void SetPaused(bool isPaused);
 		public void Shake(CameraShakeSettings shakeSettings);
 	}
