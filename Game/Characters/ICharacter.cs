@@ -8,5 +8,6 @@ namespace PolyWare.Game {
 		public Transform Transform { get; }
 		public IStatsHandler Stats { get; }
 		public IFactionMember FactionMember { get; }
+		public CharacterMoveSettings MoveSettings { get; }
 	}
 }
