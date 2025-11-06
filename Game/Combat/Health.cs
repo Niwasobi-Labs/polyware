@@ -19,9 +19,13 @@ namespace PolyWare.Game {
 		public event UnityAction<HealthContext> OnRegenUpdate;
 		public event UnityAction<HealthContext> OnRegenComplete;
 		public event UnityAction<DamageContext> OnDeath;
+		public event UnityAction OnStun;
+		public event UnityAction OnUnStun;
 			
-		public CountdownTimer RegenTimer;
-		public CountdownTimer RegenDelayTimer;
+		private CountdownTimer regenTimer;
+		private CountdownTimer regenDelayTimer;
+		private CountdownTimer stunTimer;
+		public bool IsStunned => stunTimer.IsRunning;
 
 		protected readonly List<Timer> timers = new List<Timer>();
 
@@ -49,22 +53,32 @@ namespace PolyWare.Game {
 		}
 		
 		private void SetupTimers() {
-			if (RegenTimer == null) {
-				RegenTimer = new CountdownTimer(health.RegenTime);
-				RegenTimer.OnTimerTick += UpdateRegen;
-				RegenTimer.OnTimerComplete += CompleteRegen;
-				timers.Add(RegenTimer);
+			if (regenTimer == null) {
+				regenTimer = new CountdownTimer(health.RegenTime);
+				regenTimer.OnTimerTick += UpdateRegen;
+				regenTimer.OnTimerComplete += CompleteRegen;
+				timers.Add(regenTimer);
 			}
 			else {
-				RegenTimer.SetInitialTime(health.RegenTime);
+				regenTimer.SetInitialTime(health.RegenTime);
 			}
 
-			if (RegenDelayTimer == null) {
-				RegenDelayTimer = new CountdownTimer(health.RegenDelayTime);
-				RegenDelayTimer.OnTimerComplete += StartRegen;
+			if (regenDelayTimer == null) {
+				regenDelayTimer = new CountdownTimer(health.RegenDelayTime);
+				regenDelayTimer.OnTimerComplete += StartRegen;
+				timers.Add(regenDelayTimer);
 			}
 			else {
-				RegenDelayTimer.SetInitialTime(health.RegenDelayTime);
+				regenDelayTimer.SetInitialTime(health.RegenDelayTime);
+			}
+
+			if (stunTimer == null) {
+				stunTimer = new CountdownTimer(health.StunDuration);
+				stunTimer.OnTimerComplete += RecoverFromStun;
+				timers.Add(stunTimer);
+			}
+			else {
+				stunTimer.SetInitialTime(health.StunDuration);
 			}
 		}
 
@@ -74,20 +88,23 @@ namespace PolyWare.Game {
 		
 		public void Die(DamageContext damageContext) {
 			OnDeath?.Invoke(damageContext);
+			stunTimer.Stop();
 		}
 		
 		public void TakeDamage(DamageContext ctx) {
 			if (health.Invincible) return;
+			if (stunTimer.IsRunning) return;
 			if (health.Current <= 0) return;
 			
-			RegenTimer.Stop();
-			RegenDelayTimer.Restart();
+			regenTimer.Stop();
+			regenDelayTimer.Restart();
 			
 			health.Current = Mathf.Max(health.Current - ctx.Damage, 0);
 
 			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
-			
+
 			if (health.Current <= 0) Die(ctx);
+			else if (health.Current < health.StunThreshold) Stun();
 		}
 		
 		public void Heal(float healAmount) {
@@ -97,15 +114,35 @@ namespace PolyWare.Game {
 			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 		}
 
+		public void ForceStun() {
+			if (health.Current > health.StunThreshold) {
+				health.Current = health.StunThreshold;
+				OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });	
+			}
+
+			Stun();
+		}
+		
+		private void Stun() {
+			if (stunTimer.IsRunning) return;
+			stunTimer.Restart();
+			OnStun?.Invoke();
+		}
+
+		private void RecoverFromStun() {
+			Heal(health.StunRecoveryHealth);
+			OnUnStun?.Invoke();
+		}
+		
 		public void StartRegen() {
 			if (!health.CanRegen) return;
 
-			RegenTimer.StartAt(1 - health.Current / MaxHealth);
+			regenTimer.StartAt(1 - health.Current / MaxHealth);
 			OnRegenStart?.Invoke();
 		}
 
 		private void UpdateRegen() {
-			health.Current = Mathf.Lerp(0, MaxHealth, 1 - RegenTimer.Progress);
+			health.Current = Mathf.Lerp(0, MaxHealth, 1 - regenTimer.Progress);
 			OnRegenUpdate?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 		}
 

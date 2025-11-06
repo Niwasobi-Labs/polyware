@@ -14,6 +14,11 @@ namespace PolyWare.Game {
 		public bool CanRegen;
 		[ShowIf("CanRegen")] public float RegenDelayTime;
 		[ShowIf("CanRegen")] public float RegenTime;
+		
+		public bool CanBeStunned;
+		[ShowIf("CanBeStunned")] public float StunThreshold;
+		[ShowIf("CanBeStunned")] public float StunDuration;
+		[ShowIf("CanBeStunned")] public float StunRecoveryHealth;
 
 		public float MaxHealth(IStatsHandler statsHandler = null) {
 			return maxHealthEvaluator?.Evaluate(statsHandler, this) ?? InitialMaxHealth;
