@@ -8,6 +8,7 @@ namespace PolyWare.Game {
 
 		public event Action<DamageContext> OnDeath;
 		public event Action<DamageContext> OnHit;
+		public event Action OnStun;
 		public GameObject GameObject => owner;
 		
 		private IDamageable ownerDamageable;
@@ -27,6 +28,13 @@ namespace PolyWare.Game {
 			OnHit?.Invoke(damageContext);
 			ownerDamageable.TakeDamage(damageContext);
 		}
+
+		public void Stun() {
+			OnStun?.Invoke();
+			ownerDamageable.Stun();
+		}
+
+		public bool IsStunned => ownerDamageable.IsStunned;
 
 		public void Heal(float healAmount) => ownerDamageable.Heal(healAmount);
 		public void Affect(IEffect effect, ContextHolder ctx) => ownerAffectable.Affect(effect, ctx); 
