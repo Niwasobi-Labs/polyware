@@ -52,7 +52,7 @@ namespace PolyWare.Game {
 			OnSpawn?.Invoke(newEntity.GameObject);
 
 			spawnCount++;
-			if (spawnCount >= destroyAfterSpawning) Destroy(gameObject);
+			if (destroyAfterSpawning > 0 && spawnCount >= destroyAfterSpawning) Destroy(gameObject);
 		}
 	}
 }
