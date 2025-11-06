@@ -39,9 +39,9 @@ namespace PolyWare.Game {
 		public void Heal(float healAmount) => ownerDamageable.Heal(healAmount);
 		public void Affect(IEffect effect, ContextHolder ctx) => ownerAffectable.Affect(effect, ctx); 
 		public bool IsAlive() => ownerDamageable.IsAlive();
-		public void Die(DamageContext damageContext) {
+		public void Kill(DamageContext damageContext) {
+			ownerDamageable.Kill(damageContext);
 			OnDeath?.Invoke(damageContext);
-			ownerDamageable.Die(damageContext);
 		}
 	}
 }

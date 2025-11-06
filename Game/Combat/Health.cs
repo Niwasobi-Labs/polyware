@@ -19,8 +19,7 @@ namespace PolyWare.Game {
 		public event UnityAction<HealthContext> OnRegenUpdate;
 		public event UnityAction<HealthContext> OnRegenComplete;
 		public event UnityAction<DamageContext> OnDeath;
-		public event UnityAction OnStun;
-		public event UnityAction OnUnStun;
+		public event UnityAction<bool> OnStunStateChange;
 			
 		private CountdownTimer regenTimer;
 		private CountdownTimer regenDelayTimer;
@@ -131,12 +130,12 @@ namespace PolyWare.Game {
 		private void Stun() {
 			if (stunTimer.IsRunning) return;
 			stunTimer.Restart();
-			OnStun?.Invoke();
+			OnStunStateChange?.Invoke(true);
 		}
 
 		private void RecoverFromStun() {
 			Heal(health.StunRecoveryHealth);
-			OnUnStun?.Invoke();
+			OnStunStateChange?.Invoke(false);
 		}
 		
 		public void StartRegen() {
