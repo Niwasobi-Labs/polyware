@@ -87,6 +87,7 @@ namespace PolyWare.Game {
 		}
 		
 		public void Die(DamageContext damageContext) {
+			health.Current = 0;
 			OnDeath?.Invoke(damageContext);
 			stunTimer.Stop();
 		}
@@ -105,6 +106,10 @@ namespace PolyWare.Game {
 
 			if (health.Current <= 0) Die(ctx);
 			else if (health.Current < health.StunThreshold) Stun();
+		}
+
+		public void ZeroOutHealth() {
+			health.Current = 0;
 		}
 		
 		public void Heal(float healAmount) {
