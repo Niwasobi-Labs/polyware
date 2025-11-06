@@ -4,7 +4,6 @@ using UnityEngine;
 namespace PolyWare.Game {
 	[System.Serializable]
 	public class LookAtPlayerBehaviorFactory : MoveBehaviorFactory {
-		public bool Instant = true;
 		
 		public override IBehavior Create(ICharacter parent) {
 			return new LookAtPlayerBehavior(parent, this);
@@ -12,12 +11,11 @@ namespace PolyWare.Game {
 	} 
 	
 	public class LookAtPlayerBehavior : MoveBehavior {
-		private readonly bool instant;
 
 		private Transform player;
 		
 		public LookAtPlayerBehavior(ICharacter character, LookAtPlayerBehaviorFactory factory) : base(character) {
-			instant = factory.Instant;
+			
 		}
 			
 		public override void Start() {
@@ -25,13 +23,16 @@ namespace PolyWare.Game {
 		}
 
 		private void FindPlayer() {
-			player = ServiceLocator.Global.Get<IGameService>().GetLocalPlayerCharacter.Transform;
+			if (ServiceLocator.Global.TryGet(out IGameService gameService)) {
+				player = gameService.GetLocalPlayerCharacter?.Transform;
+			}
 		}
 		
 		public override void Tick(float dt) {
 			if (!player) FindPlayer();
-			
-			if (instant) parent.Transform.LookAt(player, parent.Transform.up);
+			if (!player) return;
+
+			parent.Transform.LookAt(player, parent.Transform.up);
 		}
 		
 		public override void Complete() {
