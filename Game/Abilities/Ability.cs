@@ -47,15 +47,15 @@ namespace PolyWare.Game {
 		}
 		
 		protected void TriggerOnKillActions(AbilityContextHolder ctx) {
-			var killActions = Definition.OnKillActions;
-			
-			foreach (AbilityActionData killAction in killActions) {
-				var targets = killAction.Target.GetTargets(ctx);
-				
-				for (int j = 0; j < targets.Count; ++j) {
-					ApplyEffectsTo(targets[j], killAction.Effects, ctx);
-				}
-			}
+			// var killActions = Definition.OnKillActions;
+			//
+			// foreach (AbilityActionData killAction in killActions) {
+			// 	var targets = killAction.Target.GetTargets(ctx);
+			// 	
+			// 	for (int j = 0; j < targets.Count; ++j) {
+			// 		ApplyEffectsTo(targets[j], killAction.Effects, ctx);
+			// 	}
+			// }
 		}
 
 		private bool WasKilledByThisAbility(DamageContext damageContext, AbilityContextHolder abilityContext) {
