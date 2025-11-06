@@ -14,7 +14,7 @@ namespace PolyWare.Core {
 		public void SetAttenuationObject(GameObject newAttenuationObject) {
 			if (!listener && !TryToFindListener()) return;
 			
-			listener.AttenuationObject = newAttenuationObject;
+			listener.SetAttenuationObject(newAttenuationObject);
 		}
 
 		private bool TryToFindListener() {
