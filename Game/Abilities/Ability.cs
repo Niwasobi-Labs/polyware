@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PolyWare.Core;
 
 namespace PolyWare.Game {
 	public class Ability : IDisposable {
@@ -26,6 +27,10 @@ namespace PolyWare.Game {
 		}
 
 		protected void TriggerOnHitActions(AbilityContextHolder ctx) {
+			if (!Definition) {
+				Log.Error("No Definition found!. How did we get here?");
+				return;
+			}
 			var hitActions = Definition.OnSuccessActions;
 			
 			foreach (AbilityActionData hitAction in hitActions) {
@@ -47,18 +52,24 @@ namespace PolyWare.Game {
 		}
 		
 		protected void TriggerOnKillActions(AbilityContextHolder ctx) {
-			// var killActions = Definition.OnKillActions;
-			//
-			// foreach (AbilityActionData killAction in killActions) {
-			// 	var targets = killAction.Target.GetTargets(ctx);
-			// 	
-			// 	for (int j = 0; j < targets.Count; ++j) {
-			// 		ApplyEffectsTo(targets[j], killAction.Effects, ctx);
-			// 	}
-			// }
+			if (!Definition) {
+				Log.Error("No Definition found!. How did we get here?");
+				return;
+			}
+			var killActions = Definition.OnKillActions;
+			
+			foreach (AbilityActionData killAction in killActions) {
+				var targets = killAction.Target.GetTargets(ctx);
+				
+				for (int j = 0; j < targets.Count; ++j) {
+					ApplyEffectsTo(targets[j], killAction.Effects, ctx);
+				}
+			}
 		}
 
 		private bool WasKilledByThisAbility(DamageContext damageContext, AbilityContextHolder abilityContext) {
+			if (!damageContext.Ability) return false;
+			
 			return damageContext.Culprit == abilityContext.Culprit && damageContext.Ability == Definition;
 		}
 		
