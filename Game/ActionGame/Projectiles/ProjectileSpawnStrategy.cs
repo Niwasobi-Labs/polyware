@@ -14,8 +14,8 @@ namespace PolyWare.Game {
 		private static List<Projectile> SpawnMultipleProjectiles(ProjectileSpawnContext context) {
 			var projectiles = new List<Projectile>();
 			// ReSharper disable once PossibleLossOfFraction (we are checking inside of Spawn)
-			float angleStep = context.Spread / (context.Count - 1);
-			float startingAngle = -(context.Spread / 2f);
+			float angleStep = context.Spread / context.Count;
+			float startingAngle = context.Spread < 360f ? -(angleStep / 2f) : 0f;
 			
 			for (int i = 0; i < context.Count; i++) {
 				float angle = startingAngle + angleStep * i;

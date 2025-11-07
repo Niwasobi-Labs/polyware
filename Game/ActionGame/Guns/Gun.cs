@@ -104,7 +104,7 @@ namespace PolyWare.Game {
 			if (ReloadHandler.IsReloading) ReloadHandler.Cancel();
 
 			FireProjectiles();
-
+			
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
 			fireRate.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.FireRate));
@@ -132,7 +132,7 @@ namespace PolyWare.Game {
 			
 			ProjectileSpawnStrategy.Spawn(new ProjectileSpawnContext(
 				CreateProjectileData(),
-				GunData.GunDefinition.AmmoConsumptionPerShot,
+				GunData.GunDefinition.BulletCountPerShot,
 				bulletSpawn.position, 
 				CalculateProjectileDirection(), 
 				bulletSpawn.up,
@@ -151,7 +151,7 @@ namespace PolyWare.Game {
 		public Vector3 CalculateProjectileDirection() {
 			float spread = GunData.GunDefinition.Spread;
 			Vector3 direction = aimAssistStrategy.CalculateAdjustedDirectionToTarget();
-			if (!(spread > 0f)) return direction.normalized;
+			if (!(spread > 0f) || !GunData.GunDefinition.RandomSpreadVariance) return direction.normalized;
 			
 			float angle = UnityEngine.Random.Range(-spread * 0.5f, spread * 0.5f);
 			Vector3 axis = Vector3.Cross(direction, Vector3.up).normalized;

@@ -25,11 +25,15 @@ namespace PolyWare.Game {
 		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
 		[field: SerializeField] public float Range { get; private set; } = 25.0f;
 		[field: SerializeField] public float Spread { get; private set; }
+		[field: SerializeField] public bool RandomSpreadVariance { get; private set; } = false;
+		[field: SerializeField] public int BulletCountPerShot { get; private set; } = 1;
 		
 		[field: Title("Ammo")]
 		[field: SerializeField] public int MaxAmmo { get; private set; }
 		[field: SerializeField] public int MaxReserveAmmo { get; private set; }
 		[field: SerializeField] public int AmmoConsumptionPerShot { get; private set; } = 1;
+		[field: SerializeField] public bool InfiniteAmmo { get; private set; } = false;
+		[field: SerializeField] public bool BottomlessClip { get; private set; } = false;
 		
 		[field: Title("Reloading")] 
 		[field: SerializeField] public ReloadStrategy ReloadType { get; private set; }

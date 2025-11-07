@@ -29,12 +29,12 @@ namespace PolyWare.Game {
 		}
 		
 		public void SetCurrentAmmo(int ammo) {
-			CurrentAmmo = ammo;
+			CurrentAmmo = GunDefinition.BottomlessClip ? GunDefinition.MaxAmmo : ammo;
 			RaiseDataChangedEvent();
 		}
 		
 		public void SetReserveAmmo(int ammo) {
-			ReserveAmmo = ammo;
+			ReserveAmmo = GunDefinition.InfiniteAmmo ? int.MaxValue : ammo;
 			RaiseDataChangedEvent();
 		}
 		
