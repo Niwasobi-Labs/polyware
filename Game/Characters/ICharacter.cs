@@ -9,5 +9,6 @@ namespace PolyWare.Game {
 		public IStatsHandler Stats { get; }
 		public IFactionMember FactionMember { get; }
 		public CharacterMoveSettings MoveSettings { get; }
+		public void Kill(DamageContext damageContext);
 	}
 }
