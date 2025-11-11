@@ -32,7 +32,15 @@ namespace PolyWare.Game {
 			if (!player) FindPlayer();
 			if (!player) return;
 
-			parent.Transform.LookAt(player, parent.Transform.up);
+			Vector3 direction = (player.position - parent.Transform.position).normalized;
+			if (direction.sqrMagnitude < 0.0001f) return;
+
+			Quaternion targetRotation = Quaternion.LookRotation(direction, parent.Transform.up);
+			parent.Transform.rotation = Quaternion.Slerp(
+				parent.Transform.rotation,
+				targetRotation,
+				dt * parent.MoveSettings.TurnSpeed
+			);
 		}
 		
 		public override void Complete() {

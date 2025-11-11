@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 
 namespace PolyWare.Game {
+	[Serializable]
 	public class RotateBehaviorFactory : MoveBehaviorFactory {
 		public Vector3 RotateAround = Vector3.up;
 		
