@@ -8,6 +8,7 @@ namespace PolyWare.Game {
 		[Title("Info")]
 		public string Name;
 		[TextArea(3, 10)] public string Description;
+		public float CastTime = 0f;
 		
 		[Title("Actions")]
 		[SerializeField] public List<AbilityActionData> OnSuccessActions = new List<AbilityActionData>();
