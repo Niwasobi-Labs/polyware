@@ -1,10 +1,13 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace PolyWare.Game {
 	[Serializable]
 	public class RotateBehaviorFactory : MoveBehaviorFactory {
-		public Vector3 RotateAround = Vector3.up;
+		public bool RandomRotation = true;
+		[HideIf("RandomRotation")] public Vector3 RotateAround = Vector3.up;
 		
 		public override IBehavior Create(ICharacter parent) {
 			return new RotateBehavior(parent, this);
@@ -15,7 +18,7 @@ namespace PolyWare.Game {
 		private Vector3 rotationAxis;
 
 		public RotateBehavior(ICharacter character, RotateBehaviorFactory factory) : base(character) {
-			rotationAxis = factory.RotateAround;
+			rotationAxis = factory.RandomRotation ? Random.rotation.eulerAngles : factory.RotateAround;
 		}
 		
 		public override void Start() {
