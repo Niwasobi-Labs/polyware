@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PolyWare.Core;
+using UnityEngine;
 
 namespace PolyWare.Game {
 	[Serializable]
@@ -62,8 +63,8 @@ namespace PolyWare.Game {
 				newProjectileData,
 				bulletsToSpawn,
 				parent.Transform.position,
-				parent.Transform.forward,
-				parent.Transform.up,
+				Vector3.forward,
+				Vector3.up,
 				spawnSpreadAngle,
 				abilityCtxHolder));
 		}
