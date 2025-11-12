@@ -8,7 +8,7 @@ namespace PolyWare.Game {
 
 		public event Action<DamageContext> OnDeath;
 		public event Action<DamageContext> OnHit;
-		public event Action OnStun;
+		public event Action<bool> OnStunStateChange;
 		public GameObject GameObject => owner;
 		
 		private IDamageable ownerDamageable;
@@ -30,7 +30,7 @@ namespace PolyWare.Game {
 		}
 
 		public void Stun() {
-			OnStun?.Invoke();
+			OnStunStateChange?.Invoke(true);
 			ownerDamageable.Stun();
 		}
 

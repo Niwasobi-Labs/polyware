@@ -6,7 +6,7 @@ namespace PolyWare.Game {
 		
 		event Action<DamageContext> OnDeath;
 		event Action<DamageContext> OnHit;
-		event Action OnStun;
+		event Action<bool> OnStunStateChange;
 		
 		public bool IsStunned { get; }
 		public GameObject GameObject { get; } // todo: replace with Entity (https://app.clickup.com/t/86b6vbg95)
