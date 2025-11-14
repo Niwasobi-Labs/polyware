@@ -17,6 +17,7 @@ namespace PolyWare.Game {
 		
 		public bool CanBeStunned;
 		[ShowIf("CanBeStunned")] public float StunThreshold;
+		[ShowIf("CanBeStunned")] public bool StunOnDeath;
 		[ShowIf("CanBeStunned")] public float StunDuration;
 		[ShowIf("CanBeStunned")] public float StunRecoveryHealth;
 

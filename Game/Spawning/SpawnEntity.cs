@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 namespace PolyWare.Game {
 	public class SpawnEntity : MonoBehaviour {
-		[SerializeField] private UnityMonoEvents whenToSpawn = UnityMonoEvents.None;
+		[SerializeField] private UnityMonoEvents whenToSpawn = UnityMonoEvents.Manual;
 		[SerializeField] private EntityDefinition entity;
 		[SerializeField] private int destroyAfterSpawning = 1;
 
@@ -19,7 +19,7 @@ namespace PolyWare.Game {
 
 		private void Awake() {
 			spawnTimer = new CountdownTimer(spawnDelay);
-			spawnTimer.OnTimerComplete += Spawn;
+			spawnTimer.OnTimerComplete += () => Spawn();
 			
 			if (whenToSpawn == UnityMonoEvents.OnAwake) spawnTimer.Start();
 		}
@@ -45,14 +45,15 @@ namespace PolyWare.Game {
 			if (whenToSpawn == UnityMonoEvents.OnDestroy && spawnCount < destroyAfterSpawning) spawnTimer.Start();
 		}
 
-		public void Spawn() {
-			if (!entity) return;
+		public IEntity Spawn() {
+			if (!entity) return null;
 			
 			IEntity newEntity = EntityFactory<IEntity>.CreateFrom(entity, transform.position, transform.rotation);
 			OnSpawn?.Invoke(newEntity.GameObject);
 
 			spawnCount++;
 			if (destroyAfterSpawning > 0 && spawnCount >= destroyAfterSpawning) Destroy(gameObject);
+			return newEntity;
 		}
 	}
 }

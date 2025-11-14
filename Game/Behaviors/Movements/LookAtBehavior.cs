@@ -18,7 +18,7 @@ namespace PolyWare.Game {
 			
 		}
 			
-		public override void Start() {
+		protected override void OnStart() {
 			FindPlayer();
 		}
 
@@ -28,7 +28,7 @@ namespace PolyWare.Game {
 			}
 		}
 		
-		public override void Tick(float dt) {
+		protected override void OnTick(float dt) {
 			if (!player) FindPlayer();
 			if (!player) return;
 
@@ -42,13 +42,13 @@ namespace PolyWare.Game {
 				dt * parent.MoveSettings.TurnSpeed
 			);
 		}
-		
-		public override void Complete() {
-			// noop
-		}
 
 		public override void HitWall(Vector3 hitNormal) {
 			// noop
+		}
+
+		protected override void OnComplete() {
+			
 		}
 	}
 }

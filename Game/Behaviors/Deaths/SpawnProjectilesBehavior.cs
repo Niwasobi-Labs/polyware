@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PolyWare.Game {
 	[Serializable]
-	public class BulletDeathBehaviorFactory : DeathBehaviorFactory {
+	public class SpawnProjectilesBehaviorFactory : IBehaviorFactory {
 		public ProjectileDefinition Bullet;
 		public float SpawnSpreadAngle;
 		public int BulletsToSpawn;
@@ -13,12 +13,12 @@ namespace PolyWare.Game {
 		public DamageContext DamageContext;
 		public AbilityDefinition Ability;
 		
-		public override IBehavior Create(ICharacter parent) {
-			return new BulletDeathBehavior(parent, this);
+		public IBehavior Create(ICharacter parent) {
+			return new SpawnProjectilesBehavior(parent, this);
 		}
 	}
 	
-	public class BulletDeathBehavior : DeathBehavior {
+	public class SpawnProjectilesBehavior : Behavior {
 		private readonly ProjectileDefinition bullet;
 		private readonly float spawnSpreadAngle;
 		private readonly int bulletsToSpawn;
@@ -26,7 +26,7 @@ namespace PolyWare.Game {
 		private readonly DamageContext damageContext;
 		private readonly AbilityDefinition ability;
 		
-		public BulletDeathBehavior(ICharacter character, BulletDeathBehaviorFactory factory) : base(character) {
+		public SpawnProjectilesBehavior(ICharacter character, SpawnProjectilesBehaviorFactory factory) : base(character) {
 			bullet = factory.Bullet;
 			spawnSpreadAngle = factory.SpawnSpreadAngle;
 			bulletsToSpawn = factory.BulletsToSpawn;
@@ -35,15 +35,15 @@ namespace PolyWare.Game {
 			ability = factory.Ability;
 		}
 
-		public override void Start() {
+		protected override void OnStart() {
 			Complete();
 		}
-		
-		public override void Tick(float dt) {
-			// noop
+
+		protected override void OnTick(float dt) {
+			// no-op
 		}
-		
-		public override void Complete() {
+
+		protected override void OnComplete() {
 			var newProjectileData = new ProjectileData(
 				bullet,
 				parent.FactionMember.FactionInfo,

@@ -59,6 +59,7 @@ namespace PolyWare.Game {
 				if (ability != null) {
 					abilityCtxHolder.Targets.Add(affectable.GameObject);
 					ability.Trigger(abilityCtxHolder);
+					ability = null;
 				}
 			}
 			

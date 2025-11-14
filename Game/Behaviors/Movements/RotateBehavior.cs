@@ -21,7 +21,7 @@ namespace PolyWare.Game {
 			rotationAxis = factory.RandomRotation ? Random.rotation.eulerAngles : factory.RotateAround;
 		}
 		
-		public override void Start() {
+		protected override void OnStart() {
 			// noop
 		}
 
@@ -29,11 +29,11 @@ namespace PolyWare.Game {
 			
 		}
 
-		public override void Tick(float dt) {
+		protected override void OnTick(float dt) {
 			parent.Transform.Rotate(rotationAxis, parent.MoveSettings.TurnSpeed * dt);
 		}
 		
-		public override void Complete() {
+		protected override void OnComplete() {
 			// noop
 		}
 	}

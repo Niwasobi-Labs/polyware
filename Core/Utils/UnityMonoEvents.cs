@@ -1,6 +1,6 @@
 namespace PolyWare.Core {
 	public enum UnityMonoEvents {
-		None,
+		Manual,
 		OnEnable,
 		OnAwake,
 		OnStart,

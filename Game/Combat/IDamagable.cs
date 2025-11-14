@@ -8,6 +8,7 @@ namespace PolyWare.Game {
 		event Action<DamageContext> OnHit;
 		event Action<bool> OnStunStateChange;
 		
+		public float CurrentHealthPercentage { get; }
 		public bool IsStunned { get; }
 		public GameObject GameObject { get; } // todo: replace with Entity (https://app.clickup.com/t/86b6vbg95)
 		public void TakeDamage(DamageContext damageContext);

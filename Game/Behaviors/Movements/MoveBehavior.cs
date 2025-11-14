@@ -5,18 +5,13 @@ namespace PolyWare.Game {
 		public abstract IBehavior Create(ICharacter parent);
 	}
 	
-	public abstract class MoveBehavior : IBehavior {
-		protected readonly ICharacter parent;
+	public abstract class MoveBehavior : Behavior {
 		protected readonly Rigidbody rb;
 		
-		protected MoveBehavior(ICharacter character) {
-			parent = character;
+		protected MoveBehavior(ICharacter character) : base(character) {
 			rb = parent.GameObject.GetComponent<Rigidbody>();
 		}
 		
-		public abstract void Start();
 		public abstract void HitWall(Vector3 hitNormal);
-		public abstract void Tick(float dt);
-		public abstract void Complete();
 	}
 }

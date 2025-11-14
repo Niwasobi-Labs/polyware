@@ -1,40 +1,40 @@
 using System;
 using System.Collections.Generic;
 using PolyWare.Core;
+using UnityEngine;
 
 namespace PolyWare.Game {
 	[Serializable]
-	public class UseAbilityBehaviorFactory : AttackBehaviorFactory {
+	public class LoopBehaviorBehaviorFactory : AttackBehaviorFactory {
 		public int UseCount = -1;
 		public float Cooldown = 1;
-		public AbilityDefinition Ability;
+		public float TelegraphTime = 1f;
+		[SerializeReference] public IBehaviorFactory Behavior;
 		
 		public override IBehavior Create(ICharacter character) {
-			return new UseAbilityBehavior(character, this);
+			return new LoopBehaviorBehavior(character, this);
 		}
 	}
 	
-	public class UseAbilityBehavior : AttackBehavior {
+	public class LoopBehaviorBehavior : AttackBehavior {
 		private readonly CountdownTimer cooldownTimer;
 		private readonly int useCount;
-		private readonly AbilityDefinition ability;
 		
 		private readonly ITelegrapher telegrapher;
-		private readonly CountdownTimer castTimer;
+		private readonly CountdownTimer telegraphTimer;
 		
 		private int uses;
+		private readonly IBehavior behavior;
 		
-		public UseAbilityBehavior(ICharacter character, UseAbilityBehaviorFactory factory) : base(character) {
+		public LoopBehaviorBehavior(ICharacter character, LoopBehaviorBehaviorFactory factory) : base(character) {
 			cooldownTimer = new CountdownTimer(factory.Cooldown);
 			cooldownTimer.OnTimerComplete += CastAbility;
 			useCount = factory.UseCount;
-			ability = factory.Ability;
-			telegrapher = character.GameObject.GetComponent<ITelegrapher>();
+			behavior = factory.Behavior.Create(character);
 			
-			if (ability.CastTime > 0) {
-				castTimer = new CountdownTimer(ability.CastTime);
-				castTimer.OnTimerComplete += UseAbility;
-			}
+			telegrapher = character.GameObject.GetComponent<ITelegrapher>();
+			telegraphTimer = new CountdownTimer(factory.TelegraphTime);
+			telegraphTimer.OnTimerComplete += StartBehavior;
 		}
 
 		protected override void OnStart() {
@@ -43,20 +43,19 @@ namespace PolyWare.Game {
 		}
 
 		private void CastAbility() {
-			if (castTimer == null) {
-				UseAbility();
+			if (telegraphTimer == null) {
+				StartBehavior();
 				return;
 			}
 			
-			castTimer.Start();
-			telegrapher?.StartTelegraphing(ability.CastTime);
+			telegraphTimer.Start();
+			telegrapher?.StartTelegraphing(telegraphTimer.InitialTime);
 		}
 		
-		private void UseAbility() {
+		private void StartBehavior() {
 			telegrapher?.StopTelegraphing();
 			uses++;
-			Ability newAbility = ability.CreateInstance();
-			newAbility.Trigger(new AbilityContextHolder(ability, parent.GameObject,null, new List<IContext>{ parent.FactionMember.FactionInfo }));
+			behavior.Start();
 			
 			if (uses < useCount || useCount == -1) cooldownTimer.Restart();
 			else Complete();
@@ -64,11 +63,12 @@ namespace PolyWare.Game {
 		
 		protected override void OnTick(float dt) {
 			cooldownTimer.Tick(dt);
-			castTimer?.Tick(dt);
+			telegraphTimer?.Tick(dt);
+			if (behavior.IsRunning) behavior.Tick(dt);
 		}
 
 		public override void OnPlayerHit(ICharacter player) {
-			// no-op		
+				
 		}
 
 		protected override void OnComplete() {

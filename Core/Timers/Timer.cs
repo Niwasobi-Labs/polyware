@@ -59,5 +59,6 @@ namespace PolyWare.Core {
 		public void Pause() => IsRunning = false;
 		public void Resume() => IsRunning = true;
 		public float GetTime => Time;
+		public float InitialTime => initialTime;
 	}
 }

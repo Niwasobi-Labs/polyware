@@ -67,7 +67,7 @@ namespace PolyWare.Game {
 			if (wander) SetupWanderTimers();
 		}
 		
-		public override void Start() {
+		protected override void OnStart() {
 			if (randomStartingDirection) {
 				FindNewRandomDirection();
 			}
@@ -104,7 +104,7 @@ namespace PolyWare.Game {
 			}
 		}
 
-		public override void Tick(float dt) {
+		protected override void OnTick(float dt) {
 			foreach (Timer timer in timers) timer.Tick(dt);
 
 			if (!wander || wanderTimer.IsRunning) {
@@ -155,7 +155,7 @@ namespace PolyWare.Game {
 			rb.AddForce(currentMoveDirection, ForceMode.Force);
 		}
 		
-		public override void Complete() {
+		protected override void OnComplete() {
 			// noop
 		}
 	}

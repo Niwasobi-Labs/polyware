@@ -1,4 +1,5 @@
 using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Game {
@@ -15,7 +16,7 @@ namespace PolyWare.Game {
 
 		}
 		
-		public override void Start() {
+		protected override void OnStart() {
 			// noop
 		}
 
@@ -23,7 +24,7 @@ namespace PolyWare.Game {
 			
 		}
 
-		public override void Tick(float dt) {
+		protected override void OnTick(float dt) {
 			float speedStat = parent.Stats.GetModifiedStat(StatType.Speed);
 			float maxSpeed = parent.MoveSettings.MaxMoveSpeed * parent.Stats.GetModifiedStat(StatType.Speed);
 			rb.maxLinearVelocity = maxSpeed;
@@ -32,7 +33,7 @@ namespace PolyWare.Game {
 			rb.AddForce(rb.transform.forward * parent.MoveSettings.MaxMoveSpeed * speedStat, ForceMode.Force);
 		}
 		
-		public override void Complete() {
+		protected override void OnComplete() {
 			// noop
 		}
 	}

@@ -19,9 +19,8 @@ namespace PolyWare.Game {
 				Log.Error($"Hitbox needs an owner who is damageable");
 			}
 			
-			if (!owner.TryGetComponent(out ownerAffectable)) {
-				Log.Error($"Hitbox needs an owner who is affectable");
-			}
+			// not all hitboxes are affectable, that's ok
+			owner.TryGetComponent(out ownerAffectable);
 		}
 
 		public void TakeDamage(DamageContext damageContext) {
@@ -34,10 +33,14 @@ namespace PolyWare.Game {
 			ownerDamageable.Stun();
 		}
 
+		public float CurrentHealthPercentage => ownerDamageable.CurrentHealthPercentage;
 		public bool IsStunned => ownerDamageable.IsStunned;
 
 		public void Heal(float healAmount) => ownerDamageable.Heal(healAmount);
-		public void Affect(IEffect effect, ContextHolder ctx) => ownerAffectable.Affect(effect, ctx); 
+		public void Affect(IEffect effect, ContextHolder ctx) {
+			ownerAffectable?.Affect(effect, ctx);
+		}
+
 		public bool IsAlive() => ownerDamageable.IsAlive();
 		public void Kill(DamageContext damageContext) {
 			ownerDamageable.Kill(damageContext);
