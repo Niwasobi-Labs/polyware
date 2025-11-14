@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using PolyWare.Core;
 using UnityEngine;
 
 namespace PolyWare.Game {
@@ -9,6 +11,7 @@ namespace PolyWare.Game {
 		[SerializeField] public float SpreadAngle;
 		[SerializeField] public float Distance;
 		[SerializeField] public float LaunchForce;
+		[SerializeField] public bool KillChildrenOnDeath;
 		
 		public IBehavior Create(ICharacter parent) {
 			return new SpawnChildrenBehavior(parent, this);
@@ -21,6 +24,9 @@ namespace PolyWare.Game {
 		private readonly float spreadAngle;
 		private readonly float distance;
 		private readonly float launchForce;
+		private readonly bool killChildrenOnDeath;
+		
+		private List<GameObject> spawnedChildren = new();
 		
 		public SpawnChildrenBehavior(ICharacter character, SpawnChildrenBehaviorFactory factory) : base(character) {
 			prefab = factory.Prefab;
@@ -28,6 +34,11 @@ namespace PolyWare.Game {
 			spreadAngle = factory.SpreadAngle;
 			distance = factory.Distance;
 			launchForce = factory.LaunchForce;
+			killChildrenOnDeath = factory.KillChildrenOnDeath;
+
+			if (killChildrenOnDeath && character.GameObject.TryGetComponent(out IDamageable damageable)) {
+				damageable.OnDeath += KillAllChildren;
+			}
 		}
 		
 		protected override void OnStart() {
@@ -44,18 +55,33 @@ namespace PolyWare.Game {
 
 			for (int i = 0; i < count; i++) {
 				float angle = startingAngle + angleStep * i;
-				IEntity childSlime = EntityFactory<IEntity>.CreateFrom(prefab);
+				IEntity child = EntityFactory<IEntity>.CreateFrom(prefab);
 				Vector3 newRotation = Quaternion.AngleAxis(angle, parent.Transform.up) * -parent.Transform.forward;
 				newRotation.Normalize();
 
-				if (childSlime.GameObject.TryGetComponent(out Rigidbody rigidbody)) {
+				if (child.GameObject.TryGetComponent(out Rigidbody rigidbody)) {
 					Vector3 newPosition = parent.Transform.position + (newRotation * 1); // avoid full overlap
-					childSlime.GameObject.transform.position = newPosition;
+					child.GameObject.transform.position = newPosition;
 					rigidbody.AddForce(newRotation * launchForce, ForceMode.Impulse);
 				}
 				else {
 					Vector3 newPosition = parent.Transform.position + (newRotation * distance);
-					childSlime.GameObject.transform.position = newPosition;	
+					child.GameObject.transform.position = newPosition;	
+				}
+
+				if (killChildrenOnDeath) {
+					spawnedChildren.Add(child.GameObject);
+				}
+			}
+		}
+		
+		private void KillAllChildren(DamageContext dmgContext) {
+			for (int i = 0; i < spawnedChildren.Count; i++) {
+				if (spawnedChildren[i] == null) continue;
+				if (spawnedChildren[i].TryGetComponent(out IDamageable damageable)) {
+					damageable.Kill(dmgContext);		
+				} else {
+					UnityEngine.Object.Destroy(spawnedChildren[i]);
 				}
 			}
 		}
