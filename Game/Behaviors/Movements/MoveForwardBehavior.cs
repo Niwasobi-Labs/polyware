@@ -25,12 +25,9 @@ namespace PolyWare.Game {
 		}
 
 		protected override void OnTick(float dt) {
-			float speedStat = parent.Stats.GetModifiedStat(StatType.Speed);
-			float maxSpeed = parent.MoveSettings.MaxMoveSpeed * parent.Stats.GetModifiedStat(StatType.Speed);
-			rb.maxLinearVelocity = maxSpeed;
+			base.OnTick(dt);
 			
-			//rb.linearVelocity = currentMovement;
-			rb.AddForce(rb.transform.forward * parent.MoveSettings.MaxMoveSpeed * speedStat, ForceMode.Force);
+			rb.linearVelocity = rb.transform.forward * (parent.MoveSettings.Acceleration * currentSpeedStat);
 		}
 		
 		protected override void OnComplete() {
