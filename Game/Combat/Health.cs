@@ -145,6 +145,7 @@ namespace PolyWare.Game {
 		}
 
 		private void RecoverFromStun() {
+			IsStunned = false;
 			Heal(health.StunRecoveryHealth);
 			OnStunStateChange?.Invoke(false);
 		}
