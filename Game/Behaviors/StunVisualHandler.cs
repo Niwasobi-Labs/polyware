@@ -45,6 +45,9 @@ namespace PolyWare.Game {
 			
 			private void SwapMaterials(bool isStunned) {
 				meshRenderer.sharedMaterial = isStunned ? stunMaterial : originalMaterial;
+				if (!isStunned) { // todo: HACK, replace this entire script with a material
+					meshRenderer.material.color = originalColor;
+				}
 			}
 		}
 		
