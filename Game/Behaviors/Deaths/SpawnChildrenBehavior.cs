@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using PolyWare.Core;
 using UnityEngine;
 
 namespace PolyWare.Game {
@@ -11,6 +10,7 @@ namespace PolyWare.Game {
 		[SerializeField] public float SpreadAngle;
 		[SerializeField] public float Distance;
 		[SerializeField] public float LaunchForce;
+		[SerializeField] public bool LaunchForward = true;
 		[SerializeField] public bool KillChildrenOnDeath;
 		
 		public IBehavior Create(ICharacter parent) {
@@ -24,6 +24,7 @@ namespace PolyWare.Game {
 		private readonly float spreadAngle;
 		private readonly float distance;
 		private readonly float launchForce;
+		private readonly bool launchForward;
 		private readonly bool killChildrenOnDeath;
 		
 		private List<GameObject> spawnedChildren = new();
@@ -34,6 +35,7 @@ namespace PolyWare.Game {
 			spreadAngle = factory.SpreadAngle;
 			distance = factory.Distance;
 			launchForce = factory.LaunchForce;
+			launchForward = factory.LaunchForward;
 			killChildrenOnDeath = factory.KillChildrenOnDeath;
 
 			if (killChildrenOnDeath && character.GameObject.TryGetComponent(out IDamageable damageable)) {
@@ -56,7 +58,8 @@ namespace PolyWare.Game {
 			for (int i = 0; i < count; i++) {
 				float angle = startingAngle + angleStep * i;
 				IEntity child = EntityFactory<IEntity>.CreateFrom(prefab);
-				Vector3 newRotation = Quaternion.AngleAxis(angle, parent.Transform.up) * -parent.Transform.forward;
+				// we take the reverse direction of our intention so that a 360 spread angle will launch the first bullet forward, or backwards if specified
+				Vector3 newRotation = Quaternion.AngleAxis(angle, parent.Transform.up) * (launchForward ? -parent.Transform.forward : parent.Transform.forward);
 				newRotation.Normalize();
 
 				if (child.GameObject.TryGetComponent(out Rigidbody rigidbody)) {
