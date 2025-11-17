@@ -14,20 +14,10 @@ namespace PolyWare.Game {
 	
 	[Serializable]
 	public class MoveInDirectionBehaviorFactory : MoveBehaviorFactory {
-		public WallCollisionMode WallCollisionMode;
-		
 		[Title("Rotation")]
 		public bool SetForwardOnRotate;
 		public bool RandomStartingDirection;
 		[ShowIf("RandomStartingDirection")] public Vector3 RotateAround = Vector3.up;
-		
-		[Title("Wander")]
-		public bool Wander = false;
-		[ShowIf("Wander")] public float WanderMinDuration = 1f;
-		[ShowIf("Wander")] public float WanderMaxDuration = 2f;
-		[ShowIf("Wander")] public float WanderMinDelay = 1f;
-		[ShowIf("Wander")] public float WanderMaxDelay = 2f;
-		
 		
 		public override IBehavior Create(ICharacter parent) {
 			return new MoveInDirectionBehavior(parent, this);
@@ -37,36 +27,14 @@ namespace PolyWare.Game {
 	public class MoveInDirectionBehavior : MoveBehavior {
 		private readonly bool randomStartingDirection;
 		private readonly bool setForwardOnRotate;
-		private readonly Vector3 rotateAround;
-		private readonly WallCollisionMode wallCollisionMode;
-		private bool wander;
-		private readonly float wanderMinDuration;
-		private readonly float wanderMaxDuration;
-		private readonly float wanderMinDelay;
-		private readonly float wanderMaxDelay;
 
-		private Vector3 currentMoveDirection;
-		private float speed;
-		private CountdownTimer wanderTimer;
-		private CountdownTimer wanderDelayTimer;
-		private List<Timer> timers = new List<Timer>();
-		
 		public MoveInDirectionBehavior(ICharacter character, MoveInDirectionBehaviorFactory factory) : base(character) {
 			wallCollisionMode = factory.WallCollisionMode;
 			
 			setForwardOnRotate = factory.SetForwardOnRotate;
 			randomStartingDirection = factory.RandomStartingDirection;
-			rotateAround = factory.RotateAround;
-			
-			wander = factory.Wander;
-			wanderMinDuration = factory.WanderMinDuration;
-			wanderMaxDuration = factory.WanderMaxDuration;
-			wanderMinDelay = factory.WanderMinDelay;
-			wanderMaxDelay = factory.WanderMaxDelay;
-			
-			if (wander) SetupWanderTimers();
 		}
-		
+
 		protected override void OnStart() {
 			if (randomStartingDirection) {
 				FindNewRandomDirection();
@@ -78,81 +46,31 @@ namespace PolyWare.Game {
 			if (setForwardOnRotate) {
 				parent.Transform.forward = currentMoveDirection;
 			}
-			
-			if (wander) StartWandering();
+
+			Move();
 		}
 		
-		public override void HitWall(Vector3 hitNormal) {
-			
-			switch (wallCollisionMode) {
-				case WallCollisionMode.Reflect:
-					currentMoveDirection = Vector3.Reflect(currentMoveDirection, hitNormal);
-					rb.linearVelocity = Vector3.Reflect(rb.linearVelocity, hitNormal);
-					break;
-				case WallCollisionMode.Reverse:
-					currentMoveDirection = -currentMoveDirection;
-					rb.linearVelocity = Vector3.Reflect(-rb.linearVelocity, hitNormal);
-					break;
-				case WallCollisionMode.None:
-					break;
-			}
-
-			currentMoveDirection.Normalize();
-			
-			if (setForwardOnRotate) {
-				parent.Transform.forward = currentMoveDirection;
-			}
-		}
-
-		protected override void OnTick(float dt) {
-			foreach (Timer timer in timers) timer.Tick(dt);
-
-			if (!wander || wanderTimer.IsRunning) {
-				Move();
-			}
-		}
-
 		private void FindNewRandomDirection() {
 			currentMoveDirection = Random.onUnitSphere;
 			currentMoveDirection.y = 0; // todo: 2D games only (fix for 3D)
+			Move();
 		}
 		
-		private void StartWandering() {
-			FindNewRandomDirection();
-			wanderTimer.Start();
-		}
+		public override void HitWall(Vector3 hitNormal) {
+			base.HitWall(hitNormal);
+			if (setForwardOnRotate) {
+				parent.Transform.forward = currentMoveDirection;
+			}
 
-		private void SetupWanderTimers() {
-			if (wanderDelayTimer == null) {
-				wanderDelayTimer = new CountdownTimer(Random.Range(wanderMinDelay, wanderMaxDelay));
-				wanderDelayTimer.OnTimerComplete += StartWandering;
-				timers.Add(wanderDelayTimer);
-			}
-			else {
-				wanderDelayTimer.SetInitialTime(Random.Range(wanderMinDelay, wanderMaxDelay));
-			}
-			
-			if (wanderTimer == null) {
-				wanderTimer = new CountdownTimer(Random.Range(wanderMinDuration, wanderMaxDuration));
-				wanderTimer.OnTimerComplete += wanderDelayTimer.Start;
-				timers.Add(wanderTimer);
-			}
-			else {
-				wanderTimer.SetInitialTime(Random.Range(wanderMinDuration, wanderMaxDuration));
-			}
+			Move();
 		}
 		
 		private void Move() {
-			float speedStat = parent.Stats.GetModifiedStat(StatType.Speed);
-			float maxSpeed = parent.MoveSettings.MaxMoveSpeed * parent.Stats.GetModifiedStat(StatType.Speed);
-			rb.maxLinearVelocity = maxSpeed;
-			
 			currentMoveDirection.Normalize();
-			currentMoveDirection *= parent.MoveSettings.MaxMoveSpeed * speedStat;
+			currentMoveDirection *= parent.MoveSettings.Acceleration * currentSpeedStat;
 			currentMoveDirection.y = 0;
 			
-			//rb.linearVelocity = currentMovement;
-			rb.AddForce(currentMoveDirection, ForceMode.Force);
+			rb.AddForce(currentMoveDirection, ForceMode.Impulse);
 		}
 		
 		protected override void OnComplete() {
