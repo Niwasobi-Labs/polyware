@@ -2,7 +2,6 @@ using PolyWare.Core;
 using System;
 
 namespace PolyWare.Game {
-
 	public interface IEntityData {
 		public EntityDefinition EntityDefinition { get; }
 	}
@@ -15,5 +14,10 @@ namespace PolyWare.Game {
 		public EntityData(T definition) {
 			Definition = definition;
 		}
+	}
+	
+	[Serializable]
+	public class EntityData : EntityData<SimpleEntityDefinition> {
+		public EntityData(SimpleEntityDefinition definition) : base(definition) { }
 	}
 }

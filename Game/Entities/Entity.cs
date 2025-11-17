@@ -11,7 +11,6 @@ namespace PolyWare.Game {
 		public IEntityData EntityData => Data;
 		public GameObject GameObject => gameObject;
 		
-		
 		// todo: give entities a required Definition field to allow manual placement of entities (https://app.clickup.com/t/86b6vaqdv)
 		public abstract T Data { get; protected set; }
 
@@ -23,5 +22,13 @@ namespace PolyWare.Game {
 		
 		// called after setting up default EntityData
 		protected abstract void OnInitialize();
+	}
+
+	public abstract class Entity : Entity<EntityData> {
+		public override EntityData Data { get; protected set; }
+		
+		protected override void OnInitialize() {
+
+		}
 	}
 }
