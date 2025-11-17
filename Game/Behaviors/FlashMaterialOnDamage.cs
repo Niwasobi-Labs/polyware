@@ -21,10 +21,10 @@ namespace PolyWare.Game {
 			}
 		}
 
-		private void RecordOriginalColors() {
+		public void RecordOriginalColors() {
 			originalColors = new List<Color>();
 			foreach (MeshRenderer meshRenderer in meshRenderers) {
-				originalColors.Add(meshRenderer.material.color);
+				originalColors.Add(meshRenderer.sharedMaterial.color);
 			}
 		}
 
