@@ -45,9 +45,9 @@ namespace PolyWare.Game {
 			
 			yield return Yielders.WaitForEndOfFrame; // wait for children awake calls
 			
-			#if UNITY_EDITOR
+			//#if UNITY_EDITOR
 			StartLevel();
-			#endif
+			//#endif
 		}
 
 		public void StartLevel() {
