@@ -1,9 +1,30 @@
+using System;
+
 namespace PolyWare.Game {
+	[Serializable]
 	public abstract class DeathBehaviorFactory : IBehaviorFactory {
+		public bool OnlyRunOnStunDeath = false;
+		public bool HandleObjectDestruction = false;
 		public abstract IBehavior Create(ICharacter parent);
 	}
 	
 	public abstract class DeathBehavior : Behavior {
-		protected DeathBehavior(ICharacter parent) : base(parent) { }
+		protected readonly bool onlyRunOnStunDeath;
+		public readonly bool HandleObjectDestruction;
+
+		protected DeathBehavior(ICharacter parent, DeathBehaviorFactory factory) : base(parent) {
+			onlyRunOnStunDeath = factory.OnlyRunOnStunDeath;
+			HandleObjectDestruction = factory.HandleObjectDestruction;
+		}
+
+		public bool OnDeath(bool wasStunned) {
+			if (onlyRunOnStunDeath) {
+				if (wasStunned) Start();
+			}
+			else {
+				Start();
+			}
+			return HandleObjectDestruction;
+		}
 	}
 }
