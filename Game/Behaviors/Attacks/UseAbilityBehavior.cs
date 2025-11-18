@@ -31,14 +31,19 @@ namespace PolyWare.Game {
 			ability = factory.Ability;
 			telegrapher = character.GameObject.GetComponent<ITelegrapher>();
 			
+			uses = 0;
+			
 			if (ability.CastTime > 0) {
 				castTimer = new CountdownTimer(ability.CastTime);
 				castTimer.OnTimerComplete += UseAbility;
 			}
+
+			if (character.GameObject.TryGetComponent(out IDamageable damageable)) {
+				damageable.OnStunStateChange += OnStun;
+			}
 		}
 
 		protected override void OnStart() {
-			uses = 0;
 			cooldownTimer.Start();
 		}
 
@@ -71,6 +76,16 @@ namespace PolyWare.Game {
 			// no-op		
 		}
 
+		private void OnStun(bool isStunned) {
+			if (isStunned) {
+				castTimer?.Stop();
+				telegrapher?.StopTelegraphing();	
+			}
+			else {
+				Start();
+			}
+		}
+		
 		protected override void OnComplete() {
 			// no-op
 		}
