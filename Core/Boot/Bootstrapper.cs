@@ -5,7 +5,10 @@ namespace PolyWare.Core {
 	public class Bootstrapper : MonoBehaviour {
 		
 		[SerializeField] private SceneGroupCollection sceneGroupCollection;
+		[SerializeField] private string coreSceneGroupID;
 		[SerializeField] private string initialSceneGroupID;
+
+		private bool isEditor;
 		
 		[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
 		public static void EnsureCoreLoaded() {
@@ -13,6 +16,7 @@ namespace PolyWare.Core {
 		}
 		
 		private void Awake() {
+			isEditor = Application.isEditor;
 			SetupCoreServices();
 		}
 
@@ -22,9 +26,13 @@ namespace PolyWare.Core {
 			ServiceLocator.Global.Register<IInputService>(new NullInputService());
 		}
 
-		private void Start() {
+		private async void Start() {
 			if (initialSceneGroupID != string.Empty)
-				ServiceLocator.Global.Get<ISceneManagementService>().LoadSceneGroup(initialSceneGroupID);
+				await ServiceLocator.Global.Get<ISceneManagementService>().LoadSceneGroup(coreSceneGroupID);
+
+			if (!isEditor) {
+				await ServiceLocator.Global.Get<ISceneManagementService>().LoadSceneGroup(initialSceneGroupID);
+			}
 		}
 	}
 }
