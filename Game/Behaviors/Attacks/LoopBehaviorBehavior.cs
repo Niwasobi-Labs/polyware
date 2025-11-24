@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using PolyWare.Core;
 using UnityEngine;
 
@@ -70,7 +69,17 @@ namespace PolyWare.Game {
 		public override void OnPlayerHit(ICharacter player) {
 				
 		}
-
+		
+		protected override void OnStun(bool isStunned) {
+			if (isStunned) {
+				cooldownTimer?.Stop();
+				telegrapher?.StopTelegraphing();	
+			}
+			else {
+				Start();
+			}
+		}
+		
 		protected override void OnComplete() {
 			// no-op
 		}

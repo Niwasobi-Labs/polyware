@@ -12,6 +12,7 @@ namespace PolyWare.Game {
 
 		private List<Color> originalColors;
 		private bool isTelegraphing;
+		Coroutine flashCoroutine;
 		
 		private void Awake() {
 			RecordOriginalColors();
@@ -19,12 +20,13 @@ namespace PolyWare.Game {
 		
 		public override void StartTelegraphing(float duration) {
 			isTelegraphing = true;
-			StopAllCoroutines();
-			StartCoroutine(Flash());
+			if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+			flashCoroutine = StartCoroutine(Flash());
 		}
 		
 		public override void StopTelegraphing() {
 			isTelegraphing = false;
+			if (flashCoroutine != null) StopCoroutine(flashCoroutine);
 		}
 		
 		private void RecordOriginalColors() {
@@ -33,18 +35,27 @@ namespace PolyWare.Game {
 				originalColors.Add(meshRenderer.material.color);
 			}
 		}
+
+		private void ResetColors() {
+			for (int i = 0; i < meshRenderers.Length; i++) {
+				meshRenderers[i].material.color = originalColors[i];
+			}
+		}	
+		
+		private void SwapToFlashColor() {
+			for (int i = 0; i < meshRenderers.Length; i++) {
+				meshRenderers[i].material.color = flashColor;
+			}
+		}	
 		
 		private IEnumerator Flash() {
 			while (isTelegraphing) {
-				for (int i = 0; i < meshRenderers.Length; i++) {
-					meshRenderers[i].material.color = flashColor;
-				}
+				
+				SwapToFlashColor();
 				
 				yield return Yielders.WaitForSeconds(flashDuration);
 			
-				for (int i = 0; i < meshRenderers.Length; i++) {
-					meshRenderers[i].material.color = originalColors[i];
-				}
+				ResetColors();
 				
 				yield return Yielders.WaitForSeconds(flashDelay);	
 			}

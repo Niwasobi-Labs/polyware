@@ -37,10 +37,6 @@ namespace PolyWare.Game {
 				castTimer = new CountdownTimer(ability.CastTime);
 				castTimer.OnTimerComplete += UseAbility;
 			}
-
-			if (character.GameObject.TryGetComponent(out IDamageable damageable)) {
-				damageable.OnStunStateChange += OnStun;
-			}
 		}
 
 		protected override void OnStart() {
@@ -75,11 +71,11 @@ namespace PolyWare.Game {
 		public override void OnPlayerHit(ICharacter player) {
 			// no-op		
 		}
-
-		private void OnStun(bool isStunned) {
+		
+		protected override void OnStun(bool isStunned) {
 			if (isStunned) {
 				castTimer?.Stop();
-				telegrapher?.StopTelegraphing();	
+				telegrapher?.StopTelegraphing();
 			}
 			else {
 				Start();
