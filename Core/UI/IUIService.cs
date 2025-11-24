@@ -1,7 +1,10 @@
 namespace PolyWare.Core {
 	public interface IUIService : IService {
+		public T PushScreen<T>(int layer) where T : UIScreen;
 		public UIScreen GetTopScreen();
-		public T PushScreen<T>(bool overlay, bool autoOpen = true) where T : UIScreen;
+		public void ClearLayer(int layer);
+		public void ClearHistory();
+		public void PopScreen();
 		public void RegisterWorldSpaceWidget(Widget widget);
 	}
 }

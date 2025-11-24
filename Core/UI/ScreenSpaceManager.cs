@@ -1,33 +1,58 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace PolyWare.Core {
 	public class ScreenSpaceManager : MonoBehaviour {
 		[SerializeField] protected ScreenRegistry screenRegistry;
 		
-		private readonly ScreenStack screenStack = new();
-
+		private readonly Dictionary<int, ScreenStack> screenStack = new();
 		private Canvas canvas;
-
-		public UIScreen TopUIScreen => screenStack.GetTopScreen();
+		private readonly Stack<int> layerFocusHistory = new();
 		
 		protected virtual void Awake() {
 			screenRegistry.Initialize();
 		}
 
-		public T PushScreen<T>(bool overlay, bool autoOpen = true) where T : UIScreen {
-			T screen = screenStack.CheckForCachedScreen(typeof(T)) as T ?? screenRegistry.GetPrefab(typeof(T), transform) as T;
+		public void AddUIStackLayer(ScreenStack stack, int layer) {
+			screenStack.Add(layer, stack);
+		}
+		
+		public T PushScreen<T>(int layer, bool addToHistory = true) where T : UIScreen {
+			var screen = screenRegistry.GetPrefab(typeof(T), screenStack[layer].transform) as T;
 
 			if (!screen) {
 				Log.Error($"Couldn't find screen of type: {typeof(T)}");
 				return null;
 			}
 			
-			screenStack.PushScreen(screen);
-
-			if (autoOpen) screen.Open();
-			else screen.Close(); 
+			screenStack[layer].PushScreen(screen);
+			screenStack[layer].Focus();
+			
+			if (addToHistory) layerFocusHistory.Push(layer);
+			
 			
 			return screen;
+		}
+
+		public void ClearLayer(int layer) {
+			screenStack[layer].Clear();
+		}
+
+		public void ClearHistory() {
+			layerFocusHistory.Clear();	
+		}
+
+		public UIScreen GetTopScreen() {
+			return layerFocusHistory.Count > 0 ? screenStack[layerFocusHistory.Peek()].GetTopScreen() : null;
+		}
+		
+		public void PopScreen() {
+			int lastUsedLayer = layerFocusHistory.Pop();
+			screenStack[lastUsedLayer].PopScreen();
+
+			if (layerFocusHistory.Count > 0) {
+				screenStack[layerFocusHistory.Peek()].Focus();	
+			}
 		}
 	}
 }
