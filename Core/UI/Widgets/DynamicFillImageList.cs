@@ -1,9 +1,8 @@
 using System;
-using PolyWare.Core;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Alpaca.UI {
+namespace PolyWare.Core {
 	public class DynamicFillImageList : Widget {
 		[SerializeField] private GameObject listParent;
 		[SerializeField] private GameObject imagePrefab;
