@@ -14,7 +14,7 @@ namespace PolyWare.Game {
 
 		private Transform player;
 		
-		public LookAtPlayerBehavior(ICharacter character, LookAtPlayerBehaviorFactory factory) : base(character) {
+		public LookAtPlayerBehavior(ICharacter character, LookAtPlayerBehaviorFactory factory) : base(character, factory) {
 			
 		}
 			

@@ -12,7 +12,7 @@ namespace PolyWare.Game {
 	
 	public class MoveForwardBehavior : MoveBehavior {
 		
-		public MoveForwardBehavior(ICharacter character, MoveForwardBehaviorFactory factory) : base(character) {
+		public MoveForwardBehavior(ICharacter character, MoveForwardBehaviorFactory factory) : base(character, factory) {
 
 		}
 		

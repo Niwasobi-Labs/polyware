@@ -1,19 +1,27 @@
+using System;
 using UnityEngine;
 
 namespace PolyWare.Game {
+	[Serializable]
 	public abstract class MoveBehaviorFactory : IBehaviorFactory {
 		public WallCollisionMode WallCollisionMode;
+		public int WallHitsLimit = -1;
 		public abstract IBehavior Create(ICharacter parent);
 	}
 	
 	public abstract class MoveBehavior : Behavior {
 		protected readonly Rigidbody rb;
+		private readonly int wallHitLimit;
+		
 		protected float currentSpeedStat;
 		protected Vector3 currentMoveDirection;
 		protected WallCollisionMode wallCollisionMode;
 		
-		protected MoveBehavior(ICharacter character) : base(character) {
+		protected int wallHits;
+		
+		protected MoveBehavior(ICharacter character, MoveBehaviorFactory factory) : base(character) {
 			rb = parent.GameObject.GetComponent<Rigidbody>();
+			wallHitLimit = factory.WallHitsLimit;
 			UpdateMoveSettings();
 		}
 
@@ -34,6 +42,11 @@ namespace PolyWare.Game {
 			}
 
 			currentMoveDirection.Normalize();
+			
+			wallHits++;
+			if (wallHitLimit >= 0 && wallHits >= wallHitLimit) {
+				parent.Kill(new DamageContext(Element.Kinetic, 0, null, null));
+			}
 		}
 
 		protected void UpdateMoveSettings() {

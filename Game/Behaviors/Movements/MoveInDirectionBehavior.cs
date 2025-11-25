@@ -27,8 +27,9 @@ namespace PolyWare.Game {
 	public class MoveInDirectionBehavior : MoveBehavior {
 		private readonly bool randomStartingDirection;
 		private readonly bool setForwardOnRotate;
-
-		public MoveInDirectionBehavior(ICharacter character, MoveInDirectionBehaviorFactory factory) : base(character) {
+		
+		
+		public MoveInDirectionBehavior(ICharacter character, MoveInDirectionBehaviorFactory factory) : base(character, factory) {
 			wallCollisionMode = factory.WallCollisionMode;
 			
 			setForwardOnRotate = factory.SetForwardOnRotate;

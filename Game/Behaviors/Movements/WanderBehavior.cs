@@ -27,7 +27,7 @@ namespace PolyWare.Game {
 		private CountdownTimer wanderDelayTimer;
 		private List<Timer> timers = new List<Timer>();
 		
-		public WanderBehavior(ICharacter character, WanderBehaviorFactory factory) : base(character) {
+		public WanderBehavior(ICharacter character, WanderBehaviorFactory factory) : base(character, factory) {
 			wanderMinDuration = factory.WanderMinDuration;
 			wanderMaxDuration = factory.WanderMaxDuration;
 			wanderMinDelay = factory.WanderMinDelay;

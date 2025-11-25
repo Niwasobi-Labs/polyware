@@ -17,7 +17,7 @@ namespace PolyWare.Game {
 	public class RotateBehavior : MoveBehavior {
 		private Vector3 rotationAxis;
 
-		public RotateBehavior(ICharacter character, RotateBehaviorFactory factory) : base(character) {
+		public RotateBehavior(ICharacter character, RotateBehaviorFactory factory) : base(character, factory) {
 			rotationAxis = factory.RandomRotation ? Random.rotation.eulerAngles : factory.RotateAround;
 		}
 		
