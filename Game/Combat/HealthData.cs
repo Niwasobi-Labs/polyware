@@ -10,6 +10,7 @@ namespace PolyWare.Game {
 		[ReadOnly] public float Current;
 		public bool Invincible;
 		public bool CanHeal;
+		public bool FinalStand;
 			
 		public bool CanRegen;
 		[ShowIf("CanRegen")] public float RegenDelayTime;

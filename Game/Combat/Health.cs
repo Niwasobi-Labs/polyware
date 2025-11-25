@@ -11,6 +11,7 @@ namespace PolyWare.Game {
 		public struct HealthContext : IContext {
 			public float Current;
 			public float Max;
+			public bool FinalStand;
 		}
 		
 		public event UnityAction<HealthContext> OnDamageTaken;
@@ -25,7 +26,8 @@ namespace PolyWare.Game {
 		private CountdownTimer regenDelayTimer;
 		private CountdownTimer stunTimer;
 		public bool IsStunned { get; private set; }
-	
+		public bool InFinalStand => health.FinalStand && usedFinalStand;
+		
 		protected readonly List<Timer> timers = new List<Timer>();
 
 		public float MaxHealth => health.MaxHealth(statsHandler);
@@ -34,6 +36,7 @@ namespace PolyWare.Game {
 		public GameObject GameObject { get; private set; }
 
 		private IStatsHandler statsHandler;
+		private bool usedFinalStand;
 		
 		public void Initialize(HealthData newHealth, GameObject owner) {
 			health = newHealth;
@@ -103,8 +106,13 @@ namespace PolyWare.Game {
 			
 			health.Current = Mathf.Max(health.Current - ctx.Damage, 0);
 
+			if (health.FinalStand && health.Current <= 1 && !usedFinalStand) {
+				usedFinalStand = true;
+				health.Current = 1;
+			}
+			
 			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
-
+			
 			if (health.Current <= 0) {
 				if (health.StunOnDeath) {
 					health.Current = 1;
