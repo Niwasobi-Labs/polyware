@@ -45,6 +45,7 @@ namespace PolyWare.Game {
 			abilityCtxHolder.Add(Data);
 		}
 		
+		// todo: consider switching projectile collisions to non-triggers (https://niwasobi-labs.codecks.io/card/1e6-consider-switching-projectile-collisions-to-non-triggers)
 		private void OnTriggerEnter(Collider other) {
 			if (other.TryGetComponent(out IAffectable affectable)) {
 				if (affectable.GameObject.TryGetComponent(out IFactionMember otherFactionMember)) {
@@ -73,6 +74,10 @@ namespace PolyWare.Game {
 
 		private void Kill() {
 			ServiceLocator.Global.Get<IAudioService>().PlayOneShot(Data.Definition.ImpactSound, transform.position);
+			if (Data.Definition.ImpactVFX) {
+				var vfx = Instantiate(Data.Definition.ImpactVFX, transform.position, Quaternion.identity);
+				vfx.transform.forward = -MyRigidbody.transform.forward;
+			}
 			Destroy(gameObject);
 		}
 	}
