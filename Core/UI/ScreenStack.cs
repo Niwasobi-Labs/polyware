@@ -23,6 +23,7 @@ namespace PolyWare.Core {
 
 		public void Open() {
 			gameObject.SetActive(true);
+			IsOpen = true;
 
 			if (!PauseGame) return;
 			
@@ -40,7 +41,7 @@ namespace PolyWare.Core {
 		
 		public void Close() {
 			gameObject.SetActive(false);
-			
+			IsOpen = false;
 			if (GrabInputFocus) {
 				ServiceLocator.Global.Get<IInputService>().ToggleUIInput(false);
 				ServiceLocator.Global.Get<IInputService>().TogglePlayerInput(true);
