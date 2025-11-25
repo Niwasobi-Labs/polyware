@@ -6,10 +6,10 @@ using UnityEngine.Serialization;
 
 namespace PolyWare.Game {
 	public class Typewriter : MonoBehaviour {
-		[SerializeField] [FormerlySerializedAs("Text")] private TMP_Text text;
+		[SerializeField] private TMP_Text text;
 
-		[SerializeField] [FormerlySerializedAs("TriggerOnEnable")]
-		private bool triggerOnEnable;
+		[SerializeField] private bool triggerOnEnable;
+		[SerializeField] private bool useUnscaledDeltaTime;
 
 		private bool speedUp;
 
@@ -38,7 +38,12 @@ namespace PolyWare.Game {
 			var gameService = ServiceLocator.Global.Get<IGameService>();
 			while (text.maxVisibleCharacters != totalCharacters) {
 				text.maxVisibleCharacters += 1;
-				yield return Yielders.WaitForSeconds(speedUp ? gameService.GameConstants.DialogueSkipMultiplier : gameService.GameConstants.DialogueCharacterDelay);
+				if (useUnscaledDeltaTime) {
+					yield return Yielders.WaitForSecondsRealtime(speedUp ? gameService.GameConstants.DialogueSkipMultiplier : gameService.GameConstants.DialogueCharacterDelay);
+				}
+				else {
+					yield return Yielders.WaitForSeconds(speedUp ? gameService.GameConstants.DialogueSkipMultiplier : gameService.GameConstants.DialogueCharacterDelay);	
+				}
 			}
 		}
 	}
