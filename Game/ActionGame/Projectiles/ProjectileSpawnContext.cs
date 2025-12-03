@@ -9,15 +9,17 @@ namespace PolyWare.Game {
 		public readonly Vector3 Direction;
 		public readonly Vector3 AxisNormal;
 		public readonly float Spread;
+		public readonly float SpreadOffset;
 		public readonly AbilityContextHolder AbilityContextHolder;
 		
-		public ProjectileSpawnContext(ProjectileData projectile, int count, Vector3 origin, Vector3 direction, Vector3 axisNormal, float spread, AbilityContextHolder abilityContextHolder = null) {
+		public ProjectileSpawnContext(ProjectileData projectile, int count, Vector3 origin, Vector3 direction, Vector3 axisNormal, float spread, float spreadOffset, AbilityContextHolder abilityContextHolder = null) {
 			Projectile = projectile;
 			Count = count;
 			Origin = origin;
 			Direction = direction;
 			AxisNormal = axisNormal;
 			Spread = spread;
+			SpreadOffset = spreadOffset;
 			AbilityContextHolder = abilityContextHolder;
 		}
 	}

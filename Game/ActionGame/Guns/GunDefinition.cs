@@ -25,6 +25,7 @@ namespace PolyWare.Game {
 		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
 		[field: SerializeField] public float Range { get; private set; } = 25.0f;
 		[field: SerializeField] public float Spread { get; private set; }
+		[field: SerializeField] public float SpreadOffset { get; private set; }
 		[field: SerializeField] public bool RandomSpreadVariance { get; private set; } = false;
 		[field: SerializeField] public int BulletCountPerShot { get; private set; } = 1;
 		

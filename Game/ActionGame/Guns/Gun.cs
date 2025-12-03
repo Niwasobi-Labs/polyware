@@ -21,7 +21,6 @@ namespace PolyWare.Game {
 		//private PlayerGunHeatEvent heatEvent;
 		
 		private AimAssistStrategy aimAssistStrategy;
-		private ProjectileSpawnStrategy projectileSpawnStrategy;
 		
 		public ReloadHandler ReloadHandler { get; private set; }
 		
@@ -136,7 +135,8 @@ namespace PolyWare.Game {
 				bulletSpawn.position, 
 				CalculateProjectileDirection(), 
 				bulletSpawn.up,
-				GunData.GunDefinition.Spread, 
+				GunData.GunDefinition.Spread,
+				GunData.GunDefinition.SpreadOffset, 
 				abilityCtxHolder));
 		}
 

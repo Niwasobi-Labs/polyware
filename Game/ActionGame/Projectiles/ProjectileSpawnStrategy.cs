@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 
 namespace PolyWare.Game {
-	public class ProjectileSpawnStrategy {
+	public static class ProjectileSpawnStrategy {
 		
 		public static List<Projectile> Spawn(ProjectileSpawnContext context) {
 			return context.Count > 1 ? 
@@ -16,7 +16,7 @@ namespace PolyWare.Game {
 			var projectiles = new List<Projectile>();
 			// ReSharper disable once PossibleLossOfFraction (we are checking inside of Spawn)
 			float angleStep = context.Spread < 360f ? context.Spread / (context.Count - 1) : context.Spread / context.Count;
-			float startingAngle = context.Spread < 360f ? -context.Spread / 2f : 0;
+			float startingAngle = (context.Spread < 360f ? -context.Spread / 2f : 0) + context.SpreadOffset;
 			for (int i = 0; i < context.Count; i++) {
 				float angle = startingAngle + angleStep * i;
 				projectiles.Add(SpawnProjectile(context, Quaternion.AngleAxis(angle, context.AxisNormal) * context.Direction));

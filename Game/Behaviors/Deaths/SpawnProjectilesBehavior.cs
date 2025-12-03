@@ -8,6 +8,7 @@ namespace PolyWare.Game {
 	public class SpawnProjectilesBehaviorFactory : IBehaviorFactory {
 		public ProjectileDefinition Bullet;
 		public float SpawnSpreadAngle;
+		public float SpawnSpreadAngleOffset;
 		public int BulletsToSpawn;
 		public float BulletSpeed;
 		public DamageContext DamageContext;
@@ -21,6 +22,7 @@ namespace PolyWare.Game {
 	public class SpawnProjectilesBehavior : Behavior {
 		private readonly ProjectileDefinition bullet;
 		private readonly float spawnSpreadAngle;
+		private readonly float spawnSpreadAngleOffset;
 		private readonly int bulletsToSpawn;
 		private readonly float bulletSpeed;
 		private readonly DamageContext damageContext;
@@ -29,6 +31,7 @@ namespace PolyWare.Game {
 		public SpawnProjectilesBehavior(ICharacter character, SpawnProjectilesBehaviorFactory factory) : base(character) {
 			bullet = factory.Bullet;
 			spawnSpreadAngle = factory.SpawnSpreadAngle;
+			spawnSpreadAngleOffset = factory.SpawnSpreadAngleOffset;
 			bulletsToSpawn = factory.BulletsToSpawn;
 			bulletSpeed = factory.BulletSpeed;
 			damageContext = factory.DamageContext;
@@ -66,6 +69,7 @@ namespace PolyWare.Game {
 				Vector3.forward,
 				Vector3.up,
 				spawnSpreadAngle,
+				spawnSpreadAngleOffset,
 				abilityCtxHolder));
 		}
 	}
