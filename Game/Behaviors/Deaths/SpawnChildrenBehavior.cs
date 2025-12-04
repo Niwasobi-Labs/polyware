@@ -8,7 +8,8 @@ namespace PolyWare.Game {
 	[Serializable]
 	public struct SpawnChildrenContext : IContext {
 		public EntityDefinition Prefab;
-		public int Count;
+		public int MinCount;
+		public int MaxCount;
 		public float SpreadAngle;
 		public bool Launch;
 		[ShowIf("Launch")] public float LaunchForce;

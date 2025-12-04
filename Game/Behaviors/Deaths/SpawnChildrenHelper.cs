@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
+using Random = System.Random;
 
 namespace PolyWare.Game {
 	public static class SpawnChildrenHelper {
 		public static void Spawn(GameObject parent, SpawnChildrenContext context, Action<IEntity> onChildSpawned) {
-			float angleStep = context.SpreadAngle / (context.Count - 1);
+			int spawnCount = UnityEngine.Random.Range(context.MinCount, context.MaxCount);
+			float angleStep = context.SpreadAngle / (spawnCount - 1);
 			float startingAngle = -(context.SpreadAngle / 2f);
 
-			for (int i = 0; i < context.Count; i++) {
+			for (int i = 0; i < spawnCount; i++) {
 				float angle = startingAngle + angleStep * i;
 				IEntity child = EntityFactory<IEntity>.CreateFrom(context.Prefab);
 				// we take the reverse direction of our intention so that a 360 spread angle will launch the first bullet forward, or backwards if specified
