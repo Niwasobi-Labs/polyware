@@ -9,6 +9,8 @@ namespace PolyWare.Game {
 		[SerializeReference] private IMaxHealthEvaluator maxHealthEvaluator;
 		[ReadOnly] public float Current;
 		public bool Invincible;
+		public bool HasDamageCooldown;
+		[ShowIf("HasDamageCooldown")] public float DamageCooldownDuration;
 		public bool CanHeal;
 		public bool FinalStand;
 			

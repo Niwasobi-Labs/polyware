@@ -25,7 +25,10 @@ namespace PolyWare.Game {
 		private CountdownTimer regenTimer;
 		private CountdownTimer regenDelayTimer;
 		private CountdownTimer stunTimer;
+		private CountdownTimer damageCooldownTimer;
+		
 		public bool IsStunned { get; private set; }
+		public bool CanTakeDamage { get; private set; }
 		public bool InFinalStand => health.FinalStand && usedFinalStand;
 		
 		protected readonly List<Timer> timers = new List<Timer>();
@@ -48,6 +51,7 @@ namespace PolyWare.Game {
 			
 			SetupTimers();
 			health.Current = MaxHealth;
+			CanTakeDamage = true;
 		}
 		
 		public void Update() {
@@ -84,6 +88,12 @@ namespace PolyWare.Game {
 			else {
 				stunTimer.SetInitialTime(health.StunDuration);
 			}
+
+			if (damageCooldownTimer == null && health.HasDamageCooldown) {
+				damageCooldownTimer = new CountdownTimer(health.DamageCooldownDuration);
+				damageCooldownTimer.OnTimerComplete += () => CanTakeDamage = true;
+				timers.Add(damageCooldownTimer);
+			}
 		}
 
 		public bool IsAlive() {
@@ -97,7 +107,7 @@ namespace PolyWare.Game {
 		}
 		
 		public void TakeDamage(DamageContext ctx) {
-			if (health.Invincible) return;
+			if (health.Invincible || !CanTakeDamage) return;
 			if (IsStunned) return;
 			if (health.Current <= 0) return;
 			
@@ -110,6 +120,9 @@ namespace PolyWare.Game {
 				usedFinalStand = true;
 				health.Current = 1;
 			}
+			
+			CanTakeDamage = false;
+			damageCooldownTimer?.Restart();
 			
 			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
 			
