@@ -13,6 +13,7 @@ namespace PolyWare.Game {
 		public GameObject GameObject { get; } // todo: replace with Entity (https://app.clickup.com/t/86b6vbg95)
 		public void TakeDamage(DamageContext damageContext);
 		public void Heal(float healAmount);
+		public void AddOvercharge(float overchargeAmount);
 		public bool IsAlive();
 		public void Stun();
 		public void Kill(DamageContext damageContext);

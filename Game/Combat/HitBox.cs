@@ -37,6 +37,8 @@ namespace PolyWare.Game {
 		public bool IsStunned => ownerDamageable.IsStunned;
 
 		public void Heal(float healAmount) => ownerDamageable.Heal(healAmount);
+		public void AddOvercharge(float overcharge) => ownerDamageable.AddOvercharge(overcharge);
+		
 		public void Affect(IEffect effect, ContextHolder ctx) {
 			ownerAffectable?.Affect(effect, ctx);
 		}

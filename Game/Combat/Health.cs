@@ -11,6 +11,7 @@ namespace PolyWare.Game {
 		public struct HealthContext : IContext {
 			public float Current;
 			public float Max;
+			public float Overcharge;
 			public bool FinalStand;
 		}
 		
@@ -34,6 +35,7 @@ namespace PolyWare.Game {
 		protected readonly List<Timer> timers = new List<Timer>();
 
 		public float MaxHealth => health.MaxHealth(statsHandler);
+		public float CurrentOvercharge => health.Overcharge;
 		public float CurrentHealth => health.Current;
 
 		public GameObject GameObject { get; private set; }
@@ -113,8 +115,22 @@ namespace PolyWare.Game {
 			
 			regenTimer.Stop();
 			regenDelayTimer.Restart();
-			
-			health.Current = Mathf.Max(health.Current - ctx.Damage, 0);
+
+			float leftOverDamage = ctx.Damage;
+			if (CurrentOvercharge > 0) {
+				if (CurrentOvercharge >= leftOverDamage) {
+					health.Overcharge -= leftOverDamage;
+					leftOverDamage = 0;
+				}
+				else {
+					leftOverDamage -= CurrentOvercharge;
+					health.Overcharge = 0;
+				}
+			}
+
+			if (leftOverDamage > 0) {
+				health.Current = Mathf.Max((health.Current) - leftOverDamage, 0);
+			}
 
 			if (health.FinalStand && health.Current <= 1 && !usedFinalStand) {
 				usedFinalStand = true;
@@ -124,7 +140,7 @@ namespace PolyWare.Game {
 			CanTakeDamage = false;
 			damageCooldownTimer?.Restart();
 			
-			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
+			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
 			
 			if (health.Current <= 0) {
 				if (health.StunOnDeath) {
@@ -138,21 +154,22 @@ namespace PolyWare.Game {
 			else if (health.Current < health.StunThreshold) Stun();
 		}
 
-		public void ZeroOutHealth() {
-			health.Current = 0;
+		public void AddOvercharge(float overcharge) {
+			health.Overcharge += overcharge;
+			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
 		}
 		
 		public void Heal(float healAmount) {
 			if (!health.CanHeal) return;
-			
+
 			health.Current = Mathf.Min(health.Current + healAmount, MaxHealth);
-			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
+			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
 		}
 
 		public void ForceStun() {
 			if (health.Current > health.StunThreshold) {
 				health.Current = health.StunThreshold;
-				OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });	
+				OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});	
 			}
 
 			Stun();
@@ -180,12 +197,12 @@ namespace PolyWare.Game {
 
 		private void UpdateRegen() {
 			health.Current = Mathf.Lerp(0, MaxHealth, 1 - regenTimer.Progress);
-			OnRegenUpdate?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
+			OnRegenUpdate?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
 		}
 
 		private void CompleteRegen() {
 			health.Current = MaxHealth;
-			OnRegenComplete?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth });
+			OnRegenComplete?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge });
 		}
 	}
 }

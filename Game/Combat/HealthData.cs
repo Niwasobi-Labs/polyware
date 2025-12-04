@@ -13,6 +13,7 @@ namespace PolyWare.Game {
 		[ShowIf("HasDamageCooldown")] public float DamageCooldownDuration;
 		public bool CanHeal;
 		public bool FinalStand;
+		public float Overcharge;
 			
 		public bool CanRegen;
 		[ShowIf("CanRegen")] public float RegenDelayTime;
