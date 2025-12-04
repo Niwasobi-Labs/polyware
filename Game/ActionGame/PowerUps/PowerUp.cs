@@ -35,6 +35,8 @@ namespace PolyWare.Game {
 			var newAbility = Data.Definition.OnPickupAbility.CreateInstance();
 			newAbility.Trigger(new AbilityContextHolder(Data.Definition.OnPickupAbility, gameObject, new List<GameObject>{ character.Transform.gameObject }));
 			
+			EventBus<ItemPickedUpEvent>.Raise(new ItemPickedUpEvent { ItemDefinition = Data.Definition });
+			
 			Destroy(gameObject);
 		}
 	}
