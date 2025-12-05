@@ -21,6 +21,12 @@ namespace PolyWare.Game {
 			ModifierManager.PerformQuery(this, q);
 			return statEvaluators && statEvaluators.Contains(statType) ? statEvaluators.Evaluate(statType, q.Value) : q.Value;
 		}
+		
+		public float GetUnModifiedStat(StatType statType) {
+			var q = new StatQuery(statType, baseData[statType]);
+			ModifierManager.PerformQuery(this, q);
+			return q.Value;
+		}
 
 		public void Update(float deltaTime) {
 			ModifierManager.Update(deltaTime);
