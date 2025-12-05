@@ -1,7 +1,14 @@
 using PolyWare.Core;
+using UnityEngine;
 
 namespace PolyWare.Game {
 	public struct ItemPickedUpEvent : IEvent {
+		public Vector3 Position;
+		public ItemDefinition ItemDefinition;
+	}
+	
+	public struct ItemInRangeEvent : IEvent {
+		public Vector3 Position;
 		public ItemDefinition ItemDefinition;
 	}
 	
