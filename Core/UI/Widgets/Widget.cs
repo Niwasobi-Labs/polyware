@@ -1,6 +1,7 @@
 using UnityEngine;
 
 namespace PolyWare.Core {
+	[RequireComponent(typeof(RectTransform))]
 	public class Widget : MonoBehaviour {
 		public virtual void Open() {
 			gameObject.SetActive(true);
