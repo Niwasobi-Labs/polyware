@@ -13,10 +13,6 @@ namespace PolyWare.Core {
 		private int currentImageCount;
 		private int currentMaxUnits;
 
-		private void Awake() {
-			GetComponentsInChildren<IFillable>(imageList);
-		}
-
 		public void Initialize(int currentUnits, int totalUnits) {
 			currentMaxUnits = totalUnits;
 			
