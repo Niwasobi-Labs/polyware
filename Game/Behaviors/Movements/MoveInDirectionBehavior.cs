@@ -18,6 +18,7 @@ namespace PolyWare.Game {
 		public bool SetForwardOnRotate;
 		public bool RandomStartingDirection;
 		[ShowIf("RandomStartingDirection")] public Vector3 RotateAround = Vector3.up;
+		[HideIf("RandomStartingDirection")] public Vector3 FixedWorldMove = Vector3.forward;
 		
 		public override IBehavior Create(ICharacter parent) {
 			return new MoveInDirectionBehavior(parent, this);
@@ -27,13 +28,15 @@ namespace PolyWare.Game {
 	public class MoveInDirectionBehavior : MoveBehavior {
 		private readonly bool randomStartingDirection;
 		private readonly bool setForwardOnRotate;
-		
+		private readonly Vector3 fixedWorldMove;
 		
 		public MoveInDirectionBehavior(ICharacter character, MoveInDirectionBehaviorFactory factory) : base(character, factory) {
 			wallCollisionMode = factory.WallCollisionMode;
 			
 			setForwardOnRotate = factory.SetForwardOnRotate;
 			randomStartingDirection = factory.RandomStartingDirection;
+			
+			fixedWorldMove = factory.FixedWorldMove;
 		}
 
 		protected override void OnStart() {
@@ -41,7 +44,7 @@ namespace PolyWare.Game {
 				FindNewRandomDirection();
 			}
 			else {
-				currentMoveDirection = parent.Transform.forward;
+				currentMoveDirection = fixedWorldMove;
 			}
 
 			if (setForwardOnRotate) {
