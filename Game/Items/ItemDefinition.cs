@@ -8,7 +8,7 @@ namespace PolyWare.Game {
 	}
 	
 	public struct ItemInRangeEvent : IEvent {
-		public Vector3 Position;
+		public Transform ItemTransform;
 		public ItemDefinition ItemDefinition;
 	}
 	
