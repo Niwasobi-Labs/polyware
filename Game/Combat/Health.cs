@@ -136,9 +136,11 @@ namespace PolyWare.Game {
 				usedFinalStand = true;
 				health.Current = 1;
 			}
-			
-			CanTakeDamage = false;
-			damageCooldownTimer?.Restart();
+
+			if (health.HasDamageCooldown) {
+				CanTakeDamage = false;
+				damageCooldownTimer?.Restart();	
+			}
 			
 			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
 			
