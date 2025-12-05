@@ -3,7 +3,7 @@ using UnityEngine.Events;
 
 namespace PolyWare.Game {
 	public class ProximityTarget : MonoBehaviour, IProximityTarget {
-		[Header("Proxmity Target")]
+		[Header("Proximity Target")]
 		public GameObject TargetOverride;
 		[SerializeField] protected UnityEvent<IProximityUser> onTriggerEnterEvents;
 		[SerializeField] protected UnityEvent<IProximityUser> onTriggerExitEvents;

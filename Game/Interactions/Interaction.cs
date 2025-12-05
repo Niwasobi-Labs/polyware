@@ -4,7 +4,8 @@ using UnityEngine.Events;
 
 namespace PolyWare.Game {
 	public class Interaction : ProximityTarget, IInteractable {
-		[Title("Interaction")]public bool DisablePrompt;
+		[Title("Interaction")]
+		public bool DisablePrompt;
 
 		[SerializeField] protected string prompt;
 
