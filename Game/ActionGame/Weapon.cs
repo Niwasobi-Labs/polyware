@@ -66,15 +66,14 @@ namespace PolyWare.Game {
 		
 		// IUsable
 		public abstract void Use();
-		public abstract void ForceUse();
 		public abstract void StopUsing();
 		
 		public void NotifyPlayerOfInteraction(bool inRange) {
 			if (inRange) {
-				EventBus<ItemInRangeEvent>.Raise(new ItemInRangeEvent { Position = transform.position, ItemDefinition = Data.Definition });
+				EventBus<ItemInRangeEvent>.Raise(new ItemInRangeEvent { ItemTransform = transform, ItemDefinition = Data.Definition });
 			}
 			else {
-				EventBus<ItemInRangeEvent>.Raise(new ItemInRangeEvent { Position = transform.position, ItemDefinition = null });
+				EventBus<ItemInRangeEvent>.Raise(new ItemInRangeEvent { ItemTransform = null, ItemDefinition = null });
 			}
 		}
 	}

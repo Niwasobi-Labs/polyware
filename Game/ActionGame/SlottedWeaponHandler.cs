@@ -58,10 +58,6 @@ namespace PolyWare.Game {
 			CurrentWeapon?.Use();
 		}
 
-		public void ForceUse() {
-			CurrentWeapon?.ForceUse();
-		}
-
 		public void StopUsing() {
 			CurrentWeapon?.StopUsing();
 		}
