@@ -45,6 +45,10 @@ namespace PolyWare.Game {
 			if (whenToSpawn == UnityMonoEvents.OnDestroy && spawnCount < destroyAfterSpawning) spawnTimer.Start();
 		}
 
+		public void SpawnManually() {
+			Spawn();
+		}
+		
 		public IEntity Spawn() {
 			if (!entity) return null;
 			
