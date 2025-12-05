@@ -24,7 +24,7 @@ namespace PolyWare.Game {
 		protected void Update() {
 			lifeTimer.Tick(Time.deltaTime);
 		}
-
+		
 		public void Pickup(IProximityUser user) {
 			if (!user.GetUserObject().TryGetComponent(out character)) {
 				Log.Error($"Can't pickup { name } with {user.GetUserObject().name}");
@@ -35,7 +35,7 @@ namespace PolyWare.Game {
 			var newAbility = Data.Definition.OnPickupAbility.CreateInstance();
 			newAbility.Trigger(new AbilityContextHolder(Data.Definition.OnPickupAbility, gameObject, new List<GameObject>{ character.Transform.gameObject }));
 			
-			EventBus<ItemPickedUpEvent>.Raise(new ItemPickedUpEvent { ItemDefinition = Data.Definition });
+			EventBus<ItemPickedUpEvent>.Raise(new ItemPickedUpEvent { Position = transform.position, ItemDefinition = Data.Definition });
 			
 			Destroy(gameObject);
 		}
