@@ -14,6 +14,7 @@ namespace PolyWare.Game {
 		}
 
 		[field: Title("Shooting")]
+		[field: SerializeField] public AbilityDefinition OnSuccessfulUseAbility { get; private set; }
 		[field: SerializeField] public AbilityDefinition FireAbility { get; private set; }
 		[field: SerializeField] public DamageContext Damage { get; private set; }
 		[field: SerializeReference] public IDamageEvaluator BulletDamageEvaluator { get; private set; } = new DefaultDamageEvaluator();

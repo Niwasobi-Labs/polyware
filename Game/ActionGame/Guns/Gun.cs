@@ -111,7 +111,26 @@ namespace PolyWare.Game {
 
 			ServiceLocator.Global.Get<IAudioService>().PlayOneShot(GunData.GunDefinition.ShootingSound, transform.position);
 			
+			TriggerOnSuccessfulUseAbility();
+			
 			//if (myCharacter.IsPlayer) PlayerCharacter.OnPlayerFired?.Invoke(GunData.GunDefinition.AmmoConsumptionPerShot); task: use event bus
+		}
+
+		private void TriggerOnSuccessfulUseAbility() {
+			if (GunData.GunDefinition.OnSuccessfulUseAbility == null) return;
+			
+			Ability ability = GunData.GunDefinition.OnSuccessfulUseAbility.CreateInstance();
+			AbilityContextHolder abilityCtxHolder = new AbilityContextHolder (
+				GunData.GunDefinition.OnSuccessfulUseAbility, 
+				myCharacter.GameObject, 
+				new List<GameObject>{ aimAssistStrategy.GetTargetTransform()?.gameObject },
+				new List<IContext> {
+					GunData, 
+					new DamageContext(GunData.GunDefinition.BulletDamageEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.Damage), myCharacter?.Transform.gameObject, GunData.GunDefinition.FireAbility),
+					myCharacter?.FactionMember.FactionInfo
+				}
+			);
+			ability.Trigger(abilityCtxHolder);
 		}
 		
 		private void FireProjectiles() {
