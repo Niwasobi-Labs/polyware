@@ -142,7 +142,7 @@ namespace PolyWare.Game {
 				damageCooldownTimer?.Restart();	
 			}
 			
-			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
+			OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge, FinalStand = InFinalStand });
 			
 			if (health.Current <= 0) {
 				if (health.StunOnDeath) {
@@ -158,20 +158,20 @@ namespace PolyWare.Game {
 
 		public void AddOvercharge(float overcharge) {
 			health.Overcharge += overcharge;
-			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
+			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge, FinalStand = InFinalStand});
 		}
 		
 		public void Heal(float healAmount) {
 			if (!health.CanHeal) return;
 
 			health.Current = Mathf.Min(health.Current + healAmount, MaxHealth);
-			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
+			OnHeal?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge, FinalStand = InFinalStand});
 		}
 
 		public void ForceStun() {
 			if (health.Current > health.StunThreshold) {
 				health.Current = health.StunThreshold;
-				OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});	
+				OnDamageTaken?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge, FinalStand = InFinalStand});	
 			}
 
 			Stun();
@@ -199,12 +199,12 @@ namespace PolyWare.Game {
 
 		private void UpdateRegen() {
 			health.Current = Mathf.Lerp(0, MaxHealth, 1 - regenTimer.Progress);
-			OnRegenUpdate?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge});
+			OnRegenUpdate?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge, FinalStand = InFinalStand});
 		}
 
 		private void CompleteRegen() {
 			health.Current = MaxHealth;
-			OnRegenComplete?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge });
+			OnRegenComplete?.Invoke(new HealthContext { Current = CurrentHealth,  Max = MaxHealth, Overcharge = CurrentOvercharge, FinalStand = InFinalStand});
 		}
 	}
 }
