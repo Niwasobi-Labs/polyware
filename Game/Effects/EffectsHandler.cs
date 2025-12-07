@@ -17,7 +17,19 @@ namespace PolyWare.Game {
 				activeEffects[i].Update(deltaTime);
 			}
 		}
-		
+
+		public List<T> GetListOfEffectsByType<T>() where T : IEffect {
+			List<T> effectStack = new();
+			
+			for (int i = 0; i < activeEffects.Count; ++i) {
+				if (activeEffects[i].GetType() == typeof(T)) {
+					effectStack.Add((T)activeEffects[i]);
+				}
+			}
+
+			return effectStack;
+		}
+
 		public void Remove(IEffect effect) {
 			activeEffects.Remove(effect);
 			if (activeEffects.Count == 0) OnEmpty?.Invoke();
