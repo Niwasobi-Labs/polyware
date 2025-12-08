@@ -4,7 +4,7 @@ using UnityEngine;
 namespace PolyWare.Core {
 	[RequireComponent(typeof(RectTransform))]
 	public class Widget : MonoBehaviour {
-		[SerializeField] protected GameObject visualParentOverride;
+		[SerializeField] private GameObject visualParentOverride;
 		[SerializeField] protected WidgetTweenAnimationContext tweenAnimationContext;
 
 		public event Action OnCloseAnimationComplete;
