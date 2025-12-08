@@ -25,7 +25,7 @@ namespace PolyWare.Game {
 				};
 			}
 			catch (Exception) {
-				Log.Error($"IRadarStrategy is missing type {type}");
+				Log.Error($"IRadarStrategy is missing types {type}");
 				throw;
 			}
 			

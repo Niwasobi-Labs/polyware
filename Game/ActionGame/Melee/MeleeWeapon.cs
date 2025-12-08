@@ -33,7 +33,9 @@ namespace PolyWare.Game {
 				if (!meleeResults[i] || !meleeResults[i].TryGetComponent(out IDamageable damageable) || !meleeResults[i].TryGetComponent(out IAffectable affectable)) continue;
 				
 				if (damageable.GameObject.TryGetComponent(out IFactionMember factionMember) && !myCharacter.FactionMember.CanDamage(factionMember)) continue;
-				
+
+				DamageContext meleeDmgCtx = new DamageContext(MeleeData.MeleeDefinition.MeleeInfo.Damage.Element, MeleeData.MeleeDefinition.EvaluateMeleeDamage(myCharacter?.Stats, myCharacter?.Effects), myCharacter?.Transform.gameObject, MeleeData.MeleeDefinition.MeleeInfo.MeleeAbility);
+					
 				Ability abilityInstance = MeleeData.MeleeDefinition.MeleeInfo.MeleeAbility.CreateInstance();
 				abilityInstance.Trigger(new AbilityContextHolder(
 					abilityInstance.Definition, 
@@ -41,7 +43,7 @@ namespace PolyWare.Game {
 					new List<GameObject> { affectable.GameObject },
 					new List<IContext> {
 						MeleeData,
-						new DamageContext(MeleeData.MeleeDefinition.EvaluateMeleeDamage(myCharacter?.Stats), myCharacter?.Transform.gameObject, abilityInstance.Definition)
+						meleeDmgCtx
 					})
 				);
 			}

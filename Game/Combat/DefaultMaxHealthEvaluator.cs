@@ -1,8 +1,7 @@
 namespace PolyWare.Game {
-	public class DefaultMaxHealthEvaluator : IMaxHealthEvaluator {
-		public float Evaluate(IStatsHandler statHandler, HealthData healthData) {
-			if (statHandler != null) return healthData.InitialMaxHealth + statHandler.GetModifiedStat(StatType.Vitality);
-			return healthData.InitialMaxHealth;
+	public class DefaultMaxHealthEvaluator : IStatEvaluator {
+		public float Evaluate(IStatsHandler statHandler, IEffectsHandler effects, float maxHealth) {
+			return maxHealth;
 		}
 	}
 }

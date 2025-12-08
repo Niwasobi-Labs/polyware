@@ -4,16 +4,16 @@ using PolyWare.Core;
 using UnityEngine;
 
 namespace PolyWare.Game {
-	[CreateAssetMenu(fileName = "New StatEvaluatorCollection", menuName = "PolyWare/Collections/StatEvaluator Collection")]
-	public class StatEvaluatorCollection : Collection<StatType, StatEvaluator> {
-		[SerializeField] protected List<StatEvaluator> data = new ();
+	[CreateAssetMenu(fileName = "New StatEvaluatorCollection", menuName = "PolyWare/Collections/StatUpgradeCurve Collection")]
+	public class StatEvaluatorCollection : Collection<CharacterStatType, StatUpgradeCurve> {
+		[SerializeField] protected List<StatUpgradeCurve> data = new ();
 		
 		public override void Initialize() {
-			dictionary = new Dictionary<StatType, StatEvaluator>();
+			dictionary = new Dictionary<CharacterStatType, StatUpgradeCurve>();
 			
-			foreach (StatEvaluator value in data) {
+			foreach (StatUpgradeCurve value in data) {
 				try {
-					dictionary.Add(value.Stat, value);
+					dictionary.Add(value.BaseStat, value);
 				}
 				catch (Exception e) {
 					Log.Error(e.Message);
@@ -21,8 +21,8 @@ namespace PolyWare.Game {
 			}
 		}
 		
-		public float Evaluate(StatType stat, float currentStat) {
-			return dictionary[stat].Evaluate(currentStat);
+		public float Evaluate(CharacterStatType baseStat, float currentStat) {
+			return dictionary[baseStat].Evaluate(currentStat);
 		}
 	}
 }

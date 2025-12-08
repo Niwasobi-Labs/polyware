@@ -1,10 +1,10 @@
 namespace PolyWare.Game {
 	public class StatQuery {
-		public readonly StatType StatType;
+		public readonly CharacterStatType CharacterStatType;
 		public float Value;
 		
-		public StatQuery(StatType statType, float value) {
-			StatType = statType;
+		public StatQuery(CharacterStatType characterStatType, float value) {
+			CharacterStatType = characterStatType;
 			Value = value;
 		}
 	}

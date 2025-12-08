@@ -15,7 +15,7 @@ namespace PolyWare.Game {
 		public abstract T Data { get; protected set; }
 
 		public void Initialize(IEntityData data) {
-			if (data is not T entityData) throw new System.ArgumentException($"Invalid data type for {GetType().Name}");
+			if (data is not T entityData) throw new System.ArgumentException($"Invalid data types for {GetType().Name}");
 			Data = entityData;
 			OnInitialize();
 		}

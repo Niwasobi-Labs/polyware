@@ -50,7 +50,7 @@ namespace PolyWare.Game {
 		}
 
 		protected void UpdateMoveSettings() {
-			currentSpeedStat = parent.Stats.GetModifiedStat(StatType.Agility);
+			currentSpeedStat = parent.Stats.GetScaledStat(CharacterStatType.Agility);
 			rb.maxLinearVelocity = parent.MoveSettings.MaxMoveSpeed * currentSpeedStat;
 		}
 	}

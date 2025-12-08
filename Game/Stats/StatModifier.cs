@@ -13,8 +13,8 @@ namespace PolyWare.Game {
 
 		public static StatModifier Create(StatModiferData data) {
 			return data.Type switch {
-				StatModiferData.OperatorType.Add => new FuncStatModifier(data.StatType, data.Duration, v => v + data.Value),
-				StatModiferData.OperatorType.Multiply => new FuncStatModifier(data.StatType, data.Duration, v => v * data.Value),
+				StatModiferData.OperatorType.Add => new FuncStatModifier(data.CharacterStatType, data.Duration, v => v + data.Value),
+				StatModiferData.OperatorType.Multiply => new FuncStatModifier(data.CharacterStatType, data.Duration, v => v * data.Value),
 				_ => throw new ArgumentOutOfRangeException()
 			};	
 		}

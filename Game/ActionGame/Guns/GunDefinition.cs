@@ -17,12 +17,12 @@ namespace PolyWare.Game {
 		[field: SerializeField] public AbilityDefinition OnSuccessfulUseAbility { get; private set; }
 		[field: SerializeField] public AbilityDefinition FireAbility { get; private set; }
 		[field: SerializeField] public DamageContext Damage { get; private set; }
-		[field: SerializeReference] public IDamageEvaluator BulletDamageEvaluator { get; private set; } = new DefaultDamageEvaluator();
+		[field: SerializeReference] public IStatEvaluator BulletDamageEvaluator { get; private set; } = new NoEvaluationStatEvaluator();
 		[field: SerializeField] public FireMode FiringMode { get; private set; }
 		[field: SerializeField] public ProjectileDefinition Bullet { get; private set; } 
 		[field: SerializeField] public EventReference ShootingSound { get; private set; }
 		[field: SerializeField] public float FireRate { get; private set; } = 1.0f;
-		[field: SerializeReference] public IFireRateEvaluator FireRateEvaluator { get; private set; } = new DefaultFireRateEvaluator();
+		[field: SerializeReference] public IStatEvaluator FireRateEvaluator { get; private set; } = new NoEvaluationStatEvaluator();
 		[field: SerializeField] public float BulletSpeed { get; private set; } = 50.0f;
 		[field: SerializeField] public float Range { get; private set; } = 25.0f;
 		[field: SerializeField] public float Spread { get; private set; }

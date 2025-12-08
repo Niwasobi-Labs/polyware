@@ -102,8 +102,11 @@ namespace PolyWare.Game {
 			
 			GunData.SetCurrentAmmo(GunData.CurrentAmmo - GunData.GunDefinition.AmmoConsumptionPerShot);
 
-			fireRate.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.FireRate));
-			fireRate.Start();
+			if (GunData.GunDefinition.FireRateEvaluator != null) {
+				fireRate.SetInitialTime(GunData.GunDefinition.FireRateEvaluator.Evaluate(myCharacter?.Stats, myCharacter?.Effects, GunData.GunDefinition.FireRate));	
+			}
+			
+			fireRate.Restart();
 
 			if (GunData.GunDefinition.CanOverheat) AddHeat(GunData.GunDefinition.HeatPerShot);
 
@@ -126,7 +129,6 @@ namespace PolyWare.Game {
 				new List<GameObject>{ aimAssistStrategy.GetTargetTransform()?.gameObject },
 				new List<IContext> {
 					GunData, 
-					new DamageContext(GunData.GunDefinition.BulletDamageEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.Damage), myCharacter?.Transform.gameObject, GunData.GunDefinition.FireAbility),
 					myCharacter?.FactionMember.FactionInfo
 				}
 			);
@@ -134,13 +136,17 @@ namespace PolyWare.Game {
 		}
 		
 		private void FireProjectiles() {
+			DamageContext dmgCtx = new DamageContext(GunData.GunDefinition.Damage, myCharacter?.GameObject, GunData.GunDefinition.FireAbility);
+			
+			dmgCtx.Damage = GunData.GunDefinition.BulletDamageEvaluator.Evaluate(myCharacter?.Stats, myCharacter?.Effects, GunData.GunDefinition.Damage.Damage);
+			
 			var abilityCtxHolder = new AbilityContextHolder(
 				GunData.GunDefinition.FireAbility,
 				myCharacter.Transform.gameObject,
 				null,
 				new List<IContext> {
 					GunData,
-					new DamageContext(GunData.GunDefinition.BulletDamageEvaluator.Evaluate(myCharacter?.Stats, GunData.GunDefinition.Damage), myCharacter?.Transform.gameObject, GunData.GunDefinition.FireAbility),
+					new DamageContext(dmgCtx, myCharacter?.Transform.gameObject, GunData.GunDefinition.FireAbility),
 					myCharacter?.FactionMember.FactionInfo
 				});
 			

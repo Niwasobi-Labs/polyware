@@ -5,8 +5,8 @@ namespace PolyWare.Game {
 
 		[field: SerializeField] public MeleeDefinition.MeleeAttackInfo MeleeInfo { get; private set; }
 
-		public DamageContext EvaluateMeleeDamage(IStatsHandler stats) {
-			return MeleeInfo.DamageEvaluator.Evaluate(stats, MeleeInfo.Damage);
+		public float EvaluateMeleeDamage(IStatsHandler stats, IEffectsHandler effects = null) {
+			return MeleeInfo.DamageEvaluator.Evaluate(stats, effects, MeleeInfo.Damage.Damage);
 		}
 	}
 }

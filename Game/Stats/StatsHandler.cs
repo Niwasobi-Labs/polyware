@@ -16,14 +16,14 @@ namespace PolyWare.Game {
 			return true;
 		}
 		
-		public float GetModifiedStat(StatType statType) {
-			var q = new StatQuery(statType, baseData[statType]);
+		public float GetScaledStat(CharacterStatType characterStatType) {
+			var q = new StatQuery(characterStatType, baseData[characterStatType]);
 			ModifierManager.PerformQuery(this, q);
-			return statEvaluators && statEvaluators.Contains(statType) ? statEvaluators.Evaluate(statType, q.Value) : q.Value;
+			return statEvaluators && statEvaluators.Contains(characterStatType) ? statEvaluators.Evaluate(characterStatType, q.Value) : q.Value;
 		}
 		
-		public float GetUnModifiedStat(StatType statType) {
-			var q = new StatQuery(statType, baseData[statType]);
+		public float GetUnscaledStat(CharacterStatType characterStatType) {
+			var q = new StatQuery(characterStatType, baseData[characterStatType]);
 			ModifierManager.PerformQuery(this, q);
 			return q.Value;
 		}

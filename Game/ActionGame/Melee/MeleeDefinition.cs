@@ -11,7 +11,7 @@ namespace PolyWare.Game {
 			public AbilityDefinition MeleeAbility;
 			public float Cooldown;
 			public DamageContext Damage;
-			[SerializeReference] public IDamageEvaluator DamageEvaluator = new DefaultDamageEvaluator();
+			[SerializeReference] public IStatEvaluator DamageEvaluator;
 			public float Range;
 		}
 	}

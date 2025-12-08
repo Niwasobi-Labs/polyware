@@ -6,7 +6,7 @@ namespace PolyWare.Game {
 	[Serializable]
 	public struct HealthData {
 		public float InitialMaxHealth;
-		[SerializeReference] private IMaxHealthEvaluator maxHealthEvaluator;
+		[SerializeReference] private IStatEvaluator maxHealthEvaluator;
 		[ReadOnly] public float Current;
 		public bool Invincible;
 		public bool HasDamageCooldown;
@@ -25,8 +25,8 @@ namespace PolyWare.Game {
 		[ShowIf("CanBeStunned")] public float StunDuration;
 		[ShowIf("CanBeStunned")] public float StunRecoveryHealth;
 
-		public float MaxHealth(IStatsHandler statsHandler = null) {
-			return maxHealthEvaluator?.Evaluate(statsHandler, this) ?? InitialMaxHealth;
+		public float MaxHealth(IStatsHandler statsHandler = null, IEffectsHandler effects = null) {
+			return maxHealthEvaluator?.Evaluate(statsHandler, effects, InitialMaxHealth) ?? InitialMaxHealth;
 		}
 	}
 }
