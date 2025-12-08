@@ -37,7 +37,7 @@ namespace PolyWare.Game {
 				var targets = hitAction.Target.GetTargets(ctx);
 				
 				for (int j = 0; j < targets.Count; ++j) {
-					if (ctx.Culprit.TryGetComponent(out ICharacter character) && !hitAction.LuckCheck(character.Stats.GetScaledStat(CharacterStatType.Luck))) continue;
+					if (ctx.Culprit && ctx.Culprit.TryGetComponent(out ICharacter character) && !hitAction.LuckCheck(character.Stats.GetScaledStat(CharacterStatType.Luck))) continue;
 					
 					SubscribeToTargetDeath(targets[j], ctx);
 					ApplyEffectsTo(targets[j], hitAction.Effects, ctx);
