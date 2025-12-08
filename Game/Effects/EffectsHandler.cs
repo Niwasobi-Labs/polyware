@@ -6,7 +6,6 @@ namespace PolyWare.Game {
 		public event Action OnEmpty;
 		
 		private readonly List<IEffect> activeEffects = new();
-		public IReadOnlyList<IEffect> ActiveEffects => activeEffects;
 		
 		public void Add(IEffect effect) {
 			effect.OnCompleted += Remove;
@@ -17,6 +16,16 @@ namespace PolyWare.Game {
 			for (int i = 0; i < activeEffects.Count; ++i) {
 				activeEffects[i].Update(deltaTime);
 			}
+		}
+
+		public float GetStatusEffectStackOfType(StatusEffectType statusEffectType) {
+			float stack = 0;
+			for (int i = 0; i < activeEffects.Count; ++i) {
+				if (activeEffects[i] is StatusEffect statusEffect && statusEffect.StatusEffectType == statusEffectType) {
+					stack += statusEffect.Stack;
+				}
+			}
+			return stack;
 		}
 
 		public void Remove(IEffect effect) {

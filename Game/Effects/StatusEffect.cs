@@ -11,11 +11,13 @@ namespace PolyWare.Game {
 	[Serializable]
 	public class StatusEffectFactory : IEffectFactory {
 		public StatusEffectType StatusEffectType;
+		public float Stack = 1;
 		public float Duration;
 
 		public IEffect Create() {
 			return new StatusEffect {
 				StatusEffectType = StatusEffectType,
+				Stack = Stack,
 				Duration = Duration
 			};
 		}
@@ -25,7 +27,7 @@ namespace PolyWare.Game {
 		public event Action<IEffect> OnCompleted;
 		
 		public StatusEffectType StatusEffectType;
-		public int Stack;
+		public float Stack;
 		public float Duration;
 		
 		private CountdownTimer timer;
