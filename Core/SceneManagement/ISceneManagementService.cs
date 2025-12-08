@@ -9,6 +9,7 @@ namespace PolyWare.Core {
 		static string CoreSceneName = "Core";
 		
 		Task LoadSceneGroup(string groupName);
+		Task LoadRandomSceneGroup();
 		Task ReloadActiveSceneGroup();
 	}
 }

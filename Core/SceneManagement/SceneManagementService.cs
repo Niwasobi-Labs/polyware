@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Random = UnityEngine.Random;
 
 namespace PolyWare.Core {
 	public class SceneManagementService : ISceneManagementService {
@@ -37,6 +38,10 @@ namespace PolyWare.Core {
 			
 			OnSceneGroupLoadProgress?.Invoke(1);
 			OnSceneGroupLoaded?.Invoke(sceneGroupName);
+		}
+
+		public async Task LoadRandomSceneGroup() {
+			await LoadSceneGroup(sceneGroups.RandomItem(1));
 		}
 
 		public async Task ReloadActiveSceneGroup() {
