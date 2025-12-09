@@ -6,6 +6,7 @@ namespace PolyWare.Game {
 		private readonly LinkedList<StatModifier> modifiers = new LinkedList<StatModifier>();
 		
 		public event EventHandler<StatQuery> Queries;
+		public event Action OnModifierListUpdated;
 		
 		public void PerformQuery(object sender, StatQuery query) => Queries?.Invoke(sender, query);
 		
@@ -14,11 +15,13 @@ namespace PolyWare.Game {
 			Queries += modifier.Handle;
 
 			modifier.OnDispose += _ => RemoveModifier(modifier);
+			OnModifierListUpdated?.Invoke();
 		}
 
 		public void RemoveModifier(StatModifier modifier) {
 			modifiers.Remove(modifier);
 			Queries -= modifier.Handle;
+			OnModifierListUpdated?.Invoke();
 		}
 		
 		public void Update(float deltaTime) {

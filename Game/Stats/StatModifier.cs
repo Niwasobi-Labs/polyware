@@ -3,8 +3,8 @@ using PolyWare.Core;
 
 namespace PolyWare.Game {
 	public abstract class StatModifier : IDisposable {
-		
-		public bool MarkedForRemoval { get; private set; }
+
+		public bool MarkedForRemoval;
 		
 		public event Action<StatModifier> OnDispose =  delegate { };
 		public abstract void Handle(object sender, StatQuery statQuery);
@@ -28,7 +28,7 @@ namespace PolyWare.Game {
 		}
 
 		public void Update(float deltaTime) {
-			timer?.Tick(deltaTime);
+			if (!MarkedForRemoval) timer?.Tick(deltaTime);
 		}
 		
 		public void Dispose() {

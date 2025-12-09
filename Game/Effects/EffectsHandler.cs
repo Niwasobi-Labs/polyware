@@ -29,7 +29,11 @@ namespace PolyWare.Game {
 		}
 
 		public void Remove(IEffect effect) {
-			activeEffects.Remove(effect);
+			if (activeEffects.Contains(effect)) {
+				effect.Cancel();
+				activeEffects.Remove(effect);	
+			}
+			
 			if (activeEffects.Count == 0) OnEmpty?.Invoke();
 		}
 

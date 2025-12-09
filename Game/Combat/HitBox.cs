@@ -43,6 +43,10 @@ namespace PolyWare.Game {
 			ownerAffectable?.Affect(effect, ctx);
 		}
 
+		public void RemoveEffect(IEffect effect) {
+			ownerAffectable?.RemoveEffect(effect);
+		}
+
 		public bool IsAlive() => ownerDamageable.IsAlive();
 		public void Kill(DamageContext damageContext) {
 			ownerDamageable.Kill(damageContext);

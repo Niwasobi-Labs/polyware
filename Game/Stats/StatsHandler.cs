@@ -1,5 +1,9 @@
+using System;
+
 namespace PolyWare.Game {
 	public class StatsHandler : IStatsHandler {
+		public event Action OnStatUpdate;
+		
 		public readonly StatModifierManager ModifierManager;
 		private readonly StatData baseData;
 		private readonly StatEvaluatorCollection statEvaluators;
@@ -9,6 +13,7 @@ namespace PolyWare.Game {
 			baseData = baseBases;
 			statEvaluators = statEvaluatorCollection;
 			statEvaluators?.Initialize();
+			ModifierManager.OnModifierListUpdated += RaiseStatUpdateEvent;
 		}
 
 		public bool AddModifier(StatModifier modifier) {
@@ -30,6 +35,10 @@ namespace PolyWare.Game {
 
 		public void Update(float deltaTime) {
 			ModifierManager.Update(deltaTime);
+		}
+
+		private void RaiseStatUpdateEvent() {
+			OnStatUpdate?.Invoke();
 		}
 	}
 }
