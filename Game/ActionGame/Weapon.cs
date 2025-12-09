@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using PolyWare.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -17,7 +18,9 @@ namespace PolyWare.Game {
 		public override WeaponData Data { get; protected set; }
 		
 		protected ICharacter myCharacter;
-
+		
+		private List<IEffect> equippedEffects = new();
+		
 		// IItem
 		public bool AutoPickup => false;
 
@@ -32,6 +35,8 @@ namespace PolyWare.Game {
 			worldCollider.enabled = false;
 			myCharacter = character;
 			
+			ApplyOnEquipEffects();
+			
 			OnEquip();
 		}
 
@@ -40,12 +45,37 @@ namespace PolyWare.Game {
 		public bool Unequip() {
 			if (!OnUnequip()) return false;
 			
+			RemoveEquipEffects();
+			
 			Destroy(gameObject); // todo: consider pooling instead of destroying
 			
 			return true;
 		}
 		
 		protected abstract bool OnUnequip();
+		
+		private void ApplyOnEquipEffects() {
+			if (Data.Definition.OnEquipEffects.Length == 0) return;
+			if (myCharacter == null || !myCharacter.GameObject.TryGetComponent(out IAffectable myCharacterAffectable)) return;
+			
+			var equipEffects = Data.Definition.OnEquipEffects;
+			for (int i = 0; i < equipEffects.Length; ++i) {
+				IEffect newEffect = equipEffects[i].Create();
+				myCharacterAffectable.Affect(newEffect, null);
+				equippedEffects.Add(newEffect);
+			}
+		}
+
+		private void RemoveEquipEffects() {
+			if (equippedEffects.Count == 0) return;
+			if (myCharacter == null || !myCharacter.GameObject.TryGetComponent(out IAffectable myCharacterAffectable)) return;
+			
+			for (int i = 0; i < equippedEffects.Count; i++) {
+				myCharacterAffectable.RemoveEffect(equippedEffects[i]);	
+			}
+			
+			equippedEffects.Clear();
+		}
 		
 		public bool Drop() {
 			gameObject.SetActive(true);
