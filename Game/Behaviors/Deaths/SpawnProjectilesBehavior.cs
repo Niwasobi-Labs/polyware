@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace PolyWare.Game {
 	[Serializable]
-	public class SpawnProjectilesBehaviorFactory : IBehaviorFactory {
+	public class SpawnProjectilesBehaviorFactory : BehaviorFactory {
 		public ProjectileDefinition Bullet;
 		public float SpawnSpreadAngle;
 		public float SpawnSpreadAngleOffset;
@@ -14,7 +14,7 @@ namespace PolyWare.Game {
 		public DamageContext DamageContext;
 		public AbilityDefinition Ability;
 		
-		public IBehavior Create(ICharacter parent) {
+		public override IBehavior Create(ICharacter parent) {
 			return new SpawnProjectilesBehavior(parent, this);
 		}
 	}
@@ -28,7 +28,7 @@ namespace PolyWare.Game {
 		private readonly DamageContext damageContext;
 		private readonly AbilityDefinition ability;
 		
-		public SpawnProjectilesBehavior(ICharacter character, SpawnProjectilesBehaviorFactory factory) : base(character) {
+		public SpawnProjectilesBehavior(ICharacter character, SpawnProjectilesBehaviorFactory factory) : base(character, factory) {
 			bullet = factory.Bullet;
 			spawnSpreadAngle = factory.SpawnSpreadAngle;
 			spawnSpreadAngleOffset = factory.SpawnSpreadAngleOffset;
@@ -71,6 +71,8 @@ namespace PolyWare.Game {
 				spawnSpreadAngle,
 				spawnSpreadAngleOffset,
 				abilityCtxHolder));
+			
+			
 		}
 	}
 }

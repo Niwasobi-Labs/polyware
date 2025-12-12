@@ -15,11 +15,11 @@ namespace PolyWare.Game {
 		[ShowIf("Launch")] public float LaunchForce;
 	}
 	[Serializable]
-	public class SpawnChildrenBehaviorFactory : IBehaviorFactory {
+	public class SpawnChildrenBehaviorFactory : BehaviorFactory {
 		public SpawnChildrenContext SpawnSettings;
 		public bool KillChildrenOnDeath;
 		
-		public IBehavior Create(ICharacter parent) {
+		public override IBehavior Create(ICharacter parent) {
 			return new SpawnChildrenBehavior(parent, this);
 		}
 	}
@@ -30,7 +30,7 @@ namespace PolyWare.Game {
 		
 		private readonly List<GameObject> spawnedChildren = new();
 		
-		public SpawnChildrenBehavior(ICharacter character, SpawnChildrenBehaviorFactory factory) : base(character) {
+		public SpawnChildrenBehavior(ICharacter character, SpawnChildrenBehaviorFactory factory) : base(character, factory) {
 			spawnSettings = factory.SpawnSettings;
 			killChildrenOnDeath = factory.KillChildrenOnDeath;
 

@@ -1,9 +1,18 @@
+using System;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
 namespace PolyWare.Game {
+	[Serializable]
+	public abstract class BehaviorFactory : IBehaviorFactory {
+		public abstract IBehavior Create(ICharacter parent);
+	}
+	
 	public abstract class Behavior : IBehavior {
 		public bool IsRunning { get; private set; }
 		protected readonly ICharacter parent;
 		
-		protected Behavior(ICharacter parent) {
+		protected Behavior(ICharacter parent, BehaviorFactory factory) {
 			this.parent = parent;
 		}
 

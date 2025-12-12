@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace PolyWare.Game {
 	[Serializable]
-	public abstract class MoveBehaviorFactory : IBehaviorFactory {
+	public abstract class MoveBehaviorFactory : BehaviorFactory {
 		public WallCollisionMode WallCollisionMode;
 		public int WallHitsLimit = -1;
-		public abstract IBehavior Create(ICharacter parent);
 	}
 	
 	public abstract class MoveBehavior : Behavior {
@@ -19,7 +18,7 @@ namespace PolyWare.Game {
 		
 		protected int wallHits;
 		
-		protected MoveBehavior(ICharacter character, MoveBehaviorFactory factory) : base(character) {
+		protected MoveBehavior(ICharacter character, MoveBehaviorFactory factory) : base(character, factory) {
 			rb = parent.GameObject.GetComponent<Rigidbody>();
 			wallHitLimit = factory.WallHitsLimit;
 			UpdateMoveSettings();
