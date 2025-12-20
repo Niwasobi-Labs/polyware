@@ -1,8 +1,12 @@
+using System.Runtime.InteropServices;
 using Sirenix.OdinInspector;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-namespace PolyWare.Core {
-	public class UIScreen : MonoBehaviour {
+namespace PolyWare.Core
+{
+	public class UIScreen : MonoBehaviour
+	{
 		[Title("UI Screen")]
 		[SerializeField] private bool persistant = true;
 
@@ -17,33 +21,38 @@ namespace PolyWare.Core {
 
 		private EventBinding<CancelEvent> cancelEventHandler;
 
-		private void EnableInputEvents() {
+		private void EnableInputEvents()
+		{
 			cancelEventHandler = new EventBinding<CancelEvent>(OnCancel);
 			EventBus<CancelEvent>.Subscribe(cancelEventHandler);
 		}
 
-		private void DisableInputEvents() {
+		private void DisableInputEvents()
+		{
 			EventBus<CancelEvent>.Unsubscribe(cancelEventHandler);
 		}
 
-		protected virtual void OnCancel() {
+		protected virtual void OnCancel()
+		{
 			Close();
 		}
 
 		// task: consider switching this to call an OnOpen that children will override instead of this
-		public virtual bool Open() {
+		public virtual bool Open()
+		{
 			IsOpen = true;
 			gameObject.SetActive(true);
-				
+
 			if (!focusOnOpen) return false;
-				
+
 			EnableInputEvents();
 			// Instance.Input.ChangeToActionMap(InputManager.ActionMap.UI); // todo: send event to game that input needs to be changed to UI?
 			Focus();
 			return true;
 		}
 
-		public virtual void Close() {
+		public virtual void Close()
+		{
 			if (rememberFocusOnClose) RememberCurrentlySelectedObject();
 
 			IsOpen = false;
@@ -51,19 +60,27 @@ namespace PolyWare.Core {
 			gameObject.SetActive(false);
 		}
 
-		public void Focus() {
+		public void Focus()
+		{
 			// if (Instance.UI.IsMouseActive) return; todo: reenable this
-
-			if (lastSelectedObject) {
-				ServiceLocator.Global.Get<IEventSystemService>().SetSelectedGameObject(lastSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : lastSelectedObject.gameObject);
+			GameObject newSelectable = null;
+			if (lastSelectedObject)
+			{
+				newSelectable = lastSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : lastSelectedObject.gameObject;
 				lastSelectedObject = null;
 			}
-			else if (defaultSelectedObject) {
-				ServiceLocator.Global.Get<IEventSystemService>().SetSelectedGameObject(defaultSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : defaultSelectedObject);
+			else if (defaultSelectedObject)
+			{
+				newSelectable = defaultSelectedObject.TryGetComponent(out IFocusable widget) ? widget.GetFocusObject() : defaultSelectedObject;
 			}
+
+			if (newSelectable == null) return;
+
+			ServiceLocator.Global.Get<IEventSystemService>().SetSelectedGameObject(newSelectable);
 		}
 
-		private void RememberCurrentlySelectedObject() {
+		private void RememberCurrentlySelectedObject()
+		{
 			lastSelectedObject = ServiceLocator.Global.Get<IEventSystemService>().GetSelectedGameObject();
 		}
 	}

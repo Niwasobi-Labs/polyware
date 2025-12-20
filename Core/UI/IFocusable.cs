@@ -1,7 +1,9 @@
 using UnityEngine;
 
-namespace PolyWare.Core {
-	public interface IFocusable {
+namespace PolyWare.Core
+{
+	public interface IFocusable
+	{
 		public GameObject GetFocusObject();
 	}
 }
