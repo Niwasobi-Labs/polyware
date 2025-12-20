@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PolyWare.Core
@@ -8,12 +9,25 @@ namespace PolyWare.Core
 	{
 		[SerializeField] private GameObject listParent;
 		[SerializeField] private GameObject imagePrefab;
-		[SerializeField] private int unitsPerImage;
-
-		private readonly List<IFillable> imageList = new List<IFillable>();
-
+		[SerializeField] private bool granularFill;
+		[SerializeField][ShowIf("granularFill")] private int unitsPerImage;
 		private int currentImageCount;
 		private int currentMaxUnits;
+		private readonly List<IFillable> imageList = new List<IFillable>();
+
+		public void InitializeWithOverride(int currentUnits, int totalUnits, int imageCountOverride, int unitsPerImageOverride)
+		{
+			unitsPerImage = unitsPerImageOverride;
+			currentImageCount = imageCountOverride;
+
+			currentMaxUnits = totalUnits;
+
+			if (currentImageCount > imageList.Count) GrowList(currentImageCount - imageList.Count);
+
+			ShowHideImages();
+
+			Refresh(currentUnits);
+		}
 
 		public void Initialize(int currentUnits, int totalUnits)
 		{
@@ -57,7 +71,7 @@ namespace PolyWare.Core
 					imageList[i].SetFillAmount(0);
 					continue;
 				}
-				if (current < unitsPerImage)
+				if (current < unitsPerImage && granularFill)
 				{
 					imageList[i].SetFillAmount(current / (float)unitsPerImage);
 					current = 0;
